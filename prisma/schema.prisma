@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid()) @map("_id")
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  username      String? @unique
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // UserProgress  UserProgressUnit[]
+}
+
+model Course {
+  id    String @id @default(cuid()) @map("_id")
+  name  String
+  units Unit[]
+}
+
+model Unit {
+  id               String             @id @default(cuid()) @map("_id")
+  courseId         String
+  noidnumber       Int                @default(1)
+  name             String
+  completed        Boolean            @default(false)
+  progress         Int                @default(0)
+  questions        Question[]
+  Course           Course             @relation(fields: [courseId], references: [id])
+}
+  // UserProgressUnit UserProgressUnit[]
+
+model Question {
+  id         String  @id @default(cuid()) @map("_id")
+  unitId     String
+  question   String
+  answer     String
+  userAnswer String?
+  correct    Boolean @default(false)
+  Unit       Unit    @relation(fields: [unitId], references: [id])
+}
+
+// model UserProgressUnit {
+//   id        String  @id @default(cuid()) @map("_id")
+//   UserId        String  @default(cuid()) @map("_UserId")
+//   UnitId        String  @default(cuid()) @map("_UnitId")
+//   Progress  Int     @default(0)
+//   completed Boolean @default(false)
+//   User      User    @relation(fields: [UserId], references: [id])
+//   Unit      Unit    @relation(fields: [UnitId], references: [id])
+// }
