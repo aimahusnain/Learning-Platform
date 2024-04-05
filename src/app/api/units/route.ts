@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
       include: { Course: true },
     });
 
-    if (allUnits) {
+    if (allUnits.length > 0) {
       return NextResponse.json({
         success: true,
         data: allUnits,
@@ -15,13 +15,13 @@ export async function GET(request: NextRequest) {
     } else {
       return NextResponse.json({
         success: false,
-        message: "Failed to fetch blog posts. Please try again",
+        message: "No units found",
       });
     }
   } catch (e) {
     return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Something went wrong! Please try again",
     });
   }
 }
