@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
-  const res = await fetch(`/api/units`);
+  const res = await fetch(`https://learning-platform.vercel.app/api/units`);
 
   const data = await res.json();
 
