@@ -65,7 +65,6 @@ model Unit {
   questions        Question[]
   Course           Course             @relation(fields: [courseId], references: [id])
 }
-  // UserProgressUnit UserProgressUnit[]
 
 model Question {
   id         String  @id @default(cuid()) @map("_id")
@@ -76,13 +75,3 @@ model Question {
   correct    Boolean @default(false)
   Unit       Unit    @relation(fields: [unitId], references: [id])
 }
-
-// model UserProgressUnit {
-//   id        String  @id @default(cuid()) @map("_id")
-//   UserId        String  @default(cuid()) @map("_UserId")
-//   UnitId        String  @default(cuid()) @map("_UnitId")
-//   Progress  Int     @default(0)
-//   completed Boolean @default(false)
-//   User      User    @relation(fields: [UserId], references: [id])
-//   Unit      Unit    @relation(fields: [UnitId], references: [id])
-// }

@@ -29,7 +29,7 @@ const English = async () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {getAllList &&
           getAllList.map((unit: any) => (
-            <Card className="w-[350px]">
+            <Card key={unit.id} className="w-[350px]">
               <CardHeader>
                 <Link href={`/english/${unit.id}`}>
                   <CardTitle className="capitalize">{unit.name}</CardTitle>
