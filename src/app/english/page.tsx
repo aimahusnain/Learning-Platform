@@ -1,4 +1,12 @@
-import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
@@ -17,18 +25,38 @@ const English = async () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">English Course</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h1 className="text-4xl font-bold mb-8 text-center">English Course</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {getAllList &&
           getAllList.map((unit: any) => (
-            <Link
-              className="border border-gray-300 rounded-md p-4 flex flex-col items-center justify-center hover:bg-gray-100 transition-colors duration-300"
-              href={`/english/${unit.id}`}
-              key={unit.id}
-            >
-              <p className="text-xl font-bold mb-2">Unit {unit.noidnumber}</p>
-              <p className="text-sm font-normal text-center">{unit.name}</p>
-            </Link>
+            <Card className="w-[350px]">
+              <CardHeader>
+                <Link href={`/english/${unit.id}`}>
+                  <CardTitle className="capitalize">{unit.name}</CardTitle>
+                </Link>
+                <CardDescription>Unit {unit.noidnumber}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form>
+                  <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                      Show How many Questions are?
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      {unit.description}
+                    </div>
+                  </div>
+                </form>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button variant="outline" className="cursor-default">
+                  Not Completed
+                </Button>
+                <Link href={`/english/${unit.id}`}>
+                  <Button variant="success">Learn</Button>
+                </Link>
+              </CardFooter>
+            </Card>
           ))}
       </div>
     </div>
