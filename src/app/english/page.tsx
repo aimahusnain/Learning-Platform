@@ -2,7 +2,9 @@ import React from "react";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
-  const res = await fetch(`http://localhost:3000/api/units`);
+  const res = await fetch(
+    `https://learning-platform-of-moon.vercel.app/api/units`
+  );
 
   const data = await res.json();
 
