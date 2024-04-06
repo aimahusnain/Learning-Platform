@@ -20,7 +20,9 @@ async function SearchedUnit(id: string) {
 }
 
 async function SearchedQuestions(id: string) {
-  const res = await fetch(`http://localhost:3000/api/questions?id=${id}`);
+  const res = await fetch(
+    `https://learning-platform-of-moon.vercel.app/api/questions?id=${id}`
+  );
   const data = await res.json();
 
   if (data.success) return data.data;
@@ -31,100 +33,6 @@ const UnitDetails = async ({ params }: { params: any }) => {
 
   const UnitDetailsData = await SearchedUnit(unitid);
   const Questions = await SearchedQuestions(unitid);
-
-  // const Questions = [
-  //   {
-  //     id: 1,
-  //     Name: "Write the short form (she's / we aren't etc.).",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is =========",
-  //       "they are =========",
-  //       "it is not =========",
-  //       "that is =========",
-  //       "i am not =========",
-  //       "you are not =========",
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     Name: "Write am, is or are.",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is=========",
-  //       "they are=========",
-  //       "it is not=========",
-  //       "that is=========",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     Name: "Complete the sentences.",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is=========",
-  //       "they are=========",
-  //       "it is not=========",
-  //       "that is=========",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  //   {
-  //     id: 4,
-  //     Name: "Look at Lisa's sentences in 1 A. Now write sentences about yourself.",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is=========",
-  //       "they are=========",
-  //       "it is not=========",
-  //       "that is=========",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  //   {
-  //     id: 5,
-  //     Name: "Write sentences for the pictures. Use:",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is=========",
-  //       "they are=========",
-  //       "it is not=========",
-  //       "that is=========",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  //   {
-  //     id: 6,
-  //     Name: "Write true sentences, positive or negative. Use is/isn't or are/aren't",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is========= ",
-  //       "they are========= ",
-  //       "it is not========= ",
-  //       "that is========= ",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  //   {
-  //     id: 7,
-  //     Name: "Write true sentences, positive or negative. Use I'm / I'm not",
-  //     Description: "Learn contracted forms like 'she's' and 'we aren't'.",
-  //     MainQuestions: [
-  //       "she is=========",
-  //       "they are=========",
-  //       "it is not=========",
-  //       "that is=========",
-  //       "i am not=========",
-  //       "you are not=========",
-  //     ],
-  //   },
-  // ];
 
   return (
     <div className="container mx-auto px-4 py-8">
