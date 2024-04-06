@@ -8,13 +8,11 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const unitid = url.searchParams.get("id");
 
-const Question = await db.question.findFirst({
-  where: {
-    unitId: String(unitid),
-  },
-});
-
-
+    const Question = await db.question.findMany({
+      where: {
+        unitId: String(unitid),
+      },
+    });
 
     if (Question) {
       return NextResponse.json({
