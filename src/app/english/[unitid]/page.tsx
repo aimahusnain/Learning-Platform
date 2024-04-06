@@ -153,7 +153,7 @@ const UnitDetails = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions &&
           Questions.map((question: any) => (
-            <Card className="w-[350px]">
+            <Card key={question.id} className="w-[350px]">
               <CardHeader>
                 <Link href={`/english/${question.id}`}>
                   <CardTitle className="capitalize">{question.Name}</CardTitle>
