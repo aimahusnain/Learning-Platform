@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,11 +8,11 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const unitid = url.searchParams.get("id");
 
-        const searchedunit = await db.unit.findUnique({
-          where: {
-            id: String(unitid),
-          },
-        });
+    const searchedunit = await db.unit.findUnique({
+      where: {
+        id: String(unitid),
+      },
+    });
 
     if (searchedunit) {
       return NextResponse.json({
