@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-async function SearchedUnit() {
+async function SearchedUnit(id: string) {
   const res = await fetch(
-    `https://learning-platform-of-moon.vercel.app/api/units/openedunit?id=clumiedy800032qaedrfcafh3`
+    `https://learning-platform-of-moon.vercel.app/api/units/openedunit?id=${id}`
   );
 
   const data = await res.json();
@@ -19,8 +19,9 @@ async function SearchedUnit() {
   if (data.success) return data.data;
 }
 
-const UnitDetails = async () => {
-  const UnitDetailsData = await SearchedUnit();
+const UnitDetails = async ({ params }: {params: any}) => {
+  const { unitid } = params;
+  const UnitDetailsData = await SearchedUnit(unitid);
   console.log(UnitDetailsData);
 
   const Questions = [
