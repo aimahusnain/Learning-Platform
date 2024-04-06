@@ -1,6 +1,3 @@
-"use client";
-
-import { QuestionsCarousel } from "@/components/QuestionsCarousel";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,12 +8,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 
-async function getAllListsByCategory() {
+async function SearchedUnit() {
   const res = await fetch(
-    `https://learning-platform-of-moon.vercel.app/api/units`
+    `https://learning-platform-of-moon.vercel.app/api/units/openedunit?id=clumiedy800032qaedrfcafh3`
   );
 
   const data = await res.json();
@@ -24,34 +19,9 @@ async function getAllListsByCategory() {
   if (data.success) return data.data;
 }
 
-const UnitDetails = () => {
-  const [unit, setUnit] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUnitData = async () => {
-      try {
-        const response = await axios.get(
-          "/api/units/openedunit?id=clumiedy800032qaedrfcafh3"
-        );
-        setUnit(response.data.data);
-      } catch (error) {
-        console.error("Error fetching unit data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUnitData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!unit) {
-    return <div>No unit found</div>;
-  }
+const UnitDetails = async () => {
+  const UnitDetailsData = await SearchedUnit();
+  console.log(UnitDetailsData);
 
   const Questions = [
     {
@@ -149,7 +119,9 @@ const UnitDetails = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Questions</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">
+        {UnitDetailsData.name} Questions
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions &&
           Questions.map((question: any) => (
