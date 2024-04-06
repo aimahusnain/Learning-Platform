@@ -19,10 +19,19 @@ async function SearchedUnit(id: string) {
   if (data.success) return data.data;
 }
 
-const UnitDetails = async ({ params }: {params: any}) => {
+async function SearchedQuestions(id: string) {
+  const res = await fetch(
+    `https://learning-platform-of-moon.vercel.app/api/units/openedunit?id=${id}`
+  );
+
+  const data = await res.json();
+
+  if (data.success) return data.data;
+}
+
+const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
   const UnitDetailsData = await SearchedUnit(unitid);
-  console.log(UnitDetailsData);
 
   const Questions = [
     {
@@ -126,7 +135,7 @@ const UnitDetails = async ({ params }: {params: any}) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions &&
           Questions.map((question: any) => (
-            <Card key={question.id} className="w-[350px]">
+            <Card key={question.id} className="w-[350px] shadow-xl">
               <CardHeader>
                 <Link href={`/english/${question.id}`}>
                   <CardTitle className="capitalize">{question.Name}</CardTitle>

@@ -21,7 +21,6 @@ async function getAllListsByCategory() {
 
 const English = async () => {
   const getAllList = await getAllListsByCategory();
-  console.log(getAllList);
 
   return (
     <div className="container mx-auto px-4 py-8">

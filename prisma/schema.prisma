@@ -68,10 +68,9 @@ model Unit {
 
 model Question {
   id         String  @id @default(cuid()) @map("_id")
-  unitId     String
-  question   String
-  answer     String
-  userAnswer String?
-  correct    Boolean @default(false)
   Unit       Unit    @relation(fields: [unitId], references: [id])
+  unitId     String
+  name       String
+  description  String?
+  mainQuestions String[]
 }
