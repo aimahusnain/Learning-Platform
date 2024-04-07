@@ -22,7 +22,7 @@ export default function Home() {
           fun, free, and effective.
         </p>
 
-        <Link href="/learn" target="_blank">
+        <Link href="/learn">
           <Button size="lg" className="mt-5">
             Get started <ArrowRight className="ml-2 h-5 w-5" />
           </Button>

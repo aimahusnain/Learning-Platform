@@ -31,7 +31,7 @@ const English = async () => {
           getAllList.map((unit: any) => (
             <Card key={unit.id} className="w-[350px]">
               <CardHeader>
-                <Link href={`/english/${unit.id}`}>
+                <Link href={`/learn/${unit.id}`}>
                   <CardTitle className="capitalize">{unit.name}</CardTitle>
                 </Link>
                 <CardDescription>Unit {unit.noidnumber}</CardDescription>
@@ -52,7 +52,7 @@ const English = async () => {
                 <Button variant="outline" className="cursor-default">
                   Not Completed
                 </Button>
-                <Link href={`/english/${unit.id}`}>
+                <Link href={`/learn/${unit.id}`}>
                   <Button variant="success">Learn</Button>
                 </Link>
               </CardFooter>

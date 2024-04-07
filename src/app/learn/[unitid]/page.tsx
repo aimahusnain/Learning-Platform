@@ -43,7 +43,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
           Questions.map((question: any) => (
             <Card key={question.id} className="w-[350px] shadow-xl">
               <CardHeader>
-                <Link href={`/english/${question.id}`}>
+                <Link href={`/learn/${UnitDetailsData.id}/questions`}>
                   <CardTitle className="capitalize">{question.name}</CardTitle>
                 </Link>
                 <CardDescription>
@@ -64,7 +64,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
                 <Button variant="outline" className="cursor-default">
                   Not Completed
                 </Button>
-                <Link href={`/english/${question.id}`}>
+                <Link href={`/learn/${UnitDetailsData.id}/questions`}>
                   <Button variant="success">Learn</Button>
                 </Link>
               </CardFooter>
