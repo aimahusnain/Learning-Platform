@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import NextAuthProvider from "./providers/next-auth-provider";
-import BackButton from "@/components/BackButton";
 import { StaticData } from "@/lib/staticdata";
+import type { Metadata } from "next";
+import { Nunito } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: StaticData.SiteName,
@@ -19,11 +17,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* <NextAuthProvider> */}
-        {/* <BackButton /> */}
+      <body className={font.className}>
         {children}
-        {/* </NextAuthProvider> */}
       </body>
     </html>
   );
