@@ -7,11 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { StaticData } from "@/lib/staticdata";
 import Link from "next/link";
 
 async function SearchedUnit(id: string) {
   const res = await fetch(
-    `https://learning-platform-of-moon.vercel.app/api/units/openedunit?id=${id}`
+    `${StaticData.SiteURL}/api/units/openedunit?id=${id}`
   );
 
   const data = await res.json();
@@ -20,9 +21,7 @@ async function SearchedUnit(id: string) {
 }
 
 async function SearchedQuestions(id: string) {
-  const res = await fetch(
-    `https://learning-platform-of-moon.vercel.app/api/questions?id=${id}`
-  );
+  const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
   const data = await res.json();
 
   if (data.success) return data.data;

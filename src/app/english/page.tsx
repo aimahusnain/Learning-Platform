@@ -7,12 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { StaticData } from "@/lib/staticdata";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
-  const res = await fetch(
-    `https://learning-platform-of-moon.vercel.app/api/units`
-  );
+  const res = await fetch(`${StaticData.SiteURL}/api/units`);
 
   const data = await res.json();
 
@@ -24,7 +23,9 @@ const English = async () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">English Course</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">
+        English Course Units
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {getAllList &&
           getAllList.map((unit: any) => (
