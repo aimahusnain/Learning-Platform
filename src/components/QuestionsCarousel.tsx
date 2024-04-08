@@ -1,38 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
-import { Progress } from "./ui/progress";
-import { Button } from "./ui/button";
+import { CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { StaticData } from "@/lib/staticdata";
+import React, { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { Progress } from "./ui/progress";
 
 interface Props {}
 
-const sampleQuestions = [
-  { question: "Question 1: What is your name?", answer: "John" },
-  { question: "Question 2: Where are you from?", answer: "New York" },
-  { question: "Question 3: What is your favorite color?", answer: "Blue" },
-  { question: "Question 4: Who is your father?", answer: "Dad" },
-];
-
-async function MainQuestions(id: string) {
-  const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
-  const data = await res.json();
-
-  if (data.success) return data.data;
-}
-
 export const QuestionsCarousel: React.FC<Props> = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [questions, setQuestions] = useState<any[]>([]); // Modify the type accordingly
 
-  const totalQuestions = sampleQuestions.length;
+  useEffect(() => {
+    // Fetch questions from your API when the component mounts
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad"
+        );
+        const data = await response.json();
+        if (data.success) {
+          setQuestions(data.data);
+        } else {
+          console.error("Failed to fetch questions:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
+  const totalQuestions = questions.length;
   const segments = totalQuestions;
 
-  const handleSkipQuestion = () => {
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+      setFeedback("");
+      setProgress((prevProgress) => prevProgress - 100 / segments);
+    }
+  };
+
+  const handleForwardQuestion = () => {
     if (currentQuestionIndex < totalQuestions) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setFeedback("");
@@ -45,22 +61,13 @@ export const QuestionsCarousel: React.FC<Props> = () => {
       return;
     }
 
-    const correctAnswer = sampleQuestions[currentQuestionIndex].answer;
+    const correctAnswer = questions[currentQuestionIndex].answer;
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setFeedback("Correct!");
     } else {
       setFeedback("Incorrect!");
     }
     setProgress((prevProgress) => prevProgress + 100 / segments);
-  };
-
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex === totalQuestions - 1) {
-      setFeedback("Congratulations! You have completed the lesson.");
-    } else if (currentQuestionIndex < totalQuestions - 1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setFeedback("");
-    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,12 +78,14 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="flex w-full items-center gap-3">
-          <Button onClick={router.back} variant='ghost' size="icon">X</Button>
+          <Button onClick={router.back} variant="ghost" size="icon">
+            <CircleX />
+          </Button>
           <Progress value={progress} className="w-full h-4 bg-gray-300" />
         </div>
-        <div className="p-8">
-          <h2 className="text-2xl font-bold mb-4">
-            {sampleQuestions[currentQuestionIndex].question}
+        <div className="p-8 text-center">
+          <h2 className="text-2xl font-bold mb-4 capitalize">
+            {questions[currentQuestionIndex]?.whatquestion}
           </h2>
           <input
             type="text"
@@ -96,10 +105,31 @@ export const QuestionsCarousel: React.FC<Props> = () => {
           )}
         </div>
         <div className="flex w-full justify-between">
-          <Button onClick={handleSkipQuestion} variant="outline">
-            Skip
+          <Button
+            onClick={handlePreviousQuestion}
+            variant="outline"
+            disabled={currentQuestionIndex === 0}
+          >
+            Previous
           </Button>
-          {feedback ? (
+          <Button
+            onClick={handleSubmitAnswer}
+            variant="success"
+            className="mr-12"
+            // disabled={currentQuestionIndex === 0}
+          >
+            Check Answer
+          </Button>
+          <Button
+            onClick={handleForwardQuestion}
+            variant="outline"
+            disabled={currentQuestionIndex === totalQuestions - 1}
+          >
+            Next
+          </Button>
+
+          {/* Submit Button */}
+          {/* {feedback ? (
             <Button onClick={handleNextQuestion}>
               {currentQuestionIndex < totalQuestions - 1
                 ? "Next"
@@ -113,7 +143,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             >
               Submit
             </Button>
-          )}
+          )} */}
         </div>
       </div>
     </div>
