@@ -4,8 +4,14 @@ import { StaticData } from "@/lib/staticdata";
 import { ArrowRight, StickerIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import SignIn from '@/components/Signin'
+import { getAuthSession } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await getAuthSession();
+
+  console.log(session?.user?.name);
+
   return (
     <>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
@@ -22,11 +28,20 @@ export default function Home() {
           fun, free, and effective.
         </p>
 
-        <Link href="/learn">
+        {/* <Link href="/learn">
           <Button size="lg" className="mt-5">
             Get started <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-        </Link>
+        </Link> */}
+        {session ? (
+          <Link href="/learn">
+            <Button size="lg" className="mt-5">
+              Get started <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        ) : (
+          <SignIn />
+        )}
       </MaxWidthWrapper>
 
       <div>

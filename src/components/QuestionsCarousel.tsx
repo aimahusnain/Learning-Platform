@@ -87,6 +87,13 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             <CircleX />
           </Button>
           <Progress value={progress} className="w-full h-4 bg-gray-300" />
+          <Button
+            variant="success"
+            onClick={handleSubmitAnswer}
+            disabled={!userAnswer.trim()}
+          >
+            Submit
+          </Button>
         </div>
         <div className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4 capitalize">
@@ -121,7 +128,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             onClick={handleSubmitAnswer}
             variant="success"
             className="mr-12"
-            // disabled={currentQuestionIndex === 0}
           >
             Check Answer
           </Button>
@@ -137,13 +143,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
                 : "Happy for your Lesson"}
             </Button>
           ) : (
-            <Button
-              variant="success"
-              onClick={handleSubmitAnswer}
-              disabled={!userAnswer.trim()}
-            >
-              Submit
-            </Button>
           )} */}
         </div>
       </div>
