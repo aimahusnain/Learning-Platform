@@ -24,7 +24,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -92,13 +92,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     }
   }, [correctAnswers, totalQuestionsAnswered]);
 
-
-
    const [count, setCount] = useState(0);
-
-   const increaseCount = () => {
-     setCount(count + 1);
-   };
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -108,7 +102,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             <h2>
               {count}/{questions.length}
             </h2>
-            <button onClick={increaseCount}>Increase Count</button>
           </div>
           <div className="flex w-full items-center gap-3">
             <Button onClick={router.back} variant="secondary" size="icon">

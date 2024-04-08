@@ -38,16 +38,15 @@ model Session {
 }
 
 model User {
-  id            String          @id @default(cuid()) @map("_id")
+  id            String    @id @default(cuid()) @map("_id")
   name          String?
-  email         String?         @unique
+  email         String?   @unique
   emailVerified DateTime?
-  username      String?         @unique
+  username      String?   @unique
   image         String?
   accounts      Account[]
   sessions      Session[]
   // UserProgress  UserProgressUnit[]
-  MainQuestions MainQuestions[]
 }
 
 model Course {
@@ -83,6 +82,4 @@ model MainQuestions {
   whatquestion String
   answer       String
   question     Question @relation(fields: [questionid], references: [id])
-  userid       String
-  User         User     @relation(fields: [userid], references: [id])
 }
