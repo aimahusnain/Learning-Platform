@@ -1,10 +1,11 @@
 "use client";
 
-import { CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
+import { X } from "lucide-react";
+import { StaticData } from "@/lib/staticdata";
 
 interface Props {}
 
@@ -21,7 +22,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad"
+          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -83,8 +84,8 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="flex w-full items-center gap-3">
-          <Button onClick={router.back} variant="ghost" size="icon">
-            <CircleX />
+          <Button onClick={router.back} variant="secondary" size="icon">
+            <X />
           </Button>
           <Progress value={progress} className="w-full h-4 bg-gray-300" />
           <Button
