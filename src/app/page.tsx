@@ -33,15 +33,15 @@ export default async function Home() {
             Get started <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </Link> */}
-        {session ? (
+        {/* {session ? ( */}
           <Link href="/learn">
             <Button size="lg" className="mt-5">
               Get started <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-        ) : (
+        {/* ) : (
           <SignIn />
-        )}
+        )} */}
       </MaxWidthWrapper>
 
       <div>
