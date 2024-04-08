@@ -22,26 +22,18 @@ export default async function Home() {
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
           Learn a <span className="text-success">language</span> the easy way.
+          https://prod.liveshare.vsengsaas.visualstudio.com/join?A5C133FF0E9C6415EC9081385D1656FC7638
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
           Master a language, effortlessly. {StaticData.SiteName} makes learning
           fun, free, and effective.
         </p>
 
-        {/* <Link href="/learn">
+        <Link href="/learn">
           <Button size="lg" className="mt-5">
             Get started <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-        </Link> */}
-        {/* {session ? ( */}
-          <Link href="/learn">
-            <Button size="lg" className="mt-5">
-              Get started <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-        {/* ) : (
-          <SignIn />
-        )} */}
+        </Link>
       </MaxWidthWrapper>
 
       <div>

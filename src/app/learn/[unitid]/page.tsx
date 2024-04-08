@@ -20,19 +20,33 @@ async function SearchedUnit(id: string) {
   if (data.success) return data.data;
 }
 
+
 async function SearchedQuestions(id: string) {
   const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
   const data = await res.json();
-
+  
   if (data.success) return data.data;
 }
 
 const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
-
+  
   const UnitDetailsData = await SearchedUnit(unitid);
   const Questions = await SearchedQuestions(unitid);
+  const UserPorgressQuestions = await UserProgressQuestion()
 
+  async function UserProgressQuestion() {
+    const res = await fetch(
+      `http://localhost:3000/api/submitted?userName=Muhammad%20Husnain&questionId=${unitid}`
+    );
+  
+    const data = await res.json();
+    console.log(data.data);
+    
+
+    if (data.success) return data.data;
+  }
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-center">

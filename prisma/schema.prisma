@@ -38,15 +38,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
-  name          String?
-  email         String?   @unique
+  id            String         @id @default(cuid()) @map("_id")
+  name          String?        @unique
+  email         String?        @unique
   emailVerified DateTime?
-  username      String?   @unique
+  username      String?        @unique
   image         String?
   accounts      Account[]
   sessions      Session[]
   // UserProgress  UserProgressUnit[]
+  UserProgress  UserProgress[]
 }
 
 model Course {
@@ -77,9 +78,21 @@ model Question {
 }
 
 model MainQuestions {
-  id           String   @id @default(cuid()) @map("_id")
+  id           String         @id @default(cuid()) @map("_id")
   questionid   String
   whatquestion String
   answer       String
-  question     Question @relation(fields: [questionid], references: [id])
+  question     Question       @relation(fields: [questionid], references: [id])
+  UserProgress UserProgress[]
+}
+
+model UserProgress {
+  id          String         @id @default(cuid()) @map("_id")
+  userName    String
+  Submitted   Boolean        @default(false)
+  questionsId String?
+  Question    MainQuestions? @relation(fields: [questionsId], references: [id])
+  User        User           @relation(fields: [userName], references: [name])
+
+  @@index([userName])
 }
