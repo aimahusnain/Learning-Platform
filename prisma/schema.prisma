@@ -42,7 +42,7 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime?
-  username      String? @unique
+  username      String?   @unique
   image         String?
   accounts      Account[]
   sessions      Session[]
@@ -56,21 +56,30 @@ model Course {
 }
 
 model Unit {
-  id               String             @id @default(cuid()) @map("_id")
-  courseId         String
-  noidnumber       Int                @default(1)
-  name             String
-  completed        Boolean            @default(false)
-  progress         Int                @default(0)
-  questions        Question[]
-  Course           Course             @relation(fields: [courseId], references: [id])
+  id         String     @id @default(cuid()) @map("_id")
+  courseId   String
+  noidnumber Int        @default(1)
+  name       String
+  completed  Boolean    @default(false)
+  progress   Int        @default(0)
+  questions  Question[]
+  Course     Course     @relation(fields: [courseId], references: [id])
 }
 
 model Question {
-  id         String  @id @default(cuid()) @map("_id")
-  Unit       Unit    @relation(fields: [unitId], references: [id])
-  unitId     String
-  name       String
-  description  String?
+  id            String          @id @default(cuid()) @map("_id")
+  Unit          Unit            @relation(fields: [unitId], references: [id])
+  unitId        String
+  name          String
+  description   String?
   mainQuestions String[]
+  MainQuestions MainQuestions[]
+}
+
+model MainQuestions {
+  id           String   @id @default(cuid()) @map("_id")
+  questionid   String
+  whatquestion String
+  answer       String
+  question     Question @relation(fields: [questionid], references: [id])
 }

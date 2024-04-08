@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Progress } from "./ui/progress";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { StaticData } from "@/lib/staticdata";
 
 interface Props {}
 
@@ -13,7 +15,15 @@ const sampleQuestions = [
   { question: "Question 4: Who is your father?", answer: "Dad" },
 ];
 
+async function MainQuestions(id: string) {
+  const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
+  const data = await res.json();
+
+  if (data.success) return data.data;
+}
+
 export const QuestionsCarousel: React.FC<Props> = () => {
+  const router = useRouter()
   const [progress, setProgress] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -60,7 +70,10 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
-        <Progress value={progress} className="w-full h-4 bg-gray-300" />
+        <div className="flex w-full items-center gap-3">
+          <Button onClick={router.back} variant='ghost' size="icon">X</Button>
+          <Progress value={progress} className="w-full h-4 bg-gray-300" />
+        </div>
         <div className="p-8">
           <h2 className="text-2xl font-bold mb-4">
             {sampleQuestions[currentQuestionIndex].question}
@@ -87,13 +100,10 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             Skip
           </Button>
           {feedback ? (
-            <Button
-              onClick={handleNextQuestion}
-              className="bg-green-500 hover:bg-green-600 text-white"
-            >
+            <Button onClick={handleNextQuestion}>
               {currentQuestionIndex < totalQuestions - 1
                 ? "Next"
-                : "Happy Happy for your Lesson"}
+                : "Happy for your Lesson"}
             </Button>
           ) : (
             <Button
