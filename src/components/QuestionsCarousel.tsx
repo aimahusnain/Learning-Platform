@@ -15,14 +15,16 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [questions, setQuestions] = useState<any[]>([]); // Modify the type accordingly
+  const [questions, setQuestions] = useState<any[]>([]);
+
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [totalQuestionsAnswered, setTotalQuestionsAnswered] = useState(0);
 
   useEffect(() => {
-    // Fetch questions from your API when the component mounts
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -39,27 +41,29 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   }, []);
 
   const totalQuestions = questions.length;
-  const segments = totalQuestions;
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
       setFeedback("");
-      setProgress((prevProgress) => prevProgress - 100 / segments);
     }
   };
 
   const handleForwardQuestion = () => {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+    }
+    setTotalQuestionsAnswered(
+      (prevTotalQuestionsAnswered) => prevTotalQuestionsAnswered + 1
+    );
+
     if (currentQuestionIndex < totalQuestions - 1) {
-      // If not the last question, move to the next question
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setUserAnswer("");
       setFeedback("");
-      setProgress((prevProgress) => prevProgress + 100 / segments);
     } else {
-      // If it's the last question, show completion message
       setFeedback("Congratulations! You have completed the lesson.");
-      // Complete the progress
-      setProgress(100);
     }
   };
 
@@ -71,6 +75,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setFeedback("Correct!");
+      setCount(count + 1);
     } else {
       setFeedback("Incorrect!");
     }
@@ -80,21 +85,44 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     setUserAnswer(event.target.value);
   };
 
+  useEffect(() => {
+    if (totalQuestionsAnswered > 0) {
+      const percentage = (correctAnswers / totalQuestions) * 100;
+      setProgress(percentage);
+    }
+  }, [correctAnswers, totalQuestionsAnswered]);
+
+
+
+   const [count, setCount] = useState(0);
+
+   const increaseCount = () => {
+     setCount(count + 1);
+   };
+
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
-        <div className="flex w-full items-center gap-3">
-          <Button onClick={router.back} variant="secondary" size="icon">
-            <X />
-          </Button>
-          <Progress value={progress} className="w-full h-4 bg-gray-300" />
-          <Button
-            variant="success"
-            onClick={handleSubmitAnswer}
-            disabled={!userAnswer.trim()}
-          >
-            Submit
-          </Button>
+        <div className="w-full flex flex-col">
+          <div className="w-full flex items-center text-center justify-center gap-3">
+            <h2>
+              {count}/{questions.length}
+            </h2>
+            <button onClick={increaseCount}>Increase Count</button>
+          </div>
+          <div className="flex w-full items-center gap-3">
+            <Button onClick={router.back} variant="secondary" size="icon">
+              <X />
+            </Button>
+            <Progress value={progress} className="w-full h-4 bg-gray-300" />
+            <Button
+              variant="success"
+              onClick={handleSubmitAnswer}
+              disabled={!userAnswer.trim()}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
         <div className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4 capitalize">
@@ -135,16 +163,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
           <Button onClick={handleForwardQuestion} variant="outline">
             Next
           </Button>
-
-          {/* Submit Button */}
-          {/* {feedback ? (
-            <Button onClick={handleNextQuestion}>
-              {currentQuestionIndex < totalQuestions - 1
-                ? "Next"
-                : "Happy for your Lesson"}
-            </Button>
-          ) : (
-          )} */}
         </div>
       </div>
     </div>
