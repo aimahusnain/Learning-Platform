@@ -49,10 +49,16 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   };
 
   const handleForwardQuestion = () => {
-    if (currentQuestionIndex < totalQuestions) {
+    if (currentQuestionIndex < totalQuestions - 1) {
+      // If not the last question, move to the next question
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setFeedback("");
       setProgress((prevProgress) => prevProgress + 100 / segments);
+    } else {
+      // If it's the last question, show completion message
+      setFeedback("Congratulations! You have completed the lesson.");
+      // Complete the progress
+      setProgress(100);
     }
   };
 
@@ -67,7 +73,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     } else {
       setFeedback("Incorrect!");
     }
-    setProgress((prevProgress) => prevProgress + 100 / segments);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,11 +125,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
           >
             Check Answer
           </Button>
-          <Button
-            onClick={handleForwardQuestion}
-            variant="outline"
-            disabled={currentQuestionIndex === totalQuestions - 1}
-          >
+          <Button onClick={handleForwardQuestion} variant="outline">
             Next
           </Button>
 
