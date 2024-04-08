@@ -41,11 +41,11 @@ const UnitDetails = async ({ params }: { params: any }) => {
     );
   
     const data = await res.json();
-    console.log(data.data);
-    
 
     if (data.success) return data.data;
   }
+  
+  console.log(UserPorgressQuestions);
   
   return (
     <div className="container mx-auto px-4 py-8">
