@@ -24,7 +24,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
