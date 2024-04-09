@@ -75,6 +75,7 @@ model Question {
   description   String?
   mainQuestions String[]
   MainQuestions MainQuestions[]
+  UserProgress  UserProgress[]
 }
 
 model MainQuestions {
@@ -83,16 +84,15 @@ model MainQuestions {
   whatquestion String
   answer       String
   question     Question       @relation(fields: [questionid], references: [id])
-  UserProgress UserProgress[]
 }
 
 model UserProgress {
-  id          String         @id @default(cuid()) @map("_id")
-  userName    String
-  Submitted   Boolean        @default(false)
-  questionsId String?
-  Question    MainQuestions? @relation(fields: [questionsId], references: [id])
-  User        User           @relation(fields: [userName], references: [name])
+  id              String         @id @default(cuid()) @map("_id")
+  userEmail        String
+  Submitted       Boolean        @default(false)
+  questionsId     String?
+  Question        Question?      @relation(fields: [questionsId], references: [id])
+  User            User           @relation(fields: [userEmail], references: [email])
 
-  @@index([userName])
+  @@index([userEmail])
 }

@@ -24,7 +24,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -46,14 +46,18 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
       setFeedback("");
+          setProgress((prevProgress) => prevProgress - 100 / (totalQuestions - 1));
+
     }
   };
 
   const handleForwardQuestion = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
+    
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
     }
+
     setTotalQuestionsAnswered(
       (prevTotalQuestionsAnswered) => prevTotalQuestionsAnswered + 1
     );
@@ -62,6 +66,9 @@ export const QuestionsCarousel: React.FC<Props> = () => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setUserAnswer("");
       setFeedback("");
+    setProgress((prevProgress) => prevProgress + 100 / (totalQuestions - 1));
+
+
     } else {
       setFeedback("Congratulations! You have completed the lesson.");
     }
@@ -84,14 +91,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer(event.target.value);
   };
-
-  useEffect(() => {
-    if (totalQuestionsAnswered > 0) {
-      const percentage = (correctAnswers / totalQuestions) * 100;
-      setProgress(percentage);
-    }
-  }, [correctAnswers, totalQuestionsAnswered]);
-
    const [count, setCount] = useState(0);
 
   return (

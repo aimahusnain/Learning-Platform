@@ -6,28 +6,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
-    const userName = url.searchParams.get("userName");
-    const questionId = url.searchParams.get("questionId");
+    const userEmail = url.searchParams.get("userEmail");
 
-    const userProgress = await db.userProgress.findFirst({
+    const userProgress = await db.userProgress.findMany({
       where: {
-        userName: String(userName),
-        questionsId: String(questionId),
+        userEmail: String(userEmail),
       },
     });
 
     if (userProgress) {
       return NextResponse.json({
-        success: true,
-        submitted: true,
-        message: "You have already submitted this question.",
         userProgress: userProgress,
       });
     } else {
       return NextResponse.json({
-        success: true,
-        submitted: false,
-        message: "You have not submitted this question yet.",
         userProgress: userProgress,
       });
     }

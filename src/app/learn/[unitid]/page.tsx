@@ -20,33 +20,30 @@ async function SearchedUnit(id: string) {
   if (data.success) return data.data;
 }
 
-
 async function SearchedQuestions(id: string) {
   const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
   const data = await res.json();
-  
+
   if (data.success) return data.data;
+}
+
+async function UserProgressQuestion() {
+  const res = await fetch(
+    `${StaticData.SiteURL}/api/submitted?userEmail=aimahusnain@gmail.com`
+  );
+
+  const data = await res.json();
+
+  if (data.userProgress) return data.userProgress;
 }
 
 const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
-  
+
   const UnitDetailsData = await SearchedUnit(unitid);
   const Questions = await SearchedQuestions(unitid);
-  const UserPorgressQuestions = await UserProgressQuestion()
+  const UserProgressQuestions = await UserProgressQuestion();
 
-  async function UserProgressQuestion() {
-    const res = await fetch(
-      `http://localhost:3000/api/submitted?userName=Muhammad%20Husnain&questionId=${unitid}`
-    );
-  
-    const data = await res.json();
-
-    if (data.success) return data.data;
-  }
-  
-  console.log(UserPorgressQuestions);
-  
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-center">
@@ -54,40 +51,48 @@ const UnitDetails = async ({ params }: { params: any }) => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions && Array.isArray(Questions) ? (
-          Questions.map((question: any) => (
-            <Card key={question.id} className="w-[350px] shadow-xl">
-              <CardHeader>
-                <Link
-                  href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
-                >
-                  <CardTitle className="capitalize">{question.name}</CardTitle>
-                </Link>
-                <CardDescription>
-                  {question.MainQuestions &&
-                    `${question.MainQuestions.length} Questions`}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      {question.description}
+          Questions.map((question: any) => {
+            const userProgress = UserProgressQuestions.find(
+              (progress: any) => progress.questionsId === question.id
+            );
+            const isSubmitted = userProgress ? userProgress.Submitted : false;
+            return (
+              <Card key={question.id} className="w-[350px] shadow-xl">
+                <CardHeader>
+                  <Link
+                    href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
+                  >
+                    <CardTitle className="capitalize">
+                      {question.name}
+                    </CardTitle>
+                  </Link>
+                  <CardDescription>
+                    {question.MainQuestions &&
+                      `${question.MainQuestions.length} Questions`}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form>
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        {question.description}
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button variant="outline" className="cursor-default">
-                  Not Completed
-                </Button>
-                <Link
-                  href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
-                >
-                  <Button variant="success">Learn</Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))
+                  </form>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline" className="cursor-default">
+                    {isSubmitted ? "Completed" : "Not Completed"}
+                  </Button>
+                  <Link
+                    href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
+                  >
+                    <Button variant="success">Learn</Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            );
+          })
         ) : (
           <p>No questions found</p>
         )}
