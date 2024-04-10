@@ -38,16 +38,17 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid()) @map("_id")
-  name          String?        @unique
-  email         String?        @unique
-  emailVerified DateTime?
-  username      String?        @unique
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                   String                 @id @default(cuid()) @map("_id")
+  name                 String?                @unique
+  email                String?                @unique
+  emailVerified        DateTime?
+  username             String?                @unique
+  image                String?
+  accounts             Account[]
+  sessions             Session[]
   // UserProgress  UserProgressUnit[]
-  UserProgress  UserProgress[]
+  UserProgress         UserProgress[]
+  UserProgressQuestion UserProgressQuestion[]
 }
 
 model Course {
@@ -68,31 +69,44 @@ model Unit {
 }
 
 model Question {
-  id            String          @id @default(cuid()) @map("_id")
-  Unit          Unit            @relation(fields: [unitId], references: [id])
-  unitId        String
-  name          String
-  description   String?
-  mainQuestions String[]
-  MainQuestions MainQuestions[]
-  UserProgress  UserProgress[]
+  id                   String                 @id @default(cuid()) @map("_id")
+  Unit                 Unit                   @relation(fields: [unitId], references: [id])
+  unitId               String
+  name                 String
+  description          String?
+  mainQuestions        String[]
+  Submitted            Boolean    @default(false)
+  MainQuestions        MainQuestions[]
+  UserProgress         UserProgress[]
+  UserProgressQuestion UserProgressQuestion[]
 }
 
 model MainQuestions {
-  id           String         @id @default(cuid()) @map("_id")
+  id           String   @id @default(cuid()) @map("_id")
   questionid   String
   whatquestion String
   answer       String
-  question     Question       @relation(fields: [questionid], references: [id])
+  question     Question @relation(fields: [questionid], references: [id])
 }
 
 model UserProgress {
-  id              String         @id @default(cuid()) @map("_id")
-  userEmail        String
-  Submitted       Boolean        @default(false)
-  questionsId     String?
-  Question        Question?      @relation(fields: [questionsId], references: [id])
-  User            User           @relation(fields: [userEmail], references: [email])
+  id          String    @id @default(cuid()) @map("_id")
+  userEmail   String
+  Submitted   Boolean   @default(false)
+  questionsId String?
+  Question    Question? @relation(fields: [questionsId], references: [id])
+  User        User      @relation(fields: [userEmail], references: [email])
 
   @@index([userEmail])
+}
+
+// Optional
+model UserProgressQuestion {
+  id         String   @id @default(cuid()) @map("_id")
+  progress   Int
+  userAnswer String
+  questionId String
+  Question   Question @relation(fields: [questionId], references: [id])
+  userEmail  String
+  User       User     @relation(fields: [userEmail], references: [email])
 }

@@ -46,14 +46,13 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
       setFeedback("");
-          setProgress((prevProgress) => prevProgress - 100 / (totalQuestions - 1));
-
+      setProgress((prevProgress) => prevProgress - 100 / (totalQuestions - 1));
     }
   };
 
   const handleForwardQuestion = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
-    
+
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
     }
@@ -66,32 +65,42 @@ export const QuestionsCarousel: React.FC<Props> = () => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setUserAnswer("");
       setFeedback("");
-    setProgress((prevProgress) => prevProgress + 100 / (totalQuestions - 1));
-
-
+      setProgress((prevProgress) => prevProgress + 100 / (totalQuestions - 1));
     } else {
       setFeedback("Congratulations! You have completed the lesson.");
     }
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmitAnswer = async () => {
     if (!userAnswer.trim()) {
       return;
     }
 
-    const correctAnswer = questions[currentQuestionIndex].answer;
-    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-      setFeedback("Correct!");
-      setCount(count + 1);
-    } else {
-      setFeedback("Incorrect!");
+    const currentQuestion = questions[currentQuestionIndex];
+    const requestBody = {
+      progress: `${correctAnswers}/${totalQuestions}`,
+      userAnswer,
+      mainQuestion: currentQuestion.whatquestion,
+    };
+
+    try {
+      const response = await fetch("YOUR_API_ENDPOINT", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      const data = await response.json();
+      console.log("Data saved successfully:", data);
+    } catch (error) {
+      console.error("Error saving data:", error);
     }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer(event.target.value);
   };
-   const [count, setCount] = useState(0);
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -99,7 +108,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
         <div className="w-full flex flex-col">
           <div className="w-full flex items-center text-center justify-center gap-3">
             <h2>
-              {count}/{questions.length}
+              {correctAnswers}/{totalQuestions}
             </h2>
           </div>
           <div className="flex w-full items-center gap-3">

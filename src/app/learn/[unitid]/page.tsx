@@ -27,22 +27,12 @@ async function SearchedQuestions(id: string) {
   if (data.success) return data.data;
 }
 
-async function UserProgressQuestion() {
-  const res = await fetch(
-    `${StaticData.SiteURL}/api/submitted?userEmail=aimahusnain@gmail.com`
-  );
-
-  const data = await res.json();
-
-  if (data.userProgress) return data.userProgress;
-}
-
 const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
 
   const UnitDetailsData = await SearchedUnit(unitid);
   const Questions = await SearchedQuestions(unitid);
-  const UserProgressQuestions = await UserProgressQuestion();
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -52,10 +42,6 @@ const UnitDetails = async ({ params }: { params: any }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions && Array.isArray(Questions) ? (
           Questions.map((question: any) => {
-            const userProgress = UserProgressQuestions.find(
-              (progress: any) => progress.questionsId === question.id
-            );
-            const isSubmitted = userProgress ? userProgress.Submitted : false;
             return (
               <Card key={question.id} className="w-[350px] shadow-xl">
                 <CardHeader>
@@ -82,7 +68,9 @@ const UnitDetails = async ({ params }: { params: any }) => {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" className="cursor-default">
-                    {isSubmitted ? "Completed" : "Not Completed"}
+                    {question.Submitted === true
+                      ? "Submitted"
+                      : "Not Submitted"}
                   </Button>
                   <Link
                     href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}

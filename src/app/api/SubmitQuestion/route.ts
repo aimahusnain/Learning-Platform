@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
       where: {
         userEmail: String(userEmail),
       },
+      include: {Question: true}
     });
 
     if (userProgress) {

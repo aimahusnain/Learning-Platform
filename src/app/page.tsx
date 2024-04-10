@@ -1,17 +1,11 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
 import { StaticData } from "@/lib/staticdata";
-import { ArrowRight, StickerIcon } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import SignIn from '@/components/Signin'
-import { getAuthSession } from "@/lib/auth";
+import Link from "next/link";
 
-export default async function Home() {
-  const session = await getAuthSession();
-
-  console.log(session?.user?.name);
-
+export default function Home() {  
   return (
     <>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
