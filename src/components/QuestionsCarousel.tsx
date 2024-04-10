@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import { X } from "lucide-react";
 import { StaticData } from "@/lib/staticdata";
+import axios from "axios";
 
 interface Props {}
 
@@ -16,7 +17,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
-
+  const [count, setCount] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestionsAnswered, setTotalQuestionsAnswered] = useState(0);
 
@@ -24,7 +25,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -71,32 +72,23 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     }
   };
 
-  const handleSubmitAnswer = async () => {
+  const handleCheckAnswer = () => {
     if (!userAnswer.trim()) {
       return;
     }
 
-    const currentQuestion = questions[currentQuestionIndex];
-    const requestBody = {
-      progress: `${correctAnswers}/${totalQuestions}`,
-      userAnswer,
-      mainQuestion: currentQuestion.whatquestion,
-    };
-
-    try {
-      const response = await fetch("YOUR_API_ENDPOINT", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      const data = await response.json();
-      console.log("Data saved successfully:", data);
-    } catch (error) {
-      console.error("Error saving data:", error);
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+      setFeedback("Correct!");
+      setCount(count + 1);
+    } else {
+      setFeedback("Incorrect!");
     }
   };
+
+   const handleSubmitAnswer = () => {
+// Post the data here.
+   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer(event.target.value);
@@ -108,7 +100,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
         <div className="w-full flex flex-col">
           <div className="w-full flex items-center text-center justify-center gap-3">
             <h2>
-              {correctAnswers}/{totalQuestions}
+              {count}/{questions.length}
             </h2>
           </div>
           <div className="flex w-full items-center gap-3">
@@ -119,7 +111,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             <Button
               variant="success"
               onClick={handleSubmitAnswer}
-              disabled={!userAnswer.trim()}
             >
               Submit
             </Button>
@@ -155,7 +146,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             Previous
           </Button>
           <Button
-            onClick={handleSubmitAnswer}
+            onClick={handleCheckAnswer}
             variant="success"
             className="mr-12"
           >

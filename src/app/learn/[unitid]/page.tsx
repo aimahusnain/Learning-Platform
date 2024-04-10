@@ -33,7 +33,6 @@ const UnitDetails = async ({ params }: { params: any }) => {
   const UnitDetailsData = await SearchedUnit(unitid);
   const Questions = await SearchedQuestions(unitid);
 
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-center">
@@ -46,7 +45,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
               <Card key={question.id} className="w-[350px] shadow-xl">
                 <CardHeader>
                   <Link
-                    href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
+                    href={`/learn/${UnitDetailsData.id}/questions/${question.id}`}
                   >
                     <CardTitle className="capitalize">
                       {question.name}
@@ -73,7 +72,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
                       : "Not Submitted"}
                   </Button>
                   <Link
-                    href={`/learn/${question.id}/questions/${UnitDetailsData.id}`}
+                    href={`/learn/${UnitDetailsData.id}/questions/${question.id}`}
                   >
                     <Button variant="success">Learn</Button>
                   </Link>
