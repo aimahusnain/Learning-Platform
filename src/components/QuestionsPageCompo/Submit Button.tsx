@@ -17,7 +17,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
     refresh();
     try {
       const response = await fetch(
-        `https://${StaticData.SiteURL}/api/submitQuestion`,
+        `${StaticData.SiteURL}/api/submitQuestion`,
         {
           method: "PUT",
           headers: {
@@ -34,7 +34,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
       if (data && data.success) {
         console.log("Submission successful");
 
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.error("Submission failed");
       }
