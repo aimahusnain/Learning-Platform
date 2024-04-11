@@ -6,13 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
-    const unitid = url.searchParams.get("id");
 
-    const Question = await db.question.findMany({
-      where: {
-        unitId: String(unitid),
-      },
-    });
+    const Question = await db.question.findMany();
 
     if (Question) {
       return NextResponse.json({

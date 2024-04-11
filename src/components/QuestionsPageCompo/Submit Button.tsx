@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { StaticData } from "@/lib/staticdata";
+import { useRouter } from "next/navigation";
 
 interface SubmitButtonProps {
   questionId: string;
   isSubmitted: boolean;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
-  isSubmitted,
-}) => {
-  const [submittedMessage, setSubmittedMessage] = useState<string>("");
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
+  const router = useRouter();
 
   async function handleCommentSave() {
+    const refresh = router.refresh;
+
+    refresh();
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/submitQuestion`,
+        `http://${StaticData.SiteURL}/api/submitQuestion`,
         {
           method: "PUT",
           headers: {
@@ -31,7 +33,8 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
 
       if (data && data.success) {
         console.log("Submission successful");
-        setSubmittedMessage("Thanks!");
+
+        window.location.reload();
       } else {
         console.error("Submission failed");
       }
@@ -45,7 +48,6 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
       <Button onClick={handleCommentSave} disabled={isSubmitted}>
         Submit Question
       </Button>
-      {submittedMessage && <p>{submittedMessage}</p>}{" "}
     </div>
   );
 };

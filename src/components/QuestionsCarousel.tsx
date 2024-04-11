@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import SubmitButton from "./QuestionsPageCompo/Submit Button";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
+import IsSubmit from "./QuestionsPageCompo/IsSubmit";
+import Submitofmy from "./QuestionsPageCompo/IsSubmit";
 
 interface Props {}
 
@@ -105,10 +107,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             </Button>
             <Progress value={progress} className="w-full h-4 bg-gray-300" />
             {/* Submit Button */}
-            <SubmitButton
-              questionId="clufwsh570001hx1x8h9ugpea"
-              isSubmitted={false}
-            />
+            <Submitofmy />
           </div>
         </div>
         <div className="p-8 text-center">
