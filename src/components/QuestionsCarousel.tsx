@@ -1,12 +1,12 @@
 "use client";
 
+import { StaticData } from "@/lib/staticdata";
+import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import SubmitButton from "./QuestionsPageCompo/Submit Button";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
-import { X } from "lucide-react";
-import { StaticData } from "@/lib/staticdata";
-import axios from "axios";
 
 interface Props {}
 
@@ -25,7 +25,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/mainquestions?id=cluok50v30000oa6trymosjad`
+          `http://${StaticData.SiteURL}/api/mainquestions?id=cluok50v30000oa6trymosjad`
         );
         const data = await response.json();
         if (data.success) {
@@ -86,10 +86,6 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     }
   };
 
-   const handleSubmitAnswer = () => {
-// Post the data here.
-   };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer(event.target.value);
   };
@@ -108,12 +104,11 @@ export const QuestionsCarousel: React.FC<Props> = () => {
               <X />
             </Button>
             <Progress value={progress} className="w-full h-4 bg-gray-300" />
-            <Button
-              variant="success"
-              onClick={handleSubmitAnswer}
-            >
-              Submit
-            </Button>
+            {/* Submit Button */}
+            <SubmitButton
+              questionId="clufwsh570001hx1x8h9ugpea"
+              isSubmitted={false}
+            />
           </div>
         </div>
         <div className="p-8 text-center">

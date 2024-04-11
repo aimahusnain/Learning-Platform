@@ -103,8 +103,8 @@ model UserProgress {
 // Optional
 model UserProgressQuestion {
   id         String   @id @default(cuid()) @map("_id")
-  progress   Int
-  userAnswer String
+  progress   Int?
+  userAnswer String?
   questionId String
   Question   Question @relation(fields: [questionId], references: [id])
   userEmail  String

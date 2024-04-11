@@ -8,7 +8,7 @@ export async function PUT(request: NextRequest) {
 
     const updatedBlogPost = await db.question.update({
       where: { id: String(extractData.id) },
-      data: { Submitted: true },
+      data: { Submitted: false },
     });
 
     if (updatedBlogPost) {
