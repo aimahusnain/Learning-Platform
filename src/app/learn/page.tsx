@@ -11,7 +11,7 @@ import { StaticData } from "@/lib/staticdata";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
-  const res = await fetch(`http://${StaticData.SiteURL}/api/units`);
+  const res = await fetch(`https://${StaticData.SiteURL}/api/units`);
 
   const data = await res.json();
 
