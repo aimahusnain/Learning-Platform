@@ -75,7 +75,9 @@ model Question {
   name                 String
   description          String?
   mainQuestions        String[]
-  Submitted            Boolean    @default(false)
+  Submitted            Boolean                @default(false)
+  // userEmail            String
+  // User                 User                   @relation(fields: [userEmail], references: [email])
   MainQuestions        MainQuestions[]
   UserProgress         UserProgress[]
   UserProgressQuestion UserProgressQuestion[]

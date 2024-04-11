@@ -7,25 +7,20 @@ interface SubmitButtonProps {
   isSubmitted: boolean;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
-  isSubmitted,
-}) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
   const [submittedMessage, setSubmittedMessage] = useState<string>("");
 
   async function handleCommentSave() {
     try {
-      const response = await fetch(
-        `${StaticData.SiteURL}/api/submitQuestion`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: "cluok50v30000oa6trymosjad",
-          }),
-        }
-      );
+      const response = await fetch(`${StaticData.SiteURL}/api/submitQuestion`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: "cluok50v30000oa6trymosjad",
+        }),
+      });
 
       const data = await response.json();
 
