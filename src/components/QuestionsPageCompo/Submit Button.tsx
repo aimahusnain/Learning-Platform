@@ -13,7 +13,7 @@ const CombinedSubmitComponent = () => {
 
     refresh();
     try {
-      const response = await fetch(`${StaticData.SiteURL}/api/submitQuestion`, {
+      const response = await fetch(`${StaticData.SiteURL}/api/submitquestion`, {
         method: "PUT",
         body: JSON.stringify({
           id: "cluok50v30000oa6trymosjad",

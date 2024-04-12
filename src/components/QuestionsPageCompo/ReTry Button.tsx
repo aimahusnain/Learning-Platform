@@ -12,7 +12,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
 
   async function handleCommentSave() {
     try {
-      const response = await fetch(`${StaticData.SiteURL}/api/submitQuestion`, {
+      const response = await fetch(`${StaticData.SiteURL}/api/submitquestion`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
