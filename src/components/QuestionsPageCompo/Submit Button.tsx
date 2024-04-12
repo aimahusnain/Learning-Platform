@@ -19,7 +19,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
       const response = await fetch(
         `${StaticData.SiteURL}/api/submitQuestion`,
         {
-          method: "PATCH",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },

@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
     const extractData = await request.json();
 
