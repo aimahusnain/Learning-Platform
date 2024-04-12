@@ -1,13 +1,12 @@
-export const dynamic = "force-dynamic";
-
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
+    const Question = await db.question.findMany({
+            include: { Unit: true },
 
-    const Question = await db.question.findMany();
+    });
 
     if (Question) {
       return NextResponse.json({
