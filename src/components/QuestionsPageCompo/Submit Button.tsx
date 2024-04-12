@@ -17,7 +17,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
     refresh();
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/submitQuestion`,
+        `${StaticData.SiteURL}/api/questionsubmitapi`,
         {
           method: "PUT",
           headers: {

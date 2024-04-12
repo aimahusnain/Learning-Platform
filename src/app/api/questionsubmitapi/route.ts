@@ -46,7 +46,8 @@ export async function PUT(request: NextRequest) {
           data: { Submitted: true },
         });
 
-    if (updatequestion) {
+    if (updatequestion
+      ) {
       return NextResponse.json({
         success: true,
         data: updatequestion,
