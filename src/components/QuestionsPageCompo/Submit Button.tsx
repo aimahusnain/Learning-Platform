@@ -1,31 +1,36 @@
-// CombinedSubmitComponent.js
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { StaticData } from "@/lib/staticdata";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
+import { StaticData } from "@/lib/staticdata";
+import { useRouter } from "next/navigation";
 
-const CombinedSubmitComponent = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const router = useRouter()
-  
+interface SubmitButtonProps {
+  questionId: string;
+  isSubmitted: boolean;
+}
+
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
+  const router = useRouter();
+
   async function handleCommentSave() {
     const refresh = router.refresh;
 
     refresh();
     try {
-      const response = await fetch(`${StaticData.SiteURL}/api/submitquestion`, {
-        method: "PUT",
-        body: JSON.stringify({
-          id: "cluok50v30000oa6trymosjad",
-        }),
-      });
-      
-      const data = await response.json();
-      
-      setIsSubmitted(
-        data.success && data.data.length > 0 && data.data[0].Submitted
+      const response = await fetch(
+        `${StaticData.SiteURL}/api/submitQuestion`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: "cluok50v30000oa6trymosjad",
+          }),
+        }
       );
-      
+
+      const data = await response.json();
+
       if (data && data.success) {
         console.log("Submission successful");
 
@@ -47,4 +52,4 @@ const CombinedSubmitComponent = () => {
   );
 };
 
-export default CombinedSubmitComponent;
+export default SubmitButton;
