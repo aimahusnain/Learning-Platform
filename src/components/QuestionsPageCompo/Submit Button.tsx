@@ -16,18 +16,15 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
 
     refresh();
     try {
-      const response = await fetch(
-        `${StaticData.SiteURL}/api/submitQuestion`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: "cluok50v30000oa6trymosjad",
-          }),
-        }
-      );
+      const response = await fetch(`${StaticData.SiteURL}/api/submitQuestion`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body: JSON.stringify({
+          id: "cluok50v30000oa6trymosjad",
+        }),
+      });
 
       const data = await response.json();
 
