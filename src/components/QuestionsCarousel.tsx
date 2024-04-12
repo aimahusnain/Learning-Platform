@@ -4,11 +4,9 @@ import { StaticData } from "@/lib/staticdata";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import SubmitButton from "./QuestionsPageCompo/Submit Button";
+import Submitofmy from "./QuestionsPageCompo/Submit Button";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
-import IsSubmit from "./QuestionsPageCompo/IsSubmit";
-import Submitofmy from "./QuestionsPageCompo/Submit Button";
 
 interface Props {}
 
