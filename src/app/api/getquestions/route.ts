@@ -1,30 +1,30 @@
+
+export const dynamic = "force-dynamic";
+
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const Question = await db.question.findMany({
-            include: { Unit: true },
+   const getquestions = await db.question.findMany({
+     include: { Unit: true },
+   });
 
-    });
-
-    if (Question) {
+    if (getquestions.length > 0) {
       return NextResponse.json({
         success: true,
-        data: Question,
+        data: getquestions,
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "Failed to search results of questions",
+        message: "No units found",
       });
     }
   } catch (e) {
-    console.log(e);
-
     return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Something went wrong! Please try again",
     });
   }
 }
