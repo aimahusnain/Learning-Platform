@@ -24,6 +24,9 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
 
       const data = await response.json();
 
+      console.log("Response: " + Response)
+      console.log("Data: " + data)
+
       if (data && data.success) {
         console.log("Submission successful");
         setSubmittedMessage("Thanks!");
