@@ -8,7 +8,7 @@ import SubmitButton from "./QuestionsPageCompo/Submit Button";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import IsSubmit from "./QuestionsPageCompo/IsSubmit";
-import Submitofmy from "./QuestionsPageCompo/IsSubmit";
+import Submitofmy from "./QuestionsPageCompo/Submit Button";
 
 interface Props {}
 
