@@ -11,6 +11,7 @@ const IsSubmit = () => {
     const fetchData = async () => {
       try {
         const data = await submitQuestion();
+        
         setIsSubmitted(
           data.success && data.data.length > 0 && data.data[0].Submitted
         );

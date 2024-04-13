@@ -99,7 +99,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
         try {
           const data = await submitQuestion();
           setIsSubmitted(
-            data.success && data.data.length > 0 && data.data[0].Submitted
+            data.success && data.data.length > 0 && data.data[0].submitted
           );
         } catch (error) {
           console.error("Error fetching data:", error);

@@ -3,7 +3,8 @@ import { Button } from "../ui/button";
 import { StaticData } from "@/lib/staticdata";
 import { useRouter } from "next/navigation";
 
-interface SubmitButtonProps {}
+interface SubmitButtonProps {
+}
 
 const SubmitButton: React.FC<SubmitButtonProps> = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // id: "clux1ne450001hzc8vv4kgk20",
+            id: "clux1ne450001hzc8vv4kgk20",
             email: "aimahusnain@gmail.com",
           }),
         }
@@ -44,10 +45,10 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
   return (
     <div>
       <Button onClick={handleCommentSave}>
-        ReTake Quiz
+        Retake
       </Button>
     </div>
-  ); 
+  );
 };
 
 export default SubmitButton;

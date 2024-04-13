@@ -11,9 +11,7 @@ import { StaticData } from "@/lib/staticdata";
 import Link from "next/link";
 
 async function SearchedUnit(id: string) {
-  const res = await fetch(
-    `${StaticData.SiteURL}/api/units/openedunit?id=${id}`
-  );
+  const res = await fetch(`${StaticData.SiteURL}/api/units/unitopen?id=${id}`);
 
   const data = await res.json();
 
@@ -31,7 +29,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
 
   const UnitDetailsData = await SearchedUnit(unitid);
-  const Questions = await SearchedQuestions(unitid);
+  const Questions       = await SearchedQuestions(unitid);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -44,9 +42,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
             return (
               <Card key={question.id} className="w-[350px] shadow-xl">
                 <CardHeader>
-                  <Link
-                    href={`/learn/${UnitDetailsData.id}/questions/${question.id}`}
-                  >
+                  <Link href={`/learn/${unitid}/questions/${question.id}`}>
                     <CardTitle className="capitalize">
                       {question.name}
                     </CardTitle>
@@ -67,13 +63,11 @@ const UnitDetails = async ({ params }: { params: any }) => {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" className="cursor-default">
-                    {question.Submitted === true
+                    {question.submitted === true
                       ? "Submitted"
                       : "Not Submitted"}
                   </Button>
-                  <Link
-                    href={`/learn/${UnitDetailsData.id}/questions/${question.id}`}
-                  >
+                  <Link href={`/learn/${unitid}/questions/${question.id}`}>
                     <Button variant="success">Learn</Button>
                   </Link>
                 </CardFooter>
