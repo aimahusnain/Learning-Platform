@@ -37,20 +37,6 @@ model Session {
   @@index([userId])
 }
 
-model User {
-  id                   String                 @id @default(cuid()) @map("_id")
-  name                 String?                @unique
-  email                String?                @unique
-  emailVerified        DateTime?
-  username             String?                @unique
-  image                String?
-  accounts             Account[]
-  sessions             Session[]
-  // UserProgress  UserProgressUnit[]
-  UserProgress         UserProgress[]
-  UserProgressQuestion UserProgressQuestion[]
-}
-
 model Course {
   id    String @id @default(cuid()) @map("_id")
   name  String
@@ -75,20 +61,52 @@ model Question {
   name                 String
   description          String?
   mainQuestions        String[]
-  Submitted            Boolean                @default(false)
-  // userEmail            String
-  // User                 User                   @relation(fields: [userEmail], references: [email])
   MainQuestions        MainQuestions[]
   UserProgress         UserProgress[]
   UserProgressQuestion UserProgressQuestion[]
 }
 
+model UserProgressQuestion {
+  id         String   @id @map("_id")
+  progress   Int?
+  submitted  Boolean  @unique @default(false)
+  questionId String
+  userEmail  String
+  User       User     @relation(fields: [userEmail], references: [email])
+  Question   Question @relation(fields: [id], references: [id])
+}
+
+model UserProgressMainQuestion {
+  id         String        @id @default(cuid()) @map("_id")
+  progress   Int?
+  questionId String
+  Question   MainQuestions @relation(fields: [questionId], references: [id])
+  userEmail  String
+  User       User          @relation(fields: [userEmail], references: [email])
+}
+
+model User {
+  id                       String                     @id @default(cuid()) @map("_id")
+  name                     String?                    @unique
+  email                    String?                    @unique
+  emailVerified            DateTime?
+  username                 String?                    @unique
+  image                    String?
+  accounts                 Account[]
+  sessions                 Session[]
+  // UserProgress  UserProgressUnit[]
+  UserProgress             UserProgress[]
+  UserProgressQuestion     UserProgressQuestion[]
+  UserProgressMainQuestion UserProgressMainQuestion[]
+}
+
 model MainQuestions {
-  id           String   @id @default(cuid()) @map("_id")
-  questionid   String
-  whatquestion String
-  answer       String
-  question     Question @relation(fields: [questionid], references: [id])
+  id                       String                     @id @default(cuid()) @map("_id")
+  questionid               String
+  whatquestion             String
+  answer                   String
+  question                 Question                   @relation(fields: [questionid], references: [id])
+  UserProgressMainQuestion UserProgressMainQuestion[]
 }
 
 model UserProgress {
@@ -100,15 +118,4 @@ model UserProgress {
   User        User      @relation(fields: [userEmail], references: [email])
 
   @@index([userEmail])
-}
-
-// Optional
-model UserProgressQuestion {
-  id         String   @id @default(cuid()) @map("_id")
-  progress   Int?
-  userAnswer String?
-  questionId String
-  Question   Question @relation(fields: [questionId], references: [id])
-  userEmail  String
-  User       User     @relation(fields: [userEmail], references: [email])
 }

@@ -41,9 +41,12 @@ export async function PUT(request: NextRequest) {
   try {
         const extractData = await request.json();
 
-        const updatequestion = await db.question.update({
-          where: { id: String(extractData.id) },
-          data: { Submitted: true },
+        const updatequestion = await db.userProgressQuestion.update({
+          where: {
+            id: String(extractData.id),
+            userEmail: String(extractData.email),
+          },
+          data: { submitted: true },
         });
 
     if (updatequestion

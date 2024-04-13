@@ -8,15 +8,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { StaticData } from "@/lib/staticdata";
+import axios from "axios";
 import Link from "next/link";
 
 async function getAllListsByCategory() {
-  const res = await fetch(`${StaticData.SiteURL}/api/units`);
-
-  const data = await res.json();
-
-  if (data.success) return data.data;
+  try {
+    const response = await axios.get(`${StaticData.SiteURL}/api/units`);
+    const data = response.data;
+    if (data.success) return data.data;
+  } catch (error) {
+    console.error("Error fetching unit data:", error);
+  }
 }
+
 
 const English = async () => {
   const getAllList = await getAllListsByCategory();

@@ -5,27 +5,26 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
-    const extractData = await request.json();
+        const extractData = await request.json();
 
-    const updatedBlogPost = await db.question.update({
-      where: { id: String(extractData.id) },
-      data: { Submitted: false },
-    });
+        const updatequestion = await db.question.update({
+          where: { id: String(extractData.id) },
+          data: { Submitted: false },
+        });
 
-    if (updatedBlogPost) {
+    if (updatequestion
+      ) {
       return NextResponse.json({
         success: true,
-        message: "Blog post updated",
+        data: updatequestion,
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "Failed to update the post! Please try again",
+        message: "No units found",
       });
     }
   } catch (e) {
-    console.error(e);
-
     return NextResponse.json({
       success: false,
       message: "Something went wrong! Please try again",

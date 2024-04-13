@@ -5,8 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-   const getquestions = await db.question.findMany({
-     include: { Unit: true },
+            const extractData = await request.json();
+
+   const getquestions = await db.userProgressQuestion.findMany({
+     where: extractData.UserEmail,
    });
 
     if (getquestions.length > 0) {

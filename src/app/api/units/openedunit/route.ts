@@ -8,12 +8,12 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const unitid = url.searchParams.get("id");
 
-    const searchedunit = await db.unit.findUnique({
+    const searchedunit = await db.unit.findMany({
       where: {
         id: String(unitid),
       },
     });
-
+ 
     if (searchedunit) {
       return NextResponse.json({
         success: true,
