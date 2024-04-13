@@ -10,8 +10,11 @@ import { Progress } from "./ui/progress";
 import axios from "axios";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import ReTryButton from '@/components/QuestionsPageCompo/ReTry Button'
+import Bar from "./QuestionsPageCompo/ProgressBar";
 
-interface Props {}
+interface Props { }
+
+
 
 export const QuestionsCarousel: React.FC<Props> = () => {
   const router = useRouter();
@@ -93,20 +96,30 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     setUserAnswer(event.target.value);
   };
 
-    const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-      const CheckSubmit = async () => {
-        try {
-          const data = await submitQuestion();
-          setIsSubmitted(
-            data.success && data.data.length > 0 && data.data[0].submitted
-          );
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+  const CheckSubmit = async () => {
+    try {
+      const data = await submitQuestion();
+      setIsSubmitted(
+        data.success && data.data.length > 0 && data.data[0].submitted
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-  
-  CheckSubmit()
+
+  CheckSubmit();
+
+  // clux1ne450001hzc8vv4kgk20
+
+
+  // async function SearchedQuestions(id: string) {
+  //   const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
+  //   const data = await res.json();
+
+  //   if (data.success) return data.data;
+  // }
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -121,10 +134,17 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             <Button onClick={router.back} variant="secondary" size="icon">
               <X />
             </Button>
-            {!isSubmitted && (
+            {isSubmitted === false ? (
               <Progress value={progress} className="w-full h-4 bg-gray-300" />
+            ) : (
+            <Bar />
             )}
-            {isSubmitted === true ? <ReTryButton /> : <Submitofmy county={count} />}
+
+            {isSubmitted === true ? (
+              <ReTryButton />
+            ) : (
+              <Submitofmy county={count} />
+            )}
           </div>
         </div>
         <div className="p-8 text-center">
