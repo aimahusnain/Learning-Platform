@@ -124,7 +124,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             {!isSubmitted && (
               <Progress value={progress} className="w-full h-4 bg-gray-300" />
             )}
-            {isSubmitted === true ? <ReTryButton /> : <Submitofmy />}
+            {isSubmitted === true ? <ReTryButton /> : <Submitofmy county={count} />}
           </div>
         </div>
         <div className="p-8 text-center">

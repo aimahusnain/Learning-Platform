@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 interface SubmitButtonProps {
   questionId: string;
   isSubmitted: boolean;
+  count: number;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
   const router = useRouter();
 
   async function handleCommentSave() {
@@ -26,6 +27,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted }) => {
           body: JSON.stringify({
             id: "clux1ne450001hzc8vv4kgk20",
             email: "aimahusnain@gmail.com",
+            count: count,
           }),
         }
       );
