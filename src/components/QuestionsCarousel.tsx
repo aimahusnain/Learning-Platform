@@ -10,7 +10,7 @@ import { Progress } from "./ui/progress";
 import axios from "axios";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import ReTryButton from '@/components/QuestionsPageCompo/ReTry Button'
-import Bar from "./QuestionsPageCompo/ProgressBar";
+import Bar from "./QuestionsPageCompo/SubmittedMarks";
 
 interface Props {
   questionid: any;

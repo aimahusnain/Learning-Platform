@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Button } from "../ui/button";
 import { StaticData } from "@/lib/staticdata";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import React from "react";
+import { Button } from "../ui/button";
 
 interface SubmitButtonProps {
   questionId: string;
@@ -11,6 +12,7 @@ interface SubmitButtonProps {
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   async function handleCommentSave() {
     const refresh = router.refresh;
@@ -26,7 +28,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
           },
           body: JSON.stringify({
             id: "clux1ne450001hzc8vv4kgk20",
-            email: "aimahusnain@gmail.com",
+            email: session?.user?.email,
             count: count,
           }),
         }

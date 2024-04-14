@@ -1,4 +1,5 @@
 import { StaticData } from "@/lib/staticdata";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 interface UserProgress {
@@ -8,7 +9,10 @@ interface UserProgress {
   userEmail: string;
 }
 
-const Bar = () => {
+const SubmittedMarks = () => {
+  const { data: session } = useSession();
+
+
   const [fetchUserProgressData, setFetchUserProgressData] = useState<
     UserProgress[] | null
   >(null);
@@ -17,7 +21,7 @@ const Bar = () => {
     const fetchUserProgressQuestion = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=clux1ne450001hzc8vv4kgk20&userEmail=aimahusnain@gmail.com`
+          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=clux1ne450001hzc8vv4kgk20&userEmail=${session?.user?.email}`
         );
         const data = await response.json();
         if (data.success) {
@@ -42,4 +46,4 @@ const Bar = () => {
   );
 };
 
-export default Bar;
+export default SubmittedMarks;

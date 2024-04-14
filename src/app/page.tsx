@@ -27,8 +27,8 @@ export default function Home() {
           <Button size="lg" className="mt-5">
             Get started <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-          <Signin />
         </Link>
+          <Signin />
       </MaxWidthWrapper>
 
       <div>
