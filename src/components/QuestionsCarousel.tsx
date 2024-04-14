@@ -11,6 +11,7 @@ import axios from "axios";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import ReTryButton from '@/components/QuestionsPageCompo/ReTry Button'
 import Bar from "./QuestionsPageCompo/SubmittedMarks";
+import { Input } from "./ui/input";
 
 interface Props {
   questionid: any;
@@ -56,7 +57,7 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
       setFeedback("");
-      setProgress((prevProgress) => prevProgress - 100 / (totalQuestions - 1));
+      setProgress((prevProgress) => prevProgress - 100 / totalQuestions);
     }
   };
 
@@ -75,7 +76,7 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setUserAnswer("");
       setFeedback("");
-      setProgress((prevProgress) => prevProgress + 100 / (totalQuestions - 1));
+      setProgress((prevProgress) => prevProgress + 100 / totalQuestions);
     } else {
       setFeedback("Congratulations! You have completed the lesson.");
     }
@@ -132,7 +133,7 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
             {isSubmitted === false ? (
               <Progress value={progress} className="w-full h-4 bg-gray-300" />
             ) : (
-              <Bar />
+              <Bar totalLength={questions.length} />
             )}
 
             {isSubmitted === true ? (
@@ -146,13 +147,16 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
-          <input
+          <div className="flex items-center gap-2">
+
+          <Input
             type="text"
-            className="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:border-blue-500"
             placeholder="Type your answer..."
-            value={userAnswer}
+            value={userAnswer} 
             onChange={handleInputChange}
-          />
+            />
+          <Button>Save</Button>
+            </div>
           {feedback && (
             <div
               className={`mb-4 text-center font-bold ${
@@ -174,7 +178,6 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
           <Button
             onClick={handleCheckAnswer}
             variant="success"
-            className="mr-12"
             disabled={isSubmitted}
           >
             Check Answer

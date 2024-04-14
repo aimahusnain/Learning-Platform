@@ -9,9 +9,8 @@ interface UserProgress {
   userEmail: string;
 }
 
-const SubmittedMarks = () => {
+const SubmittedMarks = ({ totalLength }: { totalLength: number }) => {
   const { data: session } = useSession();
-
 
   const [fetchUserProgressData, setFetchUserProgressData] = useState<
     UserProgress[] | null
@@ -19,9 +18,14 @@ const SubmittedMarks = () => {
 
   useEffect(() => {
     const fetchUserProgressQuestion = async () => {
+      if (!session || !session.user || !session.user.email) {
+        console.error("User session or email is undefined");
+        return;
+      }
+
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=clux1ne450001hzc8vv4kgk20&userEmail=${session?.user?.email}`
+          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=clux1ne450001hzc8vv4kgk20&userEmail=${session.user.email}`
         );
         const data = await response.json();
         if (data.success) {
@@ -35,12 +39,14 @@ const SubmittedMarks = () => {
     };
 
     fetchUserProgressQuestion();
-  }, []);
+  }, [session]);
 
   return (
     <div className="w-full flex items-center justify-center">
       {fetchUserProgressData && fetchUserProgressData.length > 0 && (
-        <div>{fetchUserProgressData[0].progress}/3</div>
+        <div>
+          {fetchUserProgressData[0].progress}/{totalLength}
+        </div>
       )}
     </div>
   );
