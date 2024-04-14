@@ -125,11 +125,14 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="w-full flex flex-col">
-          <div className="w-full flex items-center text-center justify-center gap-3">
+          {!isSubmitted && (
+
+            <div className="w-full flex items-center text-center justify-center gap-3">
             <h2>
               {count}/{questions.length}
             </h2>
           </div>
+          )}
           <div className="flex w-full items-center gap-3">
             <Button onClick={router.back} variant="secondary" size="icon">
               <X />

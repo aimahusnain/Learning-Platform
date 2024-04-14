@@ -36,7 +36,7 @@ const Bar = () => {
   return (
     <div className="w-full flex items-center justify-center">
       {fetchUserProgressData && fetchUserProgressData.length > 0 && (
-        <div>Progress: {fetchUserProgressData[0].progress}</div>
+        <div>{fetchUserProgressData[0].progress}/3</div>
       )}
     </div>
   );
