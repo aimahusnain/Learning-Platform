@@ -55,33 +55,33 @@ model Unit {
 }
 
 model Question {
-  id                   String                 @id @default(cuid()) @map("_id")
-  Unit                 Unit                   @relation(fields: [unitId], references: [id])
-  unitId               String
-  name                 String
-  description          String?
-  mainQuestions        String[]
-  MainQuestions        MainQuestions[]
-  UserProgress         UserProgress[]
-  UserProgressQuestion UserProgressQuestion[]
+  id                       String                     @id @default(cuid()) @map("_id")
+  Unit                     Unit                       @relation(fields: [unitId], references: [id])
+  unitId                   String
+  name                     String
+  description              String?
+  mainQuestions            String[]
+  MainQuestions            MainQuestions[]
+  UserProgress             UserProgress[]
+  UserProgressQuestion     UserProgressQuestion[]
 }
 
 model UserProgressQuestion {
-  id         String   @id @map("_id")
-  progress   Int?     @default(0)
-  submitted  Boolean  @unique @default(false)
-  userEmail  String
-  User       User     @relation(fields: [userEmail], references: [email])
-  Question   Question @relation(fields: [id], references: [id])
+  id        String   @id @map("_id")
+  progress  Int?     @default(0)
+  submitted Boolean  @unique @default(false)
+  userEmail String
+  User      User     @relation(fields: [userEmail], references: [email])
+  Question  Question @relation(fields: [id], references: [id])
 }
 
 model UserProgressMainQuestion {
-  id         String        @id @default(cuid()) @map("_id")
-  progress   Int?
-  questionId String
-  Question   MainQuestions @relation(fields: [questionId], references: [id])
-  userEmail  String
-  User       User          @relation(fields: [userEmail], references: [email])
+  id              String         @id @map("_id")
+  userAnswer      String
+  correct         Boolean        @default(false)
+  userEmail       String
+  User            User           @relation(fields: [userEmail], references: [email])
+  MainQuestions   MainQuestions? @relation(fields: [id], references: [id])
 }
 
 model User {

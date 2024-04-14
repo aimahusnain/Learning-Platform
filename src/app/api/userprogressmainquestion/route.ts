@@ -3,23 +3,23 @@ export const dynamic = "force-dynamic";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
-    const url = new URL(request.url);
-    const id = url.searchParams.get("id");
-      const userEmail = url.searchParams.get("userEmail");
-      
-    const Question = await db.userProgressQuestion.findMany({
-        where: {
-          id: String(id),
-          userEmail: String(userEmail),
-        },
-    });
+        const extractData = await request.json();
 
-    if (Question.length > 0) {
+        const updatequestion = await db.userProgressMainQuestion.update({
+          where: {
+            id: String(extractData.id),
+            userEmail: String(extractData.email),
+          },
+          data: { correct: true },
+        });
+
+    if (updatequestion
+      ) {
       return NextResponse.json({
         success: true,
-        data: Question,
+        data: updatequestion,
       });
     } else {
       return NextResponse.json({

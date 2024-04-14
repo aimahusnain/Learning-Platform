@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { StaticData } from "@/lib/staticdata";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface SubmitButtonProps {
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+  
+  console.log(session?.user?.email)
 
   async function handleCommentSave() {
     const refresh = router.refresh;
@@ -23,7 +27,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
           },
           body: JSON.stringify({
             id: "clux1ne450001hzc8vv4kgk20",
-            email: "aimahusnain@gmail.com",
+            email: session?.user?.email,
           }),
         }
       );
@@ -33,7 +37,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
       if (data && data.success) {
         console.log("Submission successful");
 
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.error("Submission failed");
       }

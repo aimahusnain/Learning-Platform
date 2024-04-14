@@ -12,12 +12,15 @@ import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import ReTryButton from '@/components/QuestionsPageCompo/ReTry Button'
 import Bar from "./QuestionsPageCompo/ProgressBar";
 
-interface Props { }
+interface Props {
+  questionid: any;
+}
 
 
 
-export const QuestionsCarousel: React.FC<Props> = () => {
+export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
   const router = useRouter();
+
   const [progress, setProgress] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -31,7 +34,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/mainquestions?id=clux1ne450001hzc8vv4kgk20`
+          `${StaticData.SiteURL}/api/mainquestions?id=${questionid}`
         );
         const data = response.data;
         if (data.success) {
@@ -111,27 +114,16 @@ export const QuestionsCarousel: React.FC<Props> = () => {
 
   CheckSubmit();
 
-  // clux1ne450001hzc8vv4kgk20
-
-
-  // async function SearchedQuestions(id: string) {
-  //   const res = await fetch(`${StaticData.SiteURL}/api/questions?id=${id}`);
-  //   const data = await res.json();
-
-  //   if (data.success) return data.data;
-  // }
-
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="w-full flex flex-col">
           {!isSubmitted && (
-
             <div className="w-full flex items-center text-center justify-center gap-3">
-            <h2>
-              {count}/{questions.length}
-            </h2>
-          </div>
+              <h2>
+                {count}/{questions.length}
+              </h2>
+            </div>
           )}
           <div className="flex w-full items-center gap-3">
             <Button onClick={router.back} variant="secondary" size="icon">
@@ -140,7 +132,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             {isSubmitted === false ? (
               <Progress value={progress} className="w-full h-4 bg-gray-300" />
             ) : (
-            <Bar />
+              <Bar />
             )}
 
             {isSubmitted === true ? (
@@ -183,6 +175,7 @@ export const QuestionsCarousel: React.FC<Props> = () => {
             onClick={handleCheckAnswer}
             variant="success"
             className="mr-12"
+            disabled={isSubmitted}
           >
             Check Answer
           </Button>
