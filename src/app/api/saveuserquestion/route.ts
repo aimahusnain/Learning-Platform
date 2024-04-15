@@ -1,33 +1,31 @@
-export const dynamic = "force-dynamic";
-
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const extractData = await request.json();
+    const extractPostData = await request.json();
 
-    const updatequestion = await db.userProgressMainQuestion.create({
-      data: extractData,
+    const newlyCreatedPost = await db.userProgressMainQuestion.create({
+      data: extractPostData,
     });
 
-    console.log(extractData, "extractPostData");
-
-    if (updatequestion) {
+    if (newlyCreatedPost) {
       return NextResponse.json({
         success: true,
-        data: updatequestion,
+        message: "New UserProgressQuestion added successfully",
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "No units found",
+        message: "Something went wrong ! Please try again",
       });
     }
   } catch (e) {
+    console.log(e);
+
     return NextResponse.json({
       success: false,
-      message: "Something went wrong! Please try again",
+      message: "Something went wrong ! Please try again",
     });
   }
 }

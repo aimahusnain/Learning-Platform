@@ -76,12 +76,13 @@ model UserProgressQuestion {
 }
 
 model UserProgressMainQuestion {
-  id              String         @id @map("_id")
+  id              String         @id @map("_id") @default(cuid())
   userAnswer      String
   correct         Boolean        @default(false)
   userEmail       String
   User            User           @relation(fields: [userEmail], references: [email])
-  MainQuestions   MainQuestions? @relation(fields: [id], references: [id])
+  mainQuestionsId String
+  MainQuestions   MainQuestions? @relation(fields: [mainQuestionsId], references: [id])
 }
 
 model User {

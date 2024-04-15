@@ -14,6 +14,37 @@ import { Input } from "./ui/input";
 import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
 import { Progress } from "./ui/progress";
 
+async function SaveMainQuestion(
+  mainQuestionsId: any,
+  userAnswer: any,
+  correct: any
+) {
+  try {
+    const res = await fetch(`${StaticData.SiteURL}/api/saveuserquestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mainQuestionsId: mainQuestionsId,
+        userAnswer: userAnswer,
+        correct: correct,
+        userEmail: "aimahusnain@gmail.com",
+      }),
+    });
+    const data = await res.json();
+
+    console.log(data, "data123");
+
+    if (data && data.success) {
+      console.log("Data POST Successfully!");
+    } else {
+      console.error("Failed to save main question:", data.message);
+    }
+  } catch (error) {
+    console.error("Error saving main question:", error);
+  }
+}
 interface Props {
   questionid: any;
 }
@@ -133,12 +164,16 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               )}
             </div>
             <div className="flex gap-6 items-center">
-              <h2>
-                <b>
-                  {count}/{questions.length}
-                </b>{" "}
-                Total Points
-              </h2>
+              {isSubmitted === false ? (
+                <h2>
+                  <b>
+                    {count}/{questions.length}
+                  </b>{" "}
+                  Total Points
+                </h2>
+              ) : (
+                <SubmittedMarks totalLength={questions.length} />
+              )}
               {isSubmitted === true ? (
                 <ReTryButton />
               ) : (
@@ -159,12 +194,26 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
-          <Input
-            type="text"
-            placeholder="Type your answer..."
-            value={userAnswer}
-            onChange={handleInputChange}
-          />
+          <div className="flex gap-4">
+            <Input
+              type="text"
+              placeholder="Type your answer..."
+              value={userAnswer}
+              onChange={handleInputChange}
+            />
+            <Button
+              onClick={() =>
+                SaveMainQuestion(
+                  questions[currentQuestionIndex]?.id,
+                  userAnswer,
+                  false
+                )
+              }
+              variant="outline"
+            >
+              Save
+            </Button>
+          </div>
           {feedback && (
             <div
               className={`mb-4 text-center font-bold ${
