@@ -65,10 +65,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button
-            variant="success"
-            disabled={isSubmitted}
-          >
+          <Button variant="success" disabled={isSubmitted}>
             Submit
           </Button>
         </DialogTrigger>
@@ -76,8 +73,8 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
           <DialogHeader>
             <DialogTitle>Ready to submit?</DialogTitle>
             <DialogDescription>
-              If you submit now, you won't be able to retake it, and the data
-              will be washed!
+              If you submit now, you won&apos;t be able to retake it, and the
+              data will be washed!
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
