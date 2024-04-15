@@ -11,6 +11,8 @@ import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
+import { Progress } from "./ui/progress";
 
 interface Props {
   questionid: any;
@@ -116,11 +118,9 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="w-full flex flex-col">
-          {/* {!isSubmitted && ( */}
           <div className="w-full mb-6 flex items-center text-center justify-center text-2xl font-bold gap-3">
             <h1>Name of Question</h1>
           </div>
-          {/* )} */}
           <div className="flex w-full justify-between items-center gap-3">
             <Button onClick={router.back} variant="destructive" size="icon">
               <X />
@@ -146,20 +146,25 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               )}
             </div>
           </div>
+          <div className="flex w-full items-center gap-3">
+            {isSubmitted === false && (
+              <Progress
+                value={progress}
+                className="w-full mt-5 h-4 bg-gray-300"
+              />
+            )}
+          </div>
         </div>
         <div className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
-          <div className="flex items-center gap-2">
-            <Input
-              type="text"
-              placeholder="Type your answer..."
-              value={userAnswer}
-              onChange={handleInputChange}
-            />
-            <Button variant="ghost">Save</Button>
-          </div>
+          <Input
+            type="text"
+            placeholder="Type your answer..."
+            value={userAnswer}
+            onChange={handleInputChange}
+          />
           {feedback && (
             <div
               className={`mb-4 text-center font-bold ${

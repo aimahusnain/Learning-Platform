@@ -3,20 +3,17 @@ export const dynamic = "force-dynamic";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-        const extractData = await request.json();
+    const extractData = await request.json();
 
-        const updatequestion = await db.userProgressQuestion.update({
-          where: {
-            id: String(extractData.id),
-            userEmail: String(extractData.email),
-          },
-          data: { submitted: true, progress: extractData.count.county },
-        });
+    const updatequestion = await db.userProgressMainQuestion.create({
+      data: extractData,
+    });
 
-    if (updatequestion
-      ) {
+    console.log(extractData, "extractPostData");
+
+    if (updatequestion) {
       return NextResponse.json({
         success: true,
         data: updatequestion,
