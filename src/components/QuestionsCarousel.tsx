@@ -9,17 +9,16 @@ import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
 import axios from "axios";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
-import ReTryButton from '@/components/QuestionsPageCompo/ReTry Button'
+import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
 import Bar from "./QuestionsPageCompo/SubmittedMarks";
 import { Input } from "./ui/input";
+import { Badge } from "./ui/badge";
 
 interface Props {
   questionid: any;
 }
 
-
-
-export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
+export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const router = useRouter();
 
   const [progress, setProgress] = useState(0);
@@ -119,28 +118,33 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="w-full flex flex-col">
-          {!isSubmitted && (
-            <div className="w-full flex items-center text-center justify-center gap-3">
-              <h2>
-                {count}/{questions.length}
-              </h2>
-            </div>
-          )}
-          <div className="flex w-full items-center gap-3">
+          {/* {!isSubmitted && ( */}
+          <div className="w-full mb-6 flex items-center text-center justify-center text-2xl font-bold gap-3">
+            <h1>Name of Question</h1>
+          </div>
+          {/* )} */}
+          <div className="flex w-full justify-between items-center gap-3">
             <Button onClick={router.back} variant="secondary" size="icon">
               <X />
             </Button>
-            {isSubmitted === false ? (
-              <Progress value={progress} className="w-full h-4 bg-gray-300" />
-            ) : (
-              <Bar totalLength={questions.length} />
-            )}
+            <div className="ml-32">
 
-            {isSubmitted === true ? (
-              <ReTryButton />
+            {isSubmitted === false ? (
+              <Badge variant="secondary">Saved</Badge>
             ) : (
-              <Submitofmy county={count} />
+              <Badge variant="secondary">Submitted</Badge>
             )}
+            </div>
+            <div className="flex gap-6 items-center">
+              <h2>
+                {count}/{questions.length} Total Points
+              </h2>
+              {isSubmitted === true ? (
+                <ReTryButton />
+              ) : (
+                <Submitofmy county={count} />
+              )}
+            </div>
           </div>
         </div>
         <div className="p-8 text-center">
@@ -148,15 +152,14 @@ export const QuestionsCarousel: React.FC<Props> = ({questionid}) => {
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
           <div className="flex items-center gap-2">
-
-          <Input
-            type="text"
-            placeholder="Type your answer..."
-            value={userAnswer} 
-            onChange={handleInputChange}
+            <Input
+              type="text"
+              placeholder="Type your answer..."
+              value={userAnswer}
+              onChange={handleInputChange}
             />
-          <Button>Save</Button>
-            </div>
+            <Button variant="ghost">Save</Button>
+          </div>
           {feedback && (
             <div
               className={`mb-4 text-center font-bold ${

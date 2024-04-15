@@ -37,7 +37,6 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
       if (data && data.success) {
         console.log("Submission successful");
 
-        // window.location.reload();
       } else {
         console.error("Submission failed");
       }
