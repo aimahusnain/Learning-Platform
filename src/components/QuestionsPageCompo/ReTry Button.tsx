@@ -47,7 +47,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
 
   return (
     <div>
-      <Button onClick={handleCommentSave}>
+      <Button variant="success" onClick={handleCommentSave}>
         Retake
       </Button>
     </div>

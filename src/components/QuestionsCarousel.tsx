@@ -1,18 +1,16 @@
 "use client";
 
+import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
 import { StaticData } from "@/lib/staticdata";
+import axios from "axios";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Submitofmy from "./QuestionsPageCompo/IsSubmit";
-import { Button } from "./ui/button";
-import { Progress } from "./ui/progress";
-import axios from "axios";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
-import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
-import Bar from "./QuestionsPageCompo/SubmittedMarks";
-import { Input } from "./ui/input";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface Props {
   questionid: any;
@@ -124,20 +122,22 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           </div>
           {/* )} */}
           <div className="flex w-full justify-between items-center gap-3">
-            <Button onClick={router.back} variant="secondary" size="icon">
+            <Button onClick={router.back} variant="destructive" size="icon">
               <X />
             </Button>
             <div className="ml-32">
-
-            {isSubmitted === false ? (
-              <Badge variant="secondary">Saved</Badge>
-            ) : (
-              <Badge variant="secondary">Submitted</Badge>
-            )}
+              {isSubmitted === false ? (
+                <Badge variant="secondary">Saved</Badge>
+              ) : (
+                <Badge variant="secondary">Submitted</Badge>
+              )}
             </div>
             <div className="flex gap-6 items-center">
               <h2>
-                {count}/{questions.length} Total Points
+                <b>
+                  {count}/{questions.length}
+                </b>{" "}
+                Total Points
               </h2>
               {isSubmitted === true ? (
                 <ReTryButton />
@@ -180,7 +180,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           </Button>
           <Button
             onClick={handleCheckAnswer}
-            variant="success"
+            variant="default"
             disabled={isSubmitted}
           >
             Check Answer
