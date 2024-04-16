@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
 import { Progress } from "./ui/progress";
+import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
 
 async function SaveMainQuestion(
   mainQuestionsId: any,
@@ -45,8 +46,17 @@ async function SaveMainQuestion(
     console.error("Error saving main question:", error);
   }
 }
+
 interface Props {
   questionid: any;
+}
+
+interface MainQuestion {
+  id: string;
+  userAnswer: string;
+  correct: boolean;
+  userEmail: string;
+  mainQuestionsId: string;
 }
 
 export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
@@ -57,11 +67,12 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
+  const [mainQuestions, setMainQuestions] = useState<MainQuestion[]>([]);
   const [count, setCount] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestionsAnswered, setTotalQuestionsAnswered] = useState(0);
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
-  
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -111,14 +122,21 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     } else {
       setFeedback("Congratulations! You have completed the lesson.");
     }
+
+    SaveMainQuestion(
+      questions[currentQuestionIndex]?.id,
+      userAnswer,
+      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()
+        ? true
+        : false
+    );
   };
-  
-  
+
   const handleCheckAnswer = () => {
     if (!userAnswer.trim()) {
       return;
     }
-    
+
     const correctAnswer = questions[currentQuestionIndex].answer;
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setFeedback("Correct!");
@@ -148,13 +166,26 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   CheckSubmit();
 
   const CheckSubmitAnswer = () => {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+
+    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+      setFeedback("Correct!");
+      setCount(count + 1);
+    } else {
+      setFeedback("Incorrect!");
+    }
+
     handleCheckAnswer();
     SaveMainQuestion(
       questions[currentQuestionIndex]?.id,
       userAnswer,
-      feedback === "Correct!"
+      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()
+        ? true
+        : false
     );
-  }
+  };
+
+  console.log(questions[currentQuestionIndex]?.id);
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -180,7 +211,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   <b>
                     {count}/{questions.length}
                   </b>{" "}
-                  Total Points
+                   Total Points
                 </h2>
               ) : (
                 <SubmittedMarks totalLength={questions.length} />
@@ -205,17 +236,24 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
-          <Input
-            type="text"
-            placeholder="Type your answer..."
-            value={userAnswer}
-            onChange={handleInputChange}
-          />
-          {showCorrectAnswer && (
+          {!isSubmitted && (
+            <Input
+              type="text"
+              placeholder="Type your answer..."
+              value={userAnswer}
+              onChange={handleInputChange}
+            />
+          )}
+          {showCorrectAnswer && isSubmitted && (
             <div className="my-4 text-center capitalize font-sans font-bold text-green-500">
               Correct Answer: {questions[currentQuestionIndex]?.answer}
             </div>
           )}{" "}
+          {isSubmitted && (
+            <SubmitTrueorFalse
+              questionid={questions[currentQuestionIndex]?.id}
+            />
+          )}
           {feedback && (
             <div
               className={`mb-4 text-center font-bold ${
@@ -235,20 +273,18 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             Previous
           </Button>
           {isSubmitted && (
-
             <Button onClick={() => setShowCorrectAnswer(true)}>
-            Show the Answer
-          </Button>
+              Show the Answer
+            </Button>
           )}
           {!isSubmitted && (
-
             <Button
-            onClick={CheckSubmitAnswer}
-            variant="default"
-            disabled={isSubmitted}
+              onClick={CheckSubmitAnswer}
+              variant="default"
+              disabled={isSubmitted}
             >
-            Check Answer
-          </Button>
+              Check Answer
+            </Button>
           )}
 
           <Button onClick={handleForwardQuestion} variant="outline">
