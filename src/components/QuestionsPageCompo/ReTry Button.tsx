@@ -14,7 +14,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
 
   console.log(session?.user?.email);
 
-  async function handleCommentSave() {
+  async function unquestionsubmitapi() {
     const refresh = router.refresh;
 
     refresh();
@@ -27,7 +27,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: questionid,
+            id: "clux1ne450001hzc8vv4kgk20",
             email: session?.user?.email,
           }),
         }
@@ -43,6 +43,35 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
     } catch (error) {
       console.error("Error submitting question:", error);
     }
+  }
+
+  async function deleteuserProgressMainQuestion() {
+    try {
+      const response = await fetch(
+        `${StaticData.SiteURL}/api/deleteUserProgressMainQuestion?email=${session?.user?.email}&questionId=clux1ne450001hzc8vv4kgk20`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (data && data.success) {
+        console.log("Delete successful");
+      } else {
+        console.error("Deletion failed");
+      }
+    } catch (error) {
+      console.error("Error submitting question:", error);
+    }
+  }
+
+  async function handleCommentSave() {
+    deleteuserProgressMainQuestion();
+    unquestionsubmitapi()
   }
 
   return (

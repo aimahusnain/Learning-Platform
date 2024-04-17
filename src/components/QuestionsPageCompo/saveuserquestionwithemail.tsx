@@ -4,7 +4,8 @@ export async function SaveMainQuestion(
   mainQuestionsId: any,
   userAnswer: any,
     correct: boolean,
-  userEmail: String
+  userEmail: String,
+  mainquestionId: String
 ) {
   try {
     const res = await fetch(`${StaticData.SiteURL}/api/saveuserquestion`, {
@@ -17,6 +18,7 @@ export async function SaveMainQuestion(
         userAnswer: userAnswer,
         correct: correct,
         userEmail: userEmail,
+        questionId: mainquestionId,
       }),
     });
     const data = await res.json();

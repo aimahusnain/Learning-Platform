@@ -64,6 +64,7 @@ model Question {
   MainQuestions            MainQuestions[]
   UserProgress             UserProgress[]
   UserProgressQuestion     UserProgressQuestion[]
+  UserProgressMainQuestion UserProgressMainQuestion[]
 }
 
 model UserProgressQuestion {
@@ -83,6 +84,8 @@ model UserProgressMainQuestion {
   User            User           @relation(fields: [userEmail], references: [email])
   mainQuestionsId String
   MainQuestions   MainQuestions? @relation(fields: [mainQuestionsId], references: [id])
+  questionId      String
+  Question        Question?       @relation(fields: [questionId], references: [id])
 }
 
 model User {

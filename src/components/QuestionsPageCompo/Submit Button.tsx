@@ -18,9 +18,10 @@ interface SubmitButtonProps {
   questionId: string;
   isSubmitted: boolean;
   count: number;
+  id: any
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: "clux1ne450001hzc8vv4kgk20",
+            id: id,
             email: session?.user?.email,
             count: count,
           }),

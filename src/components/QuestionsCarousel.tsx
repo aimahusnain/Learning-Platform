@@ -93,7 +93,8 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
       userAnswers[currentQuestionIndex],
       userAnswers[currentQuestionIndex].trim().toLowerCase() ===
         correctAnswer.toLowerCase(),
-      String(session?.user?.email)
+      String(session?.user?.email),
+      "clux1ne450001hzc8vv4kgk20"
     );
   };
 
@@ -190,7 +191,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               {isSubmitted === true ? (
                 <ReTryButton questionid={questionid} />
               ) : (
-                <Submitofmy county={count} questionid={questionid} />
+                <Submitofmy county={count} questionid={questionid}/>
               )}
             </div>
           </div>
@@ -259,9 +260,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             </Button>
           )}
 
-          {/* <Button onClick={handleForwardQuestion} variant="outline">
-            Next
-          </Button> */}
           {isSubmitted == true ? (
             <Button
               onClick={handleForwardQuestionwithoutSaveMainQuestion}

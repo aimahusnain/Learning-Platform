@@ -6,12 +6,12 @@ import { UserEmail } from "./email";
 
 interface Props {
   questionid: string;
-  UserEmail: string
+  UserEmail: string;
 }
 
 const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
   const [correct, setCorrect] = useState<boolean | null>(null);
-  const [userAnswer, setUserAnswer] = useState<string>("");
+  const [userAnswer, setUserAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserProgress = async () => {
@@ -22,16 +22,16 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
         const data = response.data;
         const userProgress = data.data;
 
-        const userAnswer = userProgress.find(
+        const userAnswerData = userProgress.find(
           (item: any) => item.mainQuestionsId === questionid
         );
 
-        if (userAnswer) {
-          setCorrect(userAnswer.correct);
-          setUserAnswer(userAnswer.userAnswer);
+        if (userAnswerData) {
+          setCorrect(userAnswerData.correct);
+          setUserAnswer(userAnswerData.userAnswer);
         } else {
           setCorrect(null);
-          setUserAnswer("");
+          setUserAnswer(null);
         }
       } catch (error) {
         console.error("Error fetching user progress:", error);
@@ -43,10 +43,10 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
 
   return (
     <div>
-      {correct === null ? (
-        <Input type="text" placeholder="Your Answer" value="" />
-      ) : (
+      {userAnswer !== null ? (
         <Input type="text" placeholder="Your Answer" value={userAnswer} />
+      ) : (
+        <Input type="text" placeholder="Your Answer" value="" />
       )}
 
       {correct === true && (
@@ -54,13 +54,15 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
           Correct!
         </p>
       )}
-      {correct === false && (
+
+      {userAnswer === "" && (
+        <p className="font-sans text-black font-bold text-xl my-4">Skipped</p>
+      )}
+
+      {correct === false && userAnswer !== "" && (
         <p className="font-sans text-red-500 font-bold text-xl my-4">
           Incorrect!
         </p>
-      )}
-      {correct === null && (
-        <p className="font-sans text-black font-bold text-xl my-4">Skipped</p>
       )}
     </div>
   );
