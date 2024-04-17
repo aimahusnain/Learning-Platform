@@ -5,7 +5,7 @@ import { StaticData } from "@/lib/staticdata";
 import axios from "axios";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { use, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Submitofmy from "./QuestionsPageCompo/IsSubmit";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import { Badge } from "./ui/badge";
@@ -14,60 +14,22 @@ import { Input } from "./ui/input";
 import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
 import { Progress } from "./ui/progress";
 import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
-
-async function SaveMainQuestion(
-  mainQuestionsId: any,
-  userAnswer: any,
-  correct: boolean
-) {
-  try {
-    const res = await fetch(`${StaticData.SiteURL}/api/saveuserquestion`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        mainQuestionsId: mainQuestionsId,
-        userAnswer: userAnswer,
-        correct: correct,
-        userEmail: "aimahusnain@gmail.com",
-      }),
-    });
-    const data = await res.json();
-
-    console.log(data, "data123");
-
-    if (data && data.success) {
-      console.log("Data POST Successfully!");
-    } else {
-      console.error("Failed to save main question:", data.message);
-    }
-  } catch (error) {
-    console.error("Error saving main question:", error);
-  }
-}
+import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
+import { useSession } from "next-auth/react";
 
 interface Props {
   questionid: any;
 }
 
-interface MainQuestion {
-  id: string;
-  userAnswer: string;
-  correct: boolean;
-  userEmail: string;
-  mainQuestionsId: string;
-}
-
 export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [progress, setProgress] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userAnswer, setUserAnswer] = useState("");
+  const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
-  const [mainQuestions, setMainQuestions] = useState<MainQuestion[]>([]);
   const [count, setCount] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestionsAnswered, setTotalQuestionsAnswered] = useState(0);
@@ -82,6 +44,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
         const data = response.data;
         if (data.success) {
           setQuestions(data.data);
+          setUserAnswers(Array(data.data.length).fill(""));
         } else {
           console.error("Failed to fetch questions:", data.message);
         }
@@ -106,7 +69,10 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const handleForwardQuestion = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
 
-    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+    if (
+      userAnswers[currentQuestionIndex].trim().toLowerCase() ===
+      correctAnswer.toLowerCase()
+    ) {
       setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
     }
 
@@ -116,7 +82,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
     if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setUserAnswer("");
       setFeedback("");
       setProgress((prevProgress) => prevProgress + 100 / totalQuestions);
     } else {
@@ -125,29 +90,57 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
     SaveMainQuestion(
       questions[currentQuestionIndex]?.id,
-      userAnswer,
-      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()
-        ? true
-        : false
+      userAnswers[currentQuestionIndex],
+      userAnswers[currentQuestionIndex].trim().toLowerCase() ===
+        correctAnswer.toLowerCase(),
+      String(session?.user?.email)
     );
   };
 
+  const handleForwardQuestionwithoutSaveMainQuestion = () => {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+
+    if (
+      userAnswers[currentQuestionIndex].trim().toLowerCase() ===
+      correctAnswer.toLowerCase()
+    ) {
+      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+    }
+
+    setTotalQuestionsAnswered(
+      (prevTotalQuestionsAnswered) => prevTotalQuestionsAnswered + 1
+    );
+
+    if (currentQuestionIndex < totalQuestions - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setFeedback("");
+      setProgress((prevProgress) => prevProgress + 100 / totalQuestions);
+    } else {
+      setFeedback("Congratulations! You have completed the lesson.");
+    }
+  };
+
   const handleCheckAnswer = () => {
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    const userAnswer = userAnswers[currentQuestionIndex];
+
     if (!userAnswer.trim()) {
+      setFeedback("Please provide an answer.");
       return;
     }
 
-    const correctAnswer = questions[currentQuestionIndex].answer;
     if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
       setFeedback("Correct!");
-      setCount(count + 1);
+      setCount((prevCount) => prevCount + 1);
     } else {
       setFeedback("Incorrect!");
     }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserAnswer(event.target.value);
+    const updatedUserAnswers = [...userAnswers];
+    updatedUserAnswers[currentQuestionIndex] = event.target.value;
+    setUserAnswers(updatedUserAnswers);
   };
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -164,28 +157,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   };
 
   CheckSubmit();
-
-  const CheckSubmitAnswer = () => {
-    const correctAnswer = questions[currentQuestionIndex].answer;
-
-    if (userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-      setFeedback("Correct!");
-      setCount(count + 1);
-    } else {
-      setFeedback("Incorrect!");
-    }
-
-    handleCheckAnswer();
-    SaveMainQuestion(
-      questions[currentQuestionIndex]?.id,
-      userAnswer,
-      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()
-        ? true
-        : false
-    );
-  };
-
-  console.log(questions[currentQuestionIndex]?.id);
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -211,15 +182,15 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   <b>
                     {count}/{questions.length}
                   </b>{" "}
-                   Total Points
+                  Total Points
                 </h2>
               ) : (
                 <SubmittedMarks totalLength={questions.length} />
               )}
               {isSubmitted === true ? (
-                <ReTryButton />
+                <ReTryButton questionid={questionid} />
               ) : (
-                <Submitofmy county={count} />
+                <Submitofmy county={count} questionid={questionid} />
               )}
             </div>
           </div>
@@ -240,7 +211,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             <Input
               type="text"
               placeholder="Type your answer..."
-              value={userAnswer}
+              value={userAnswers[currentQuestionIndex]}
               onChange={handleInputChange}
             />
           )}
@@ -251,6 +222,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           )}{" "}
           {isSubmitted && (
             <SubmitTrueorFalse
+              UserEmail={String(session?.user?.email)}
               questionid={questions[currentQuestionIndex]?.id}
             />
           )}
@@ -279,7 +251,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
           )}
           {!isSubmitted && (
             <Button
-              onClick={CheckSubmitAnswer}
+              onClick={handleCheckAnswer}
               variant="default"
               disabled={isSubmitted}
             >
@@ -287,9 +259,21 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             </Button>
           )}
 
-          <Button onClick={handleForwardQuestion} variant="outline">
+          {/* <Button onClick={handleForwardQuestion} variant="outline">
             Next
-          </Button>
+          </Button> */}
+          {isSubmitted == true ? (
+            <Button
+              onClick={handleForwardQuestionwithoutSaveMainQuestion}
+              variant="outline"
+            >
+              Next
+            </Button>
+          ) : (
+            <Button onClick={handleForwardQuestion} variant="outline">
+              Next
+            </Button>
+          )}
         </div>
       </div>
     </div>

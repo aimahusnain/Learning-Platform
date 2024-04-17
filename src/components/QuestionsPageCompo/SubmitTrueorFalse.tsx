@@ -2,26 +2,28 @@ import { StaticData } from "@/lib/staticdata";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { UserEmail } from "./email";
 
 interface Props {
   questionid: string;
+  UserEmail: string
 }
 
-const SubmitTrueorFalse: React.FC<Props> = ({ questionid }) => {
+const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
   const [correct, setCorrect] = useState<boolean | null>(null);
-  const [userAnswer, setUserAnswer] = useState<boolean | null>(null);
+  const [userAnswer, setUserAnswer] = useState<string>("");
 
   useEffect(() => {
     const fetchUserProgress = async () => {
       try {
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/fetchUserProgressMainQuestion?email=aimahusnain@gmail.com`
+          `${StaticData.SiteURL}/api/fetchUserProgressMainQuestion?email=${UserEmail}`
         );
         const data = response.data;
         const userProgress = data.data;
 
         const userAnswer = userProgress.find(
-          (item: any) => item.mainQuestionsId == questionid
+          (item: any) => item.mainQuestionsId === questionid
         );
 
         if (userAnswer) {
@@ -29,6 +31,7 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid }) => {
           setUserAnswer(userAnswer.userAnswer);
         } else {
           setCorrect(null);
+          setUserAnswer("");
         }
       } catch (error) {
         console.error("Error fetching user progress:", error);
@@ -38,16 +41,12 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid }) => {
     fetchUserProgress();
   }, [questionid]);
 
-  if (userAnswer === null && correct === null) {
-    return null;
-  }
-
   return (
     <div>
       {correct === null ? (
         <Input type="text" placeholder="Your Answer" value="" />
       ) : (
-        <Input type="text" placeholder="Your Answer" value={String(userAnswer)} />
+        <Input type="text" placeholder="Your Answer" value={userAnswer} />
       )}
 
       {correct === true && (

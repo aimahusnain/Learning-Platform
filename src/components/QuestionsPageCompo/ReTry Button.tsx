@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 interface SubmitButtonProps {
+  questionid: any
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = () => {
+const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
   const router = useRouter();
   const { data: session } = useSession();
-  
-  console.log(session?.user?.email)
+
+  console.log(session?.user?.email);
 
   async function handleCommentSave() {
     const refresh = router.refresh;
@@ -26,7 +27,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: "clux1ne450001hzc8vv4kgk20",
+            id: questionid,
             email: session?.user?.email,
           }),
         }
@@ -36,7 +37,6 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
 
       if (data && data.success) {
         console.log("Submission successful");
-
       } else {
         console.error("Submission failed");
       }

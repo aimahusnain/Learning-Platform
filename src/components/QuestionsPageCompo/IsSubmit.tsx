@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { submitQuestion } from "./SubmitQuestion";
 import SubmitButton from "./Submit Button";
 
-const IsSubmit = (county: any) => {
+const IsSubmit = (county: any, questionid: any) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const IsSubmit = (county: any) => {
   return (
     <SubmitButton
       count={county}
-      questionId="clux1ne450001hzc8vv4kgk20"
+      questionId={questionid}
       isSubmitted={isSubmitted}
     />
   );
