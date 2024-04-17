@@ -28,8 +28,8 @@ async function SearchedQuestions(id: string) {
 const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
 
-  const UnitDetailsData = await SearchedUnit(unitid);
-  const Questions       = await SearchedQuestions(unitid);
+  const UnitDetailsData      =     await SearchedUnit(unitid);
+  const Questions            =     await SearchedQuestions(unitid);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,6 +77,20 @@ const UnitDetails = async ({ params }: { params: any }) => {
         ) : (
           <p>No questions found</p>
         )}
+
+        <Card key="Explanation" className="w-[350px] shadow-xl">
+          <CardHeader>
+            <Link href={`/learn/${unitid}/questions/explainUnit1`}>
+              <CardTitle className="capitalize">Explanation</CardTitle>
+            </Link>
+            <CardDescription>Explanation Videos</CardDescription>
+          </CardHeader>
+          <CardFooter className="flex justify-between">
+            <Link href={`/learn/${unitid}/questions/explainUnit1`}>
+              <Button variant="success">Learn</Button>
+            </Link>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );
