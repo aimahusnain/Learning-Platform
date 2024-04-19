@@ -9,7 +9,12 @@ interface UserProgress {
   userEmail: string;
 }
 
-const SubmittedMarks = ({ totalLength }: { totalLength: number }) => {
+const SubmittedMarks = ({
+  totalLength,
+  questionId,
+}: {
+  totalLength: number;
+  questionId: string}) => {
   const { data: session } = useSession();
 
   const [fetchUserProgressData, setFetchUserProgressData] = useState<
@@ -25,7 +30,7 @@ const SubmittedMarks = ({ totalLength }: { totalLength: number }) => {
 
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=clux1ne450001hzc8vv4kgk20&userEmail=${session.user.email}`
+          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=${questionId}&userEmail=${session.user.email}`
         );
         const data = await response.json();
         if (data.success) {

@@ -5,14 +5,12 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 interface SubmitButtonProps {
-  questionid: any
+  questionid: string
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
   const router = useRouter();
   const { data: session } = useSession();
-
-  console.log(session?.user?.email);
 
   async function unquestionsubmitapi() {
     const refresh = router.refresh;
@@ -27,7 +25,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: "clux1ne450001hzc8vv4kgk20",
+            id: questionid.questionid,
             email: session?.user?.email,
           }),
         }
@@ -48,7 +46,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
   async function deleteuserProgressMainQuestion() {
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/deleteUserProgressMainQuestion?email=${session?.user?.email}&questionId=clux1ne450001hzc8vv4kgk20`,
+        `${StaticData.SiteURL}/api/deleteUserProgressMainQuestion?email=${session?.user?.email}&questionId=${questionid.questionid}`,
         {
           method: "DELETE",
           headers: {

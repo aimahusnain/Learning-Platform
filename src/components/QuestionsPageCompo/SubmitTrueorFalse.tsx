@@ -56,7 +56,7 @@ const SubmitTrueorFalse: React.FC<Props> = ({ questionid, UserEmail }) => {
       )}
 
       {userAnswer === "" && (
-        <p className="font-sans text-black font-bold text-xl my-4">Skipped</p>
+        <p className="font-sans text-yellow-600 font-bold text-xl my-4">Skipped</p>
       )}
 
       {correct === false && userAnswer !== "" && (

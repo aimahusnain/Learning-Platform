@@ -94,7 +94,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
       userAnswers[currentQuestionIndex].trim().toLowerCase() ===
         correctAnswer.toLowerCase(),
       String(session?.user?.email),
-      "clux1ne450001hzc8vv4kgk20"
+      questionid
     );
   };
 
@@ -186,12 +186,15 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   Total Points
                 </h2>
               ) : (
-                <SubmittedMarks totalLength={questions.length} />
+                <SubmittedMarks
+                  questionId={questionid.toString()}
+                  totalLength={questions.length}
+                />
               )}
               {isSubmitted === true ? (
-                <ReTryButton questionid={questionid} />
+                <ReTryButton questionid={questionid.toString()} />
               ) : (
-                <Submitofmy county={count} questionid={questionid}/>
+                <Submitofmy county={count} questionid={questionid.toString()} />
               )}
             </div>
           </div>
