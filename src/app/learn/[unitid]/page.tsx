@@ -9,6 +9,14 @@ import {
 } from "@/components/ui/card";
 import { StaticData } from "@/lib/staticdata";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 async function SearchedUnit(id: string) {
   const res = await fetch(`${StaticData.SiteURL}/api/units/unitopen?id=${id}`);
@@ -28,8 +36,8 @@ async function SearchedQuestions(id: string) {
 const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
 
-  const UnitDetailsData      =     await SearchedUnit(unitid);
-  const Questions            =     await SearchedQuestions(unitid);
+  const UnitDetailsData = await SearchedUnit(unitid);
+  const Questions = await SearchedQuestions(unitid);  
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -53,13 +61,32 @@ const UnitDetails = async ({ params }: { params: any }) => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form>
-                    <div className="grid w-full items-center gap-4">
-                      <div className="flex flex-col space-y-1.5">
-                        {question.description}
-                      </div>
-                    </div>
-                  </form>
+                  <Dialog>
+                    <DialogTrigger>Explanation Video</DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Explanation Video</DialogTitle>
+                        <DialogDescription>
+                          This Video Will Explain you very easily the{" "}
+                          {question.name}.
+                        </DialogDescription>
+                        {question.videoReferenceVideo ?
+                          (
+                        
+                            <iframe
+                            height="315"
+                            src={question.videoReferenceVideo}
+                            title="YouTub1e video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            allowFullScreen
+                            />
+                          ) : (
+                            <p>Video Not Founded ):</p>
+                          )}
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" className="cursor-default">
@@ -77,20 +104,6 @@ const UnitDetails = async ({ params }: { params: any }) => {
         ) : (
           <p>No questions found</p>
         )}
-
-        <Card key="Explanation" className="w-[350px] shadow-xl">
-          <CardHeader>
-            <Link href={`/learn/${unitid}/questions/explainUnit1`}>
-              <CardTitle className="capitalize">Explanation</CardTitle>
-            </Link>
-            <CardDescription>Explanation Videos</CardDescription>
-          </CardHeader>
-          <CardFooter className="flex justify-between">
-            <Link href={`/learn/${unitid}/questions/explainUnit1`}>
-              <Button variant="success">Learn</Button>
-            </Link>
-          </CardFooter>
-        </Card>
       </div>
     </div>
   );

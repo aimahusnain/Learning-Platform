@@ -58,6 +58,7 @@ model Question {
   id                       String                     @id @default(cuid()) @map("_id")
   Unit                     Unit                       @relation(fields: [unitId], references: [id])
   unitId                   String
+  videoReferenceVideo      String?
   name                     String
   description              String?
   mainQuestions            String[]
@@ -97,7 +98,6 @@ model User {
   image                    String?
   accounts                 Account[]
   sessions                 Session[]
-  // UserProgress  UserProgressUnit[]
   UserProgress             UserProgress[]
   UserProgressQuestion     UserProgressQuestion[]
   UserProgressMainQuestion UserProgressMainQuestion[]

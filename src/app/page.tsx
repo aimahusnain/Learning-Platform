@@ -1,33 +1,58 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button } from "@/components/ui/button";
-import { StaticData } from "@/lib/staticdata";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import Signin from '@/components/Signin'
 import HomepageButtons from "@/components/HomepageButtons";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { StaticData } from "@/lib/staticdata";
+import Navbar from "@/components/Navbar";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-export default function Home() {  
+const container = {
+  hidden: { opacity: 1, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
+export default function Home() {
   return (
     <>
-      <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-          <p className="text-sm font-semibold text-gray-700">
-            Free, fun, and fluent!
-          </p>
-        </div>
-        <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          Learn a <span className="text-success">language</span> the easy way.
-        </h1>
-        <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Master a language, effortlessly. {StaticData.SiteName} makes learning
-          fun, free, and effective.
-        </p>
-
-        
-        <HomepageButtons />
-      </MaxWidthWrapper>
-
+      <Navbar />
+      <motion.ul variants={container} initial="hidden" animate="visible">
+        <MaxWidthWrapper className="mt-6 flex flex-col items-center justify-center text-center">
+          <motion.li key="1" variants={item}>
+            <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
+              <p className="text-sm font-semibold text-gray-700">
+                Free, fun, and fluent!
+              </p>
+            </div>
+          </motion.li>
+          <motion.li key="1" variants={item}>
+            <h1 className="max-w-4xl text-4xl font-bold md:text-5xl lg:text-6xl">
+              The free, fun, and effective way to learn a language!
+            </h1>
+          </motion.li>
+          <motion.li key="1" variants={item}>
+            <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
+              Master a language, effortlessly. {StaticData.SiteName} makes
+              learning fun, free, and effective.
+            </p>
+          </motion.li>
+          <motion.li key="1" variants={item}>
+            <HomepageButtons />
+          </motion.li>
+        </MaxWidthWrapper>
+      </motion.ul>
       <div>
         <div className="relative isolate">
           <div
