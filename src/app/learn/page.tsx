@@ -14,6 +14,7 @@ import { MobileSidebar } from "@/components/mobile-sidebar";
 import { Sidebar } from "@/components/sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 
+
 async function getAllListsByCategory() {
   try {
     const response = await axios.get(`${StaticData.SiteURL}/api/units`);
@@ -29,7 +30,6 @@ const English = async () => {
 
   return (
     <div>
-      <MobileHeader />
       <Sidebar className="hidden lg:flex" />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center">
@@ -41,9 +41,11 @@ const English = async () => {
               <Card key={unit.id} className="w-[350px]">
                 <CardHeader>
                   <Link href={`/learn/${unit.id}`}>
-                    <CardTitle className="capitalize">{unit.name}</CardTitle>
+                    <CardTitle className="capitalize">
+                      Unit {unit.noidnumber}
+                    </CardTitle>
                   </Link>
-                  <CardDescription>Unit {unit.noidnumber}</CardDescription>
+                  <CardDescription className="text-xl">{unit.name}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form>

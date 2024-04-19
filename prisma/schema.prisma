@@ -71,10 +71,10 @@ model Question {
 model UserProgressQuestion {
   id        String   @id @map("_id")
   progress  Int?     @default(0)
-  submitted Boolean  @unique @default(false)
+  submitted Boolean  @default(false)
   userEmail String
-  User      User     @relation(fields: [userEmail], references: [email])
-  Question  Question @relation(fields: [id], references: [id])
+  User      User?     @relation(fields: [userEmail], references: [email])
+  Question  Question? @relation(fields: [id], references: [id])
 }
 
 model UserProgressMainQuestion {

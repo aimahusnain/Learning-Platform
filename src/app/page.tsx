@@ -1,9 +1,12 @@
-import HomepageButtons from "@/components/HomepageButtons";
+"use client";
+
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { StaticData } from "@/lib/staticdata";
-import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -24,79 +27,89 @@ const item = {
     opacity: 1,
   },
 };
+
 export default function Home() {
+  const texts = ["Text 1", "Text 2", "Text 3"];
+
   return (
     <>
       <Navbar />
-      <motion.ul variants={container} initial="hidden" animate="visible">
-        <MaxWidthWrapper className="mt-6 flex flex-col items-center justify-center text-center">
-          <motion.li key="1" variants={item}>
-            <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-              <p className="text-sm font-semibold text-gray-700">
-                Free, fun, and fluent!
-              </p>
+      <MaxWidthWrapper className="mb-12 mt-10 flex flex-col items-center justify-center text-center">
+        <motion.ul variants={container} initial="hidden" animate="visible">
+          <div>
+            {" "}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none mt-[20px] absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+            >
+              <div
+                style={{
+                  clipPath:
+                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+                }}
+                className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+              />
             </div>
-          </motion.li>
-          <motion.li key="1" variants={item}>
-            <h1 className="max-w-4xl text-4xl font-bold md:text-5xl lg:text-6xl">
-              The free, fun, and effective way to learn a language!
-            </h1>
-          </motion.li>
-          <motion.li key="1" variants={item}>
-            <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-              Master a language, effortlessly. {StaticData.SiteName} makes
-              learning fun, free, and effective.
-            </p>
-          </motion.li>
-          <motion.li key="1" variants={item}>
-            <HomepageButtons />
-          </motion.li>
-        </MaxWidthWrapper>
-      </motion.ul>
+          </div>
+          <div className="flex items-center flex-col">
+            <motion.li key="1" variants={item}>
+              <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md transition-all hover:border-gray-300 ">
+                <p className="text-sm font-semibold text-gray-700">
+                  Learn About Us
+                </p>
+              </div>
+            </motion.li>
+            <motion.li key="2" variants={item}>
+              {/* {texts.map((text, index) => ( */}
+              {/* ))} */}
+              {/* <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
+                <span className="text-purple-600">Get a Free Mobile</span>{" "}
+                Friendly Design
+              </h1> */}
+            </motion.li>
+
+            <motion.li
+              key="4"
+              variants={item}
+              className="mt-5 max-w-prose text-primary font-bold text-3xl"
+            >
+              fsdfsdsfd
+            </motion.li>
+            <motion.li
+              key="3"
+              variants={item}
+              className="mt-5 max-w-prose text-zinc-700 sm:text-lg"
+            >
+              cd
+            </motion.li>
+            <motion.li key="5" className="mt-5" variants={item}>
+              <Link href="/contact">
+                <Button size="lg">
+                  Contact Us <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </motion.li>
+          </div>
+        </motion.ul>
+      </MaxWidthWrapper>
+
       <div>
         <div className="relative isolate">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          >
-            <div
-              style={{
-                clipPath:
-                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-              }}
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-br from-success to-success opacity-50 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            />
-          </div>
-
-          <div>
-            <div className="mx-auto max-w-6xl px-6 lg:px-8">
-              <div className="mt-16 flow-root sm:mt-24">
-                <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <Image
-                    src="/HomePage/Image 2.jpeg"
-                    alt="product preview"
-                    width={1364}
-                    height={866}
-                    quality={100}
-                    className="rounded-md bg-white shadow-2xl ring-1 ring-gray-900/10"
-                  />
-                </div>
+          <div className="mx-auto max-w-6xl px-6 lg:px-8">
+            <div className="mt-16 flow-root sm:mt-24">
+              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                <Image
+                  src="/file-upload-preview.jpg"
+                  alt="uploading preview"
+                  width={1419}
+                  height={732}
+                  quality={100}
+                  className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
+                />
               </div>
             </div>
           </div>
-
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          >
-            <div
-              style={{
-                clipPath:
-                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-              }}
-              className="relative left-[calc(50%-13rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
-            />
-          </div>
+          ` `
         </div>
       </div>
 
@@ -105,10 +118,12 @@ export default function Home() {
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
-              Learn a Language with {StaticData.SiteName}
+              Designed by developers for developers
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Chatting to your PDF files has never been easier than with Quill.
+              Experience our markdown, diagram-as-code, keyboard navigation,
+              seamless dark mode, GitHub integration, and syntax highlighted
+              code blocks.
             </p>
           </div>
         </div>
@@ -118,34 +133,30 @@ export default function Home() {
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 1</span>
-              <span className="text-xl font-semibold">
-                Free. Fun. Effective.
-              </span>
+              <span className="text-xl font-semibold">Diagram as Code</span>
               <span className="mt-2 text-zinc-700">
-                Learning with {StaticData.SiteName} is fun, and research shows
-                that it works! With quick, bite-sized lessons.
+                allows you to create beautiful diagrams with a straightforward
+                syntax, all without fumbling with a GUI.
               </span>
             </div>
           </li>
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 2</span>
-              <span className="text-xl font-semibold">Stay Motivated</span>
+              <span className="text-xl font-semibold">GitHub integration</span>
               <span className="mt-2 text-zinc-700">
-                We make it easy to form a habit of language learning with
-                game-like features and fun challenges.
+                Our GitHub integration keeps your markdown docs and diagrams
+                next to code. You can even create PRs.
               </span>
             </div>
           </li>
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 3</span>
-              <span className="text-xl font-semibold">
-                Personalized Learning
-              </span>
+              <span className="text-xl font-semibold">Eraser AI</span>
               <span className="mt-2 text-zinc-700">
-                Combining the best of AI and language science, lessons are
-                tailored to help you learn at just the right level and pace.
+                Eraser AI generates stunning diagrams in seconds. You can
+                kickstart your diagram with existing code or text excerpts.
               </span>
             </div>
           </li>
@@ -155,12 +166,12 @@ export default function Home() {
           <div className="mt-16 flow-root sm:mt-24">
             <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
               <Image
-                src="/HomePage/Image 1.jpg"
+                src="/file-upload-preview.jpg"
                 alt="uploading preview"
                 width={1419}
                 height={732}
                 quality={100}
-                className="rounded-md bg-white shadow-2xl ring-1 ring-gray-900/10"
+                className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
               />
             </div>
           </div>
