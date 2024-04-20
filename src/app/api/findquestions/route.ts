@@ -7,13 +7,14 @@ export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const email = url.searchParams.get("email");
+    const Id = url.searchParams.get("id");
 
     const searchedunit = await db.userProgressQuestion.findMany({
       where: {
+        id: String(Id),
         userEmail: String(email),
       },
     });
-
     if (searchedunit) {
       return NextResponse.json({
         success: true,

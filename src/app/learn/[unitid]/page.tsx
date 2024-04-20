@@ -72,7 +72,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
                         </DialogDescription>
                         {question.videoReferenceVideo ?
                           (
-                        
+                            
                             <iframe
                             height="315"
                             src={question.videoReferenceVideo}

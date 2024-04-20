@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import HomepageButtons from "@/components/HomepageButtons";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -71,9 +72,10 @@ export default function Home() {
             <motion.li
               key="4"
               variants={item}
-              className="mt-5 max-w-prose text-primary font-bold text-3xl"
+              className="mt-5 max-w-prose text-primary font-bold text-3xl md:text-4xl"
             >
-              fsdfsdsfd
+              The free, fun, and effective way to learn{" "}
+              <br className="md:block hidden" /> a language!
             </motion.li>
             <motion.li
               key="3"
@@ -83,11 +85,7 @@ export default function Home() {
               cd
             </motion.li>
             <motion.li key="5" className="mt-5" variants={item}>
-              <Link href="/contact">
-                <Button size="lg">
-                  Contact Us <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              <HomepageButtons />
             </motion.li>
           </div>
         </motion.ul>

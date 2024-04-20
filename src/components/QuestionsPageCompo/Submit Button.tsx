@@ -51,7 +51,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
 
       if (data && data.success) {
         console.log("Submission successful");
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.error("Submission failed");
       }

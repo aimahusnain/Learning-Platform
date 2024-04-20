@@ -25,7 +25,7 @@ const HomepageButtons = () => {
         <Link href="/learn">
           <Button
             size="lg"
-            className="mt-5"
+            className="mt-5 text-white"
             onClick={handleRedirect}
             disabled={loading}
           >

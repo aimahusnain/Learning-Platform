@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -11,8 +11,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import StaticData from "@/lib/staticdata";
 
 const Navbar = () => {
   const isAuthenticated = false;
@@ -21,7 +22,7 @@ const Navbar = () => {
       <MaxWidthWrapper>
         <div className="flex h-16 items-center justify-between border-b border-zinc-200">
           <Link href="/" className="flex text-2xl z-40 font-bold">
-            WebKin Solutions
+            Flex Learn
           </Link>
           <MobileNav />
           <div className="hidden items-center space-x-4 sm:flex">
@@ -52,12 +53,6 @@ const Navbar = () => {
             >
               Portfolio
             </Link>
-            <div className={buttonVariants({
-              variant: "ghost",
-              size: "sm",
-            })}>
-        
-            </div>
             <Link
               href="/careers"
               className={buttonVariants({
@@ -69,7 +64,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden items-center space-x-4 sm:flex">
-            <Link href="/talk">
+            <Link href="/talk" className="text-white">
               <Button
                 className={buttonVariants({
                   size: "sm",
