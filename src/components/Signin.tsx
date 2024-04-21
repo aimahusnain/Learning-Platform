@@ -17,7 +17,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
     try {
       await signIn("google");
     } catch (error) {
-        console.log("There was an error logging in with Google");
+      console.log("There was an error logging in with Google");
     } finally {
       setIsLoading(false);
     }
@@ -32,7 +32,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
         onClick={loginWithGoogle}
         disabled={isLoading}
       >
-        Google
+        Sign in With Google
       </Button>
     </div>
   );

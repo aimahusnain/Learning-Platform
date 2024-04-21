@@ -82,7 +82,9 @@ export default function Home() {
               variants={item}
               className="mt-5 max-w-prose text-zinc-700 sm:text-lg"
             >
-              cd
+              Unlock boundless learning opportunities with [Your Website Name].
+              Explore diverse courses, engage with expert content, and elevate
+              your knowledge journey today!
             </motion.li>
             <motion.li key="5" className="mt-5" variants={item}>
               <HomepageButtons />

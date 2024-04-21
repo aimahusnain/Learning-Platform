@@ -263,7 +263,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             </Button>
           )}
 
-          {isSubmitted == true ? (
+          {isSubmitted === true ? (
             <Button
               onClick={handleForwardQuestionwithoutSaveMainQuestion}
               variant="outline"

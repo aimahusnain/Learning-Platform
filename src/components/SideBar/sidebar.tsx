@@ -16,14 +16,14 @@ export const Sidebar = ({ className }: Props) => {
   return (
     <div
       className={cn(
-        "flex h-full lg:w-[256px] bg-white lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+        "flex lg:w-[300px] bg-white sticky h-screen left-0 top-0 px-4 border-r-2 flex-col",
         className
       )}
     >
       <Link href="/">
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <h1 className="text-2xl font-extrabold text-primary tracking-wide">
-          {StaticData.SiteName}
+            {StaticData.SiteName}
           </h1>
         </div>
       </Link>
