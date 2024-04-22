@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { StaticData } from "@/lib/staticdata";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 interface SubmitButtonProps {
   questionid: string
@@ -14,6 +15,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
 
   async function unquestionsubmitapi() {
     const refresh = router.refresh;
+    toast("ReTaked!");
 
     refresh();
     try {

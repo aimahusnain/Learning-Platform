@@ -13,6 +13,8 @@ import { StaticData } from "@/lib/staticdata";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { X } from "lucide-react";
 
 interface SubmitButtonProps {
   questionId: string;
@@ -29,7 +31,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
   async function handleCommentSave() {
     setLoading(true);
     const refresh = router.refresh;
-
+    
     refresh();
     try {
       const response = await fetch(
@@ -48,11 +50,19 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
       );
 
       const data = await response.json();
-
+      
       if (data && data.success) {
         console.log("Submission successful");
         // window.location.reload();
+        toast("Submitted!");
       } else {
+        toast("Submission failed!", {
+          description: "Please Try Again Later",
+          action: {
+            label: "close",
+            onClick: () => console.log("Sonner Closed"),
+          },
+        });
         console.error("Submission failed");
       }
     } catch (error) {

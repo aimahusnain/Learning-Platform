@@ -4,18 +4,19 @@ import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
 import { StaticData } from "@/lib/staticdata";
 import axios from "axios";
 import { X } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Submitofmy from "./QuestionsPageCompo/IsSubmit";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
+import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
+import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
+import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
 import { Progress } from "./ui/progress";
-import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
-import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
-import { useSession } from "next-auth/react";
+import FetchQuestionsData from "./QuestionsPageCompo/FetchQuestionsData";
 
 interface Props {
   questionid: any;
@@ -30,6 +31,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
+  const [openedQuestion, setopenedQuestion] = useState<any[]>([]);
   const [count, setCount] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestionsAnswered, setTotalQuestionsAnswered] = useState(0);
@@ -52,6 +54,30 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
         console.error("Error fetching questions:", error);
       }
     };
+
+    
+
+    fetchQuestions();
+  }, []);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get(
+          `${StaticData.SiteURL}/api/questions/openedQuestion?id=${questionid}`
+        );
+        const data = response.data;
+        if (data.success) {
+          setopenedQuestion(data.data);
+        } else {
+          console.error("Failed to fetch questions:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    
 
     fetchQuestions();
   }, []);
@@ -158,13 +184,19 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   };
 
   CheckSubmit();
-
+  
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
         <div className="w-full flex flex-col">
-          <div className="w-full mb-6 flex items-center text-center justify-center text-2xl font-bold gap-3">
-            <h1>Name of Question</h1>
+          <div className="w-full mb-6 flex items-center text-center justify-center gap-3">
+            {isSubmitted === false && (
+              <Progress
+                value={progress}
+                className="w-full mt-5 h-4 bg-gray-300"
+              />
+            )}
+            {/* <h1>Name of Question</h1> */}
           </div>
           <div className="flex w-full justify-between items-center gap-3">
             <Button onClick={router.back} variant="destructive" size="icon">
@@ -198,15 +230,10 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               )}
             </div>
           </div>
-          <div className="flex w-full items-center gap-3">
-            {isSubmitted === false && (
-              <Progress
-                value={progress}
-                className="w-full mt-5 h-4 bg-gray-300"
-              />
-            )}
-          </div>
         </div>
+          <div className="flex w-full items-center justify-center gap-3 text-2xl font-bold">
+            {openedQuestion[0]?.name}
+          </div>
         <div className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
