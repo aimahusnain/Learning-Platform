@@ -1,6 +1,6 @@
 "use client";
 
-import { MobileHeader } from "@/components/SideBar/mobile-header";
+import { MobileSidebar } from "@/components/SideBar/mobile-sidebar";
 import { Sidebar } from "@/components/SideBar/sidebar";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,14 @@ import axios from "axios";
 import { LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 async function getAllListsByCategory() {
   try {
@@ -56,14 +64,27 @@ const English = () => {
 
   return (
     <div className="flex flex-row">
-      <MobileHeader />
+      <MobileSidebar />
       <Sidebar className="hidden lg:flex" />
       <div className="container mx-auto px-4 py-8">
+        <Breadcrumb className="mb-4">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Learn</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <div className="flex items-center mb-8 justify-between w-full">
-          <h1 className="text-4xl font-bold text-center">
-            English Course Units
+          <h1 className="text-4xl font-bold">
+            English Course Units{" "}
+            <span className="text-2xl font-medium">({getAllList.length})</span>
           </h1>
-          <div className="mt-4 flex justify-center">
+          <div className="flex justify-center">
             <ToggleGroup type="single">
               <ToggleGroupItem
                 value="list"
@@ -89,14 +110,16 @@ const English = () => {
         ) : (
           <div
             className={
-              isGrid ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-3" : "flex flex-col gap-3"
+              isGrid
+                ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-3"
+                : "flex flex-col gap-3"
             }
           >
             {getAllList &&
               getAllList.map((unit) => (
                 <div key={unit.id}>
                   {isGrid ? (
-                    <Card className="w-full">
+                    <Card className="w-full hover:border-black transition-all duration-500">
                       <CardHeader>
                         <Link href={`/learn/${unit.id}`}>
                           <CardTitle className="capitalize">
@@ -111,7 +134,7 @@ const English = () => {
                         <form>
                           <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
-                              Show How many Questions are?
+                              How many Questions are in this Unit?
                             </div>
                             <div className="flex flex-col space-y-1.5">
                               {unit.description}
@@ -129,15 +152,18 @@ const English = () => {
                       </CardFooter>
                     </Card>
                   ) : (
-                    <div className="flex flex-col border border-gray-200 p-4 mb-4">
-                      <Link href={`/learn/${unit.id}`}>
-                        <span className="text-lg capitalize mb-2">
-                          Unit {unit.noidnumber}: {unit.name}
-                        </span>
+                    <div className="flex justify-between items-center border border-gray-200 p-4 mb-4">
+                      <Link
+                        className="text-xl font-bold capitalize"
+                        href={`/learn/${unit.id}`}
+                      >
+                        Unit {unit.noidnumber}: {unit.name}
                       </Link>
-                      <p>{unit.description}</p>
-                      <div className="flex justify-between mt-4">
-                        <Button variant="outline" className="cursor-default">
+                      <div className="flex gap-5">
+                        <Button
+                          variant="outline"
+                          className="cursor-default max-w-max"
+                        >
                           Not Completed
                         </Button>
                         <Link href={`/learn/${unit.id}`}>

@@ -37,12 +37,13 @@ const UnitDetails = async ({ params }: { params: any }) => {
   const { unitid } = params;
 
   const UnitDetailsData = await SearchedUnit(unitid);
-  const Questions = await SearchedQuestions(unitid);  
+  console.log("Searched Unit Data:", UnitDetailsData);
+  const Questions = await SearchedQuestions(unitid);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8 text-center">
-        {UnitDetailsData.name} Questions
+        {UnitDetailsData[0].name} Questions
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Questions && Array.isArray(Questions) ? (
@@ -70,20 +71,18 @@ const UnitDetails = async ({ params }: { params: any }) => {
                           This Video Will Explain you very easily the{" "}
                           {question.name}.
                         </DialogDescription>
-                        {question.videoReferenceVideo ?
-                          (
-                            
-                            <iframe
+                        {question.videoReferenceVideo ? (
+                          <iframe
                             height="315"
                             src={question.videoReferenceVideo}
                             title="YouTub1e video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"
                             allowFullScreen
-                            />
-                          ) : (
-                            <p>Video Not Founded ):</p>
-                          )}
+                          />
+                        ) : (
+                          <p>Video Not Founded ):</p>
+                        )}
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>

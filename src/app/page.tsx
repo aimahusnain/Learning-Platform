@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HomepageButtons from "@/components/HomepageButtons";
+import { StaticData } from "@/lib/staticdata";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -82,7 +83,7 @@ export default function Home() {
               variants={item}
               className="mt-5 max-w-prose text-zinc-700 sm:text-lg"
             >
-              Unlock boundless learning opportunities with [Your Website Name].
+              Unlock boundless learning opportunities with {StaticData.SiteName}.
               Explore diverse courses, engage with expert content, and elevate
               your knowledge journey today!
             </motion.li>
