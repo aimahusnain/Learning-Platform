@@ -16,7 +16,6 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
-import FetchQuestionsData from "./QuestionsPageCompo/FetchQuestionsData";
 
 interface Props {
   questionid: any;
@@ -76,8 +75,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
         console.error("Error fetching questions:", error);
       }
     };
-
-    
 
     fetchQuestions();
   }, []);
@@ -196,7 +193,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                 className="w-full mt-5 h-4 bg-gray-300"
               />
             )}
-            {/* <h1>Name of Question</h1> */}
           </div>
           <div className="flex w-full justify-between items-center gap-3">
             <Button onClick={router.back} variant="destructive" size="icon">
@@ -258,11 +254,9 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             />
           )}
           {feedback && (
-            <div
-              className={`mb-4 text-center font-bold ${
+            <div className={`mb-4 text-center font-bold ${
                 feedback === "Correct!" ? "text-green-500" : "text-red-500"
-              }`}
-            >
+              }`}>
               {feedback}
             </div>
           )}
