@@ -21,19 +21,19 @@ const Data = () => {
         <CommandList>
           <CommandEmpty>Sorry We cannot find your search!</CommandEmpty>
           <CommandGroup heading="All">
-            <Link href="/units">
+            <Link href="/admin/units">
               <CommandItem>
                 <Calendar className="mr-2 h-4 w-4" />
                 <span>Units</span>
               </CommandItem>
             </Link>
-            <Link href="/questions">
+            <Link href="/admin/questions">
               <CommandItem>
                 <Calendar className="mr-2 h-4 w-4" />
                 <span>Questions</span>
               </CommandItem>
             </Link>
-            <Link href="/mainQuestions">
+            <Link href="/admin/mainQuestions">
               <CommandItem>
                 <Calendar className="mr-2 h-4 w-4" />
                 <span>MainQuestions</span>

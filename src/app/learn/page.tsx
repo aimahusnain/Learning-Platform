@@ -37,26 +37,24 @@ async function getAllListsByCategory() {
 }
 
 const English = () => {
-  const [isGrid, setIsGrid] = useState(true); // State to track layout choice
-  const [getAllList, setAllList] = useState<any[]>([]); // Explicitly set the type as any[]
-  const [isLoading, setIsLoading] = useState(true); // State to track loading status
+  const [isGrid, setIsGrid] = useState(true);
+  const [getAllList, setAllList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Function to toggle between grid and list layout
   const toggleLayout = () => {
     setIsGrid((prevState) => !prevState);
   };
 
-  // Fetch unit data on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true); // Set loading to true while fetching data
+        setIsLoading(true);
         const data = await getAllListsByCategory();
         setAllList(data);
       } catch (error) {
         console.error("Error fetching unit data:", error);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching data
+        setIsLoading(false);
       }
     };
     fetchData();

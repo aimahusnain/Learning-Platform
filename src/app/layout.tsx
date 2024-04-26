@@ -21,7 +21,6 @@ export default function RootLayout({
       <body className={font.className}>
         <Toaster />
         <NextAuthProvider>{children}</NextAuthProvider>
-        <p className="absolute bottom-0 p-6 opacity-55">Note: This is an Admin Panel!</p>
       </body>
     </html>
   );

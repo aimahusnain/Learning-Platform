@@ -22,9 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <NextThemeProvider>
-                  <Toaster />
-                  <Themes />
+          <Toaster />
+          <Themes />
           <NextAuthProvider>{children}</NextAuthProvider>
+          <div className="fixed bottom-0 p-6 w-full bg-black h-fit py-6">
+            <p className="opacity-55">Note: This is an Admin Panel!</p>
+          </div>
         </NextThemeProvider>
       </body>
     </html>
