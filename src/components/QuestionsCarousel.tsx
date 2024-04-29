@@ -11,11 +11,12 @@ import Submitofmy from "./QuestionsPageCompo/IsSubmit";
 import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
 import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
-import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
+import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
+import QuestionsPageInput from "./QuestionsPageCompo/Input";
 
 interface Props {
   questionid: any;
@@ -180,8 +181,11 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     }
   };
 
-  CheckSubmit();
+  CheckSubmit(); 
   
+  console.log(questions[currentQuestionIndex]?.id);
+  
+
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
       <div className="w-full flex flex-col h-screen items-center justify-between">
@@ -227,9 +231,9 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             </div>
           </div>
         </div>
-          <div className="flex w-full items-center justify-center gap-3 text-2xl font-bold">
-            {openedQuestion[0]?.name}
-          </div>
+        <div className="flex w-full items-center justify-center gap-3 text-2xl font-bold">
+          {openedQuestion[0]?.name}
+        </div>
         <div className="p-8 text-center">
           <h2 className="text-2xl font-bold mb-4 capitalize">
             {questions[currentQuestionIndex]?.whatquestion}
@@ -241,6 +245,12 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               value={userAnswers[currentQuestionIndex]}
               onChange={handleInputChange}
             />
+            // <QuestionsPageInput
+            //   userAnswers={userAnswers}
+            //   currentQuestionIndex={currentQuestionIndex}
+            //   handleInputChange={handleInputChange}
+            //   userId={questions[currentQuestionIndex]?.id}
+            // />
           )}
           {showCorrectAnswer && isSubmitted && (
             <div className="my-4 text-center capitalize font-sans font-bold text-green-500">
@@ -254,9 +264,11 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             />
           )}
           {feedback && (
-            <div className={`mb-4 text-center font-bold ${
+            <div
+              className={`mb-4 text-center font-bold ${
                 feedback === "Correct!" ? "text-green-500" : "text-red-500"
-              }`}>
+              }`}
+            >
               {feedback}
             </div>
           )}

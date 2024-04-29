@@ -25,7 +25,7 @@ export default function RootLayout({
           <Toaster />
           <Themes />
           <NextAuthProvider>{children}</NextAuthProvider>
-          <div className="fixed bottom-0 p-6 w-full bg-black h-fit py-6">
+          <div className="fixed bottom-0 p-6 w-full bg-zinc-100 dark:bg-zinc-900 h-fit py-6">
             <p className="opacity-55">Note: This is an Admin Panel!</p>
           </div>
         </NextThemeProvider>
