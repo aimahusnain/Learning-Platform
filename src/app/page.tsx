@@ -1,14 +1,12 @@
 "use client";
 
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import HomepageButtons from "@/components/HomepageButtons";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import Navbar from "@/components/Navbar";
 import { StaticData } from "@/lib/staticdata";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { BsKeyboardFill } from "react-icons/bs";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -31,8 +29,6 @@ const item = {
 };
 
 export default function Home() {
-  const texts = ["Text 1", "Text 2", "Text 3"];
-
   return (
     <>
       <Navbar />

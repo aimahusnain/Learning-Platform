@@ -1,7 +1,17 @@
-import { useState, useEffect } from "react";
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { LayoutGrid, List } from "lucide-react";
-import { Button } from "../ui/button";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,12 +20,14 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import Link from "next/link";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { Input } from "../ui/input";
+import { useRouter } from "next/navigation";
 
 interface Unit {
   id: number;
   name: string;
-  noidnumber: string;
+  noidnumber: number;
   description: string;
 }
 
@@ -33,11 +45,14 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
   isGrid,
 }) => {
   const [filteredUnits, setFilteredUnits] = useState<Unit[]>([]);
+  const [name, setName] = useState("");
+  const [noidnumber, setNoidNumber] = useState<number | string>("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data from the server-side function or API route
         const response = await fetch(
           `/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
             last - 1
@@ -52,6 +67,38 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
 
     fetchData();
   }, [first, last]);
+
+  async function handleCommentSave(id: number) {
+    try {
+      const response = await fetch(`/api/admin/Unit/Update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          name: name,
+          noidnumber: noidnumber,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data && data.success) {
+        const updatedUnits = filteredUnits.map((unit) => {
+          if (unit.id === id) {
+            return { ...unit, name: name };
+          }
+          return unit;
+        });
+        setFilteredUnits(updatedUnits);
+      } else {
+        console.error("Failed to update the unit's name.");
+      }
+    } catch (error) {
+      console.error("Error while updating unit's name:", error);
+    }
+  }
 
   return (
     <div className="w-full">
@@ -119,12 +166,63 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
                   className="text-xl font-bold capitalize"
                   href={`/learn/${unit.id}`}
                 >
-                  <span className="text-md font-light">Unit {unit.noidnumber}.</span> {unit.name}
+                  <span className="text-md font-light">
+                    Unit {unit.noidnumber}.
+                  </span>{" "}
+                  {unit.name}
                 </Link>
                 <div className="flex gap-5">
-                  <Button variant="ghost" className="max-w-max">
-                    Edit
-                  </Button>
+                  <Drawer>
+                    <DrawerTrigger asChild>
+                      <Button variant="ghost" className="max-w-max">
+                        Edit
+                      </Button>
+                      {/* <Button variant="outline">Open Drawer</Button> */}
+                    </DrawerTrigger>
+                    <DrawerContent>
+                      <div className="mx-auto w-full max-w-sm">
+                        <DrawerHeader>
+                          <DrawerTitle>Edit Unit</DrawerTitle>
+                          <DrawerDescription>
+                            Change Details of Unit
+                          </DrawerDescription>
+                        </DrawerHeader>
+                        <div className="space-y-4 flex flex-col p-4 pb-3">
+                          <div className="space-y-2">
+                            <label>Name</label>
+                            <Input
+                              id={`unitName_${unit.id}`}
+                              placeholder="Name of Unit"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                            />{" "}
+                          </div>
+                          <div className="space-y-2">
+                            <label>No of Unit</label>
+                            <Input
+                              id={`unitNoid_${unit.id}`}
+                              placeholder="Number"
+                              value={noidnumber.toString()}
+                              onChange={(e) =>
+                                setNoidNumber(parseInt(e.target.value, 10))
+                              }
+                            />{" "}
+                          </div>
+                        </div>
+                        <DrawerFooter>
+                          <DrawerClose asChild>
+                            <Button onClick={() => handleCommentSave(unit.id)}>
+                              Submit
+                            </Button>
+                          </DrawerClose>
+                          <DrawerClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                          </DrawerClose>
+                        </DrawerFooter>
+                      </div>
+                    </DrawerContent>
+                  </Drawer>
+                  
                   <Link href={`/learn/${unit.id}`}>
                     <Button variant="secondary">Learn</Button>
                   </Link>

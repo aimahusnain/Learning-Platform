@@ -92,7 +92,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
   const handleForwardQuestion = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
-
+    
     if (
       userAnswers[currentQuestionIndex].trim().toLowerCase() ===
       correctAnswer.toLowerCase()
@@ -239,18 +239,20 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             {questions[currentQuestionIndex]?.whatquestion}
           </h2>
           {!isSubmitted && (
-            <Input
-              type="text"
-              placeholder="Type your answer..."
-              value={userAnswers[currentQuestionIndex]}
-              onChange={handleInputChange}
-            />
-            // <QuestionsPageInput
-            //   userAnswers={userAnswers}
-            //   currentQuestionIndex={currentQuestionIndex}
-            //   handleInputChange={handleInputChange}
-            //   userId={questions[currentQuestionIndex]?.id}
+            // <Input
+            //   type="text"
+            //   placeholder="Type your answer..."
+            //   value={userAnswers[currentQuestionIndex]}
+            //   onChange={handleInputChange}
             // />
+            // QuestionsCarousel component
+            <QuestionsPageInput
+              userAnswers={userAnswers}
+              currentQuestionIndex={currentQuestionIndex}
+              handleInputChange={handleInputChange}
+              mainQuestionId={questions[currentQuestionIndex]?.id}
+              userEmail={session?.user?.email}
+            />
           )}
           {showCorrectAnswer && isSubmitted && (
             <div className="my-4 text-center capitalize font-sans font-bold text-green-500">

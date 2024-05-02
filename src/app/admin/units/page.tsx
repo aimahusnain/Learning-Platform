@@ -105,30 +105,6 @@ const Units = () => {
           </CardContent>
         </Card>
       ))}
-      {/* {isLoading && <p>Loading...</p>}
-      {!isLoading && getAllList.length === 0 && <p>No units found.</p>}
-      {!isLoading &&
-        getAllList.map((unit) => (
-          <div
-            key={unit.id}
-            className="border border-gray-200 rounded-md p-4 mb-4"
-          >
-            <Link
-              className="text-xl font-bold capitalize mb-2 block"
-              href={`/learn/${unit.id}`}
-            >
-                Unit {unit.noidnumber}: {unit.name}
-            </Link>
-            <div className="flex justify-between items-center">
-              <Button variant="outline" className="max-w-max">
-                Not Completed
-              </Button>
-              <Link href={`/learn/${unit.id}`}>
-                <Button variant="success">Learn</Button>
-              </Link>
-            </div>
-          </div>
-        ))} */}
     </div>
   );
 };
