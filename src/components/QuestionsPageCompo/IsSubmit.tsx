@@ -1,8 +1,9 @@
 "use client";
 
+import { StaticData } from "@/lib/staticdata";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import SubmitButton from "./Submit Button";
-import { submitQuestion } from "./SubmitQuestion";
 
 interface Props {
   county: any;
@@ -11,6 +12,7 @@ interface Props {
 
 const IsSubmit: React.FC<Props> = ({ county, questionid }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+    const { data: session } = useSession();
 
   console.log("Isubmit", questionid);
   
@@ -18,7 +20,11 @@ const IsSubmit: React.FC<Props> = ({ county, questionid }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await submitQuestion();
+        const response = await fetch(
+          `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
+        );
+
+          const data = await response.json();
 
         setIsSubmitted(
           data.success && data.data.length > 0 && data.data[0].Submitted

@@ -1,13 +1,15 @@
 import { StaticData } from "@/lib/staticdata";
 import { useSession } from "next-auth/react";
 
-export async function submitQuestion() {
+export async function submitQuestion(id: any) {
     const { data: session } = useSession();
 
+    console.log(`123 ${id.questionId}`);
+    
+  
   const res = await fetch(
-    `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=clux1ne450001hzc8vv4kgk20`
+    `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${id}`
   );
-  const data = await res.json();
   console.log(data);
   return data;
 }
