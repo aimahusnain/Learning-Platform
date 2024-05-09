@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -12,9 +11,9 @@ import {
 import { StaticData } from "@/lib/staticdata";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
+import React, { useState } from "react";
 import { toast } from "sonner";
-import { X } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface SubmitButtonProps {
   questionId: string;
@@ -37,7 +36,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
       const response = await fetch(
         `${StaticData.SiteURL}/api/questionsubmitapi`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

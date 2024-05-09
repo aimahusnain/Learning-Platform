@@ -68,14 +68,26 @@ model Question {
   UserProgressMainQuestion UserProgressMainQuestion[]
 }
 
+// model UserProgressQuestion {
+//   id        String   @id @map("_id")
+//   progress  Int?     @default(0)
+//   submitted Boolean  @default(false)
+//   userEmail String
+//   User      User?     @relation(fields: [userEmail], references: [email])
+//   Question  Question? @relation(fields: [id], references: [id])
+// }
+
 model UserProgressQuestion {
-  id        String   @id @map("_id")
+  id        String   @id @map("_id") @default(cuid())
   progress  Int?     @default(0)
+  questionId String? 
   submitted Boolean  @default(false)
   userEmail String
-  User      User?     @relation(fields: [userEmail], references: [email])
-  Question  Question? @relation(fields: [id], references: [id])
+  User      User?    @relation(fields: [userEmail], references: [email])
+  Question  Question? @relation(fields: [questionId], references: [id])
 }
+
+
 
 model UserProgressMainQuestion {
   id              String         @id @map("_id") @default(cuid())

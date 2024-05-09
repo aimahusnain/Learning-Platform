@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Submitofmy from "./QuestionsPageCompo/IsSubmit";
-import { submitQuestion } from "./QuestionsPageCompo/SubmitQuestion";
 import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
 import SubmittedMarks from "./QuestionsPageCompo/SubmittedMarks";
 import { Badge } from "./ui/badge";
@@ -172,7 +171,12 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
   const CheckSubmit = async () => {
     try {
-      const data = await submitQuestion();
+      const response = await fetch(
+        `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
+      );
+
+        const data = await response.json();
+        
       setIsSubmitted(
         data.success && data.data.length > 0 && data.data[0].submitted
       );
