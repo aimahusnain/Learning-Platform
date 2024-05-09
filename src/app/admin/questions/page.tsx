@@ -6,14 +6,12 @@ import { StaticData } from "@/lib/staticdata";
 
 async function SearchedQuestions() {
   try {
+
     const res = await fetch(`${StaticData.SiteURL}/api/admin/Questions/get`);
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch questions: ${res.status} ${res.statusText}`);
-    }
-
     const data = await res.json();
-    return data.success ? data.data : [];
+    return data.success ? data.data : console.log("Not Found Please");
+    ;
   } catch (error) {
     console.error('Error fetching questions:', error);
     return [];
