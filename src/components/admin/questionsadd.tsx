@@ -95,7 +95,7 @@ const QuestionsAdd = () => {
         <DialogHeader>
           <DialogTitle>Add a Question</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
