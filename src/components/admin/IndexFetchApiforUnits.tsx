@@ -20,9 +20,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { Input } from "../ui/input";
-import { useRouter } from "next/navigation";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+import { StaticData } from "@/lib/staticdata";
 
 interface Unit {
   id: number;
@@ -48,13 +48,12 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
   const [name, setName] = useState("");
   const [noidnumber, setNoidNumber] = useState<number | string>("");
 
-  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
+          `${StaticData.SiteURL}/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
             last - 1
           }`
         );
