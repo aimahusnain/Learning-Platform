@@ -44,60 +44,60 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
   last,
   isGrid,
 }) => {
-  const [filteredUnits, setFilteredUnits] = useState<Unit[]>([]);
-  const [name, setName] = useState("");
-  const [noidnumber, setNoidNumber] = useState<number | string>("");
+  // const [filteredUnits, setFilteredUnits] = useState<Unit[]>([]);
+  // const [name, setName] = useState("");
+  // const [noidnumber, setNoidNumber] = useState<number | string>("");
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${StaticData.SiteURL}/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
-            last - 1
-          }`
-        );
-        const data = await response.json();
-        setFilteredUnits(data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${StaticData.SiteURL}/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
+  //           last - 1
+  //         }`
+  //       );
+  //       const data = await response.json();
+  //       setFilteredUnits(data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [first, last]);
+  //   fetchData();
+  // }, [first, last]);
 
-  async function handleCommentSave(id: number) {
-    try {
-      const response = await fetch(`/api/admin/Unit/Update`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-          name: name,
-          noidnumber: noidnumber,
-        }),
-      });
+  // async function handleCommentSave(id: number) {
+  //   try {
+  //     const response = await fetch(`/api/admin/Unit/Update`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         id: id,
+  //         name: name,
+  //         noidnumber: noidnumber,
+  //       }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (data && data.success) {
-        const updatedUnits = filteredUnits.map((unit) => {
-          if (unit.id === id) {
-            return { ...unit, name: name };
-          }
-          return unit;
-        });
-        setFilteredUnits(updatedUnits);
-      } else {
-        console.error("Failed to update the unit's name.");
-      }
-    } catch (error) {
-      console.error("Error while updating unit's name:", error);
-    }
-  }
+  //     if (data && data.success) {
+  //       const updatedUnits = filteredUnits.map((unit) => {
+  //         if (unit.id === id) {
+  //           return { ...unit, name: name };
+  //         }
+  //         return unit;
+  //       });
+  //       setFilteredUnits(updatedUnits);
+  //     } else {
+  //       console.error("Failed to update the unit's name.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error while updating unit's name:", error);
+  //   }
+  // }
 
   return (
   //  <div className="w-full">
