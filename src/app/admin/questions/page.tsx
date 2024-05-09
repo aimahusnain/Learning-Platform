@@ -1,24 +1,25 @@
 // Units.tsx
-import React from "react";
+import Buttondont from "@/components/admin/Buttondont"; // Import Buttondont component
 import Questionsadd from "@/components/admin/questionsadd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { StaticData } from "@/lib/staticdata";
-import Buttondont from "@/components/admin/Buttondont"; // Import Buttondont component
 
 async function SearchedQuestions() {
-  const res = await fetch(`${StaticData.SiteURL}/api/admin/Questions/get`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${StaticData.SiteURL}/api/admin/Questions/get`);
 
-  if (data.success) return data.data;
+    if (!res.ok) {
+      throw new Error(`Failed to fetch questions: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    return data.success ? data.data : [];
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+    return [];
+  }
 }
+
 
 const Units = async () => {
   const Questions = await SearchedQuestions();
