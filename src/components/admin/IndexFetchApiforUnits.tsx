@@ -58,7 +58,7 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
           }`
         );
         const data = await response.json();
-        setFilteredUnits(data.data);
+        // setFilteredUnits(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -90,7 +90,7 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
           }
           return unit;
         });
-        setFilteredUnits(updatedUnits);
+        // setFilteredUnits(updatedUnits);
       } else {
         console.error("Failed to update the unit's name.");
       }
