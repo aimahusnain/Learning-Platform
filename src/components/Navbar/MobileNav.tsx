@@ -1,25 +1,15 @@
 "use client";
 
-import { ArrowRight, ChevronDown, Menu } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+  SheetTrigger
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 const MobileNav = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
