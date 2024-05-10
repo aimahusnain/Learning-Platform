@@ -6,7 +6,6 @@ import { StaticData } from "@/lib/staticdata";
 
 async function SearchedQuestions() {
   try {
-
     const res = await fetch(`${StaticData.SiteURL}/api/admin/Questions/get`);
 
     const data = await res.json();

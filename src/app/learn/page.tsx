@@ -80,7 +80,7 @@ const English = () => {
         <div className="flex items-center mb-8 justify-between w-full">
           <h1 className="text-4xl font-bold">
             English Course Units{" "}
-            <span className="text-2xl font-medium">({getAllList.length})</span>
+            <span className="text-2xl font-medium">({getAllList?.length})</span>
           </h1>
           <div className="flex justify-center">
             <ToggleGroup type="single">

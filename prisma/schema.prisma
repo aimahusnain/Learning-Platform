@@ -58,6 +58,7 @@ model Question {
   id                       String                     @id @default(cuid()) @map("_id")
   Unit                     Unit                       @relation(fields: [unitId], references: [id])
   unitId                   String
+  Image                    String?
   videoReferenceVideo      String?
   name                     String
   description              String?
