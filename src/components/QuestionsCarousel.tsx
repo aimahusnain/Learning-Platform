@@ -16,6 +16,7 @@ import { Input } from "./ui/input";
 import { Progress } from "./ui/progress";
 import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail";
 import QuestionsPageInput from "./QuestionsPageCompo/Input";
+import Image from "next/image";
 
 interface Props {
   questionid: any;
@@ -54,8 +55,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
       }
     };
 
-    
-
     fetchQuestions();
   }, []);
 
@@ -91,7 +90,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
   const handleForwardQuestion = () => {
     const correctAnswer = questions[currentQuestionIndex].answer;
-    
+
     if (
       userAnswers[currentQuestionIndex].trim().toLowerCase() ===
       correctAnswer.toLowerCase()
@@ -175,8 +174,8 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
         `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
       );
 
-        const data = await response.json();
-        
+      const data = await response.json();
+
       setIsSubmitted(
         data.success && data.data.length > 0 && data.data[0].submitted
       );
@@ -185,10 +184,9 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     }
   };
 
-  CheckSubmit(); 
-  
+  CheckSubmit();
+
   console.log(questions[currentQuestionIndex]?.id);
-  
 
   return (
     <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
@@ -235,50 +233,52 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
             </div>
           </div>
         </div>
-        <div className="flex w-full items-center justify-center gap-3 text-2xl font-bold">
-          {openedQuestion[0]?.name}
+        <div className="flex-col flex items-center">
+          <div className="flex flex-col items-center justify-center gap-3 text-2xl font-bold">
+            {!openedQuestion[0]?.image ? (
+              <img
+              src={openedQuestion[0]?.Image}
+              alt="Question Image"
+              className="w-[50rem]"
+              />
+            ) : null}
+          </div>
+          <div className="p-5 w-fit text-center">
+            <h2 className="text-2xl font-bold mb-4 capitalize">
+              {questions[currentQuestionIndex]?.whatquestion}
+            </h2>
+            {!isSubmitted && (
+              <QuestionsPageInput
+                userAnswers={userAnswers}
+                currentQuestionIndex={currentQuestionIndex}
+                handleInputChange={handleInputChange}
+                mainQuestionId={questions[currentQuestionIndex]?.id}
+                userEmail={session?.user?.email}
+              />
+            )}
+            {showCorrectAnswer && isSubmitted && (
+              <div className="my-4 text-center capitalize font-sans font-bold text-green-500">
+                Correct Answer: {questions[currentQuestionIndex]?.answer}
+              </div>
+            )}{" "}
+            {isSubmitted && (
+              <SubmitTrueorFalse
+                UserEmail={String(session?.user?.email)}
+                questionid={questions[currentQuestionIndex]?.id}
+              />
+            )}
+            {feedback && (
+              <div
+                className={`mb-4 text-center font-bold ${
+                  feedback === "Correct!" ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {feedback}
+              </div>
+            )}
+          </div>
         </div>
-        <div className="p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4 capitalize">
-            {questions[currentQuestionIndex]?.whatquestion}
-          </h2>
-          {!isSubmitted && (
-            // <Input
-            //   type="text"
-            //   placeholder="Type your answer..."
-            //   value={userAnswers[currentQuestionIndex]}
-            //   onChange={handleInputChange}
-            // />
-            // QuestionsCarousel component
-            <QuestionsPageInput
-              userAnswers={userAnswers}
-              currentQuestionIndex={currentQuestionIndex}
-              handleInputChange={handleInputChange}
-              mainQuestionId={questions[currentQuestionIndex]?.id}
-              userEmail={session?.user?.email}
-            />
-          )}
-          {showCorrectAnswer && isSubmitted && (
-            <div className="my-4 text-center capitalize font-sans font-bold text-green-500">
-              Correct Answer: {questions[currentQuestionIndex]?.answer}
-            </div>
-          )}{" "}
-          {isSubmitted && (
-            <SubmitTrueorFalse
-              UserEmail={String(session?.user?.email)}
-              questionid={questions[currentQuestionIndex]?.id}
-            />
-          )}
-          {feedback && (
-            <div
-              className={`mb-4 text-center font-bold ${
-                feedback === "Correct!" ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {feedback}
-            </div>
-          )}
-        </div>
+
         <div className="flex w-full justify-between">
           <Button
             onClick={handlePreviousQuestion}
