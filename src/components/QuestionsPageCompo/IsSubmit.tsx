@@ -12,11 +12,10 @@ interface Props {
 
 const IsSubmit: React.FC<Props> = ({ county, questionid }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-    const { data: session } = useSession();
+  const { data: session } = useSession();
 
   console.log("Isubmit", questionid);
   
-
   useEffect(() => {
     const fetchData = async () => {
       try {

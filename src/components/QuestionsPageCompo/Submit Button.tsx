@@ -36,7 +36,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
       const response = await fetch(
         `${StaticData.SiteURL}/api/questionsubmitapi`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -56,8 +56,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
         toast("Submitted!");
       } else {
         toast("Submission failed!", {
-          description: "Please Try Again Later",
-          action: {
+          description: "Please Try Again Later", action: {
             label: "close",
             onClick: () => console.log("Sonner Closed"),
           },
@@ -66,6 +65,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
       }
     } catch (error) {
       console.error("Error submitting question:", error);
+      toast("Submission failed!", {
+        description: "Please Try Again Later",
+        action: {
+          label: "close",
+          onClick: () => console.log("Sonner Closed"),
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -75,7 +81,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="success" disabled={isSubmitted}>
+          <Button disabled={isSubmitted}>
             Submit
           </Button>
         </DialogTrigger>

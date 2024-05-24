@@ -89,7 +89,6 @@ model UserProgressQuestion {
 }
 
 
-
 model UserProgressMainQuestion {
   id              String         @id @map("_id") @default(cuid())
   userAnswer      String
@@ -120,7 +119,9 @@ model MainQuestions {
   id                       String                     @id @default(cuid()) @map("_id")
   questionid               String
   whatquestion             String
-  answer                   String
+  answer                   String[]
+  answer1                  String?
+  answer2                  String?
   question                 Question                   @relation(fields: [questionid], references: [id])
   UserProgressMainQuestion UserProgressMainQuestion[]
 }

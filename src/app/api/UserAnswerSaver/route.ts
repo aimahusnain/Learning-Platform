@@ -8,12 +8,9 @@
       const url = new URL(req.url);
       const userEmail = url.searchParams.get("email");
       const mainQuestionsId = url.searchParams.get("mainQuestionsId");
-      // const extractData = await req.json();
 
       const Question = await db.userProgressMainQuestion.findFirst({
         where: {
-          // userEmail: String(extractData.userEmail),
-          // mainQuestionsId: String(extractData.mainQuestionsId),
           userEmail: String(userEmail),
           mainQuestionsId: String(mainQuestionsId),
         },
