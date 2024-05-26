@@ -94,7 +94,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
                       : "Not Submitted"}
                   </Button>
                   <Link href={`/learn/${unitid}/questions/${question.id}`}>
-                    <Button variant="success">Learn</Button>
+                    <Button >Learn</Button>
                   </Link>
                 </CardFooter>
               </Card>

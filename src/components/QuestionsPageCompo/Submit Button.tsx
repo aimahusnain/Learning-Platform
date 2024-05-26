@@ -19,10 +19,14 @@ interface SubmitButtonProps {
   questionId: string;
   isSubmitted: boolean;
   count: number;
-  id: any
+  id: any;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({
+  isSubmitted,
+  count,
+  id,
+}) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
@@ -30,7 +34,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
   async function handleCommentSave() {
     setLoading(true);
     const refresh = router.refresh;
-    
+
     refresh();
     try {
       const response = await fetch(
@@ -49,14 +53,15 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
       );
 
       const data = await response.json();
-      
+
       if (data && data.success) {
         console.log("Submission successful");
         // window.location.reload();
         toast("Submitted!");
       } else {
         toast("Submission failed!", {
-          description: "Please Try Again Later", action: {
+          description: "Please Try Again Later",
+          action: {
             label: "close",
             onClick: () => console.log("Sonner Closed"),
           },
@@ -81,7 +86,10 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button disabled={isSubmitted}>
+          <Button
+            className="hover:bg-green-500 hover:rounded-sm font-bold transition-all duration-400 rounded-lg"
+            disabled={isSubmitted}
+          >
             Submit
           </Button>
         </DialogTrigger>
@@ -99,7 +107,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitted, count, id }) =
             </DialogClose>
             <Button
               type="submit"
-              variant="success"
+              
               onClick={handleCommentSave}
               disabled={isSubmitted || loading}
             >

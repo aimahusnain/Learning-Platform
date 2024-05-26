@@ -59,10 +59,10 @@ model Question {
   Unit                     Unit                       @relation(fields: [unitId], references: [id])
   unitId                   String
   Image                    String?
+  idea                     String?
   videoReferenceVideo      String?
   name                     String
   description              String?
-  mainQuestions            String[]
   MainQuestions            MainQuestions[]
   UserProgress             UserProgress[]
   UserProgressQuestion     UserProgressQuestion[]
@@ -79,20 +79,21 @@ model Question {
 // }
 
 model UserProgressQuestion {
-  id        String   @id @map("_id") @default(cuid())
+  id        String   @id @map("_id")
   progress  Int?     @default(0)
-  questionId String? 
   submitted Boolean  @default(false)
   userEmail String
   User      User?    @relation(fields: [userEmail], references: [email])
-  Question  Question? @relation(fields: [questionId], references: [id])
+  Question  Question? @relation(fields: [id], references: [id])
 }
 
 
 model UserProgressMainQuestion {
   id              String         @id @map("_id") @default(cuid())
   userAnswer      String
+  userAnswer2      String?
   correct         Boolean        @default(false)
+  correct2         Boolean?
   userEmail       String
   User            User           @relation(fields: [userEmail], references: [email])
   mainQuestionsId String
@@ -119,8 +120,10 @@ model MainQuestions {
   id                       String                     @id @default(cuid()) @map("_id")
   questionid               String
   whatquestion             String
-  answer                   String[]
+  whatquestionOption1      String?
+  whatquestionOption2      String?
   answer1                  String?
+  answer2Question          String?
   answer2                  String?
   question                 Question                   @relation(fields: [questionid], references: [id])
   UserProgressMainQuestion UserProgressMainQuestion[]

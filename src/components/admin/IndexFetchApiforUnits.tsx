@@ -155,7 +155,7 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
                     Not Completed
                   </Button>
                   <Link href={`/learn/${unit.id}`}>
-                    <Button variant="success">Learn</Button>
+                    <Button>Learn</Button>
                   </Link>
                 </CardFooter>
               </Card>

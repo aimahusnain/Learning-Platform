@@ -15,7 +15,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
 
   async function unquestionsubmitapi() {
     const refresh = router.refresh;
-    toast("ReTaked!");
+    toast("ReTaken!");
 
     refresh();
     try {
@@ -76,7 +76,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
 
   return (
     <div>
-      <Button variant="success" onClick={handleCommentSave}>
+      <Button  onClick={handleCommentSave}>
         Retake
       </Button>
     </div>

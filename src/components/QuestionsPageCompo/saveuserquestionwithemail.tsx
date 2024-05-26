@@ -1,11 +1,13 @@
 import { StaticData } from "@/lib/staticdata";
 
 export async function SaveMainQuestion(
+  userAnswer2: string,
   mainQuestionsId: any,
   userAnswer: any,
     correct: boolean,
+    correct2: boolean,
   userEmail: String,
-  mainquestionId: String
+  mainquestionId: String,
 ) {
   try {
     const res = await fetch(`${StaticData.SiteURL}/api/saveuserquestion`, {
@@ -16,7 +18,9 @@ export async function SaveMainQuestion(
       body: JSON.stringify({
         mainQuestionsId: mainQuestionsId,
         userAnswer: userAnswer,
+        userAnswer2: userAnswer2,
         correct: correct,
+        correct2: correct2,
         userEmail: userEmail,
         questionId: mainquestionId,
       }),
