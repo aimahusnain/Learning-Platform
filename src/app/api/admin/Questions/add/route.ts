@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
       data: {
         name: extractPostData.name,
         description: extractPostData.description,
-        videoReferenceVideo: extractPostData.videoReferenceVideo,
         Unit: { connect: { id: extractPostData.unitId } },
       },
     });
