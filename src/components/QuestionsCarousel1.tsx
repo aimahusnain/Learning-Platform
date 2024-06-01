@@ -471,7 +471,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   <img
                     src={openedQuestion[0]?.Image}
                     alt="Question Image"
-                    className="w-[50rem]"
+                    className="w-[20rem]"
                   />
                 )}
               </div>
