@@ -33,10 +33,10 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
 
   async function handleCommentSave() {
     setLoading(true);
-    const refresh = router.refresh;
-
-    refresh();
     try {
+      const refresh = router.refresh;
+      refresh();
+
       const response = await fetch(
         `${StaticData.SiteURL}/api/questionsubmitapi`,
         {
@@ -111,7 +111,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
               onClick={handleCommentSave}
               disabled={isSubmitted || loading}
             >
-              {loading ? "Loading..." : "Submit"}
+              {loading ? "Submitting..." : "Submit"}
             </Button>
           </DialogFooter>
         </DialogContent>

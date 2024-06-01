@@ -48,6 +48,7 @@ model Unit {
   courseId   String
   noidnumber Int        @default(1)
   name       String
+  videoReferenceVideo      String?
   completed  Boolean    @default(false)
   progress   Int        @default(0)
   questions  Question[]
@@ -60,7 +61,6 @@ model Question {
   unitId                   String
   Image                    String?
   idea                     String?
-  videoReferenceVideo      String?
   name                     String
   description              String?
   MainQuestions            MainQuestions[]

@@ -5,6 +5,7 @@ import { StaticData } from "@/lib/staticdata";
 import { MessagesSquare } from "lucide-react";
 import Link from "next/link";
 import MobileNav from "./MobileNav";
+import ThemeToggler from "../themes";
 
 const Navbar = () => {
   return (
@@ -54,6 +55,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden items-center space-x-4 sm:flex">
+           <ThemeToggler />
             <Link href="/talk" className="text-white">
               <Button
                 className={buttonVariants({

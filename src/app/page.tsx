@@ -33,7 +33,6 @@ export default function Home() {
     <>
       <Navbar />
       <MaxWidthWrapper className="mb-12 mt-10 flex flex-col items-center justify-center text-center">
-        <motion.ul variants={container} initial="hidden" animate="visible">
           <div>
             {" "}
             <div
@@ -49,6 +48,7 @@ export default function Home() {
               />
             </div>
           </div>
+        <motion.ul variants={container} initial="hidden" animate="visible">
           <div className="flex items-center flex-col">
             <motion.li key="1" variants={item}>
               <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md transition-all hover:border-gray-300 ">

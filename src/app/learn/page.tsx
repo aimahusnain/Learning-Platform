@@ -1,7 +1,13 @@
 "use client";
 
-import { MobileSidebar } from "@/components/SideBar/mobile-sidebar";
-import { Sidebar } from "@/components/SideBar/sidebar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,14 +23,6 @@ import axios from "axios";
 import { LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 async function getAllListsByCategory() {
   try {
@@ -62,8 +60,6 @@ const English = () => {
 
   return (
     <div className="flex flex-row">
-      <MobileSidebar />
-      <Sidebar className="hidden lg:flex" />
       <div className="container mx-auto px-4 py-8">
         <Breadcrumb className="mb-4">
           <BreadcrumbList>

@@ -45,6 +45,43 @@ const UnitDetails = async ({ params }: { params: any }) => {
         {UnitDetailsData[0].name} <span className="font-normal">Questions</span>
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+               <Dialog>
+                    <DialogTrigger>
+              <Card key="explanation-video" className="w-[350px] shadow-xl">
+                <CardHeader>
+                    <CardTitle className="capitalize w-full text-left">
+                      Explanatory Video
+                    </CardTitle>
+                </CardHeader>
+                <CardFooter className="flex w-full justify-between">
+                    <div></div>
+                    <Button>Watch</Button>
+                </CardFooter>
+              </Card>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Explanation Video</DialogTitle>
+                        <DialogDescription>
+                          This Video Will Explain you very easily the{" "}
+                          {UnitDetailsData[0].name}.
+                        </DialogDescription>
+                      </DialogHeader>
+                      {UnitDetailsData[0].videoReferenceVideo ? (
+                        <iframe
+                          className="w-full"
+                          height="315"
+                          src={UnitDetailsData[0].videoReferenceVideo}
+                          title="YouTub1e video player"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <p>Video Not Founded ):</p>
+                      )}
+                    </DialogContent>
+                  </Dialog>
         {Questions && Array.isArray(Questions) ? (
           Questions.map((question: any) => {
             return (
@@ -61,31 +98,7 @@ const UnitDetails = async ({ params }: { params: any }) => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Dialog>
-                    <DialogTrigger>Explanation Video</DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Explanation Video</DialogTitle>
-                        <DialogDescription>
-                          This Video Will Explain you very easily the{" "}
-                          {question.name}.
-                        </DialogDescription>
-                      </DialogHeader>
-                      {question.videoReferenceVideo ? (
-                        <iframe
-                          className="w-full"
-                          height="315"
-                          src={question.videoReferenceVideo}
-                          title="YouTub1e video player"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allowFullScreen
-                        />
-                      ) : (
-                        <p>Video Not Founded ):</p>
-                      )}
-                    </DialogContent>
-                  </Dialog>
+                 
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" className="cursor-default">

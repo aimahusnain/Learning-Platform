@@ -5,6 +5,7 @@ import "./globals.css";
 import NextAuthProvider from "@/providers/next-auth-provider";
 const font = Nunito({ subsets: ["latin"] });
 import { Toaster } from "@/components/ui/sonner";
+import NextThemeProvider from "@/providers/next-theme-provider";
 
 export const metadata: Metadata = {
   title: StaticData.SiteName,
@@ -20,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
       </head>
-      <body className={font.className}>
+      <body className={`${font.className} bg-white dark:bg-zinc-800`}>
+      <NextThemeProvider>
         <Toaster />
         <NextAuthProvider>{children}</NextAuthProvider>
+      </NextThemeProvider>
       </body>
     </html>
   );

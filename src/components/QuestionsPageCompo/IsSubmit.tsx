@@ -23,7 +23,7 @@ const IsSubmit: React.FC<Props> = ({ county, questionid }) => {
           `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
         );
 
-          const data = await response.json();
+        const data = await response.json();
 
         setIsSubmitted(
           data.success && data.data.length > 0 && data.data[0].Submitted
