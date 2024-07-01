@@ -19,8 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-      </head>
       <body className={`${font.className} bg-white dark:bg-zinc-800`}>
       <NextThemeProvider>
         <Toaster />

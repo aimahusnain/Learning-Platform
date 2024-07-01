@@ -118,14 +118,14 @@ model User {
 
 model MainQuestions {
   id                       String                     @id @default(cuid()) @map("_id")
+  question                 Question                   @relation(fields: [questionid], references: [id])
   questionid               String
   whatquestion             String
+  answer1                  String?
   whatquestionOption1      String?
   whatquestionOption2      String?
-  answer1                  String?
   answer2Question          String?
   answer2                  String?
-  question                 Question                   @relation(fields: [questionid], references: [id])
   UserProgressMainQuestion UserProgressMainQuestion[]
 }
 

@@ -1,9 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { StaticData } from "@/lib/staticdata";
 import axios from "axios";
+import { Lightbulb, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import Loader from "./Loader";
 import QuestionsPageInput from "./QuestionsPageCompo/Input";
 import Submitofmy from "./QuestionsPageCompo/IsSubmit";
 import SubmitTrueorFalse from "./QuestionsPageCompo/SubmitTrueorFalse";
@@ -12,16 +22,6 @@ import { SaveMainQuestion } from "./QuestionsPageCompo/saveuserquestionwithemail
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
-import { StaticData } from "@/lib/staticdata";
-import ReTryButton from "@/components/QuestionsPageCompo/ReTry Button";
-import { Lightbulb, X } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import Loader from "./Loader";
 
 interface Props {
   questionid: any;

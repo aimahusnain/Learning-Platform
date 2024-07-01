@@ -6,7 +6,6 @@ import Navbar from "@/components/Navbar";
 import { StaticData } from "@/lib/staticdata";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { BsKeyboardFill } from "react-icons/bs";
 
 const container = {
   hidden: { opacity: 1, scale: 0 },
@@ -56,14 +55,6 @@ export default function Home() {
                   Learn About Us
                 </p>
               </div>
-            </motion.li>
-            <motion.li key="2" variants={item}>
-              {/* {texts.map((text, index) => ( */}
-              {/* ))} */}
-              {/* <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-                <span className="text-purple-600">Get a Free Mobile</span>{" "}
-                Friendly Design
-              </h1> */}
             </motion.li>
 
             <motion.li
