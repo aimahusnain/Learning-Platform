@@ -44,29 +44,31 @@ model Course {
 }
 
 model Unit {
-  id         String     @id @default(cuid()) @map("_id")
-  courseId   String
-  noidnumber Int        @default(1)
-  name       String
-  videoReferenceVideo      String?
-  completed  Boolean    @default(false)
-  progress   Int        @default(0)
-  questions  Question[]
-  Course     Course     @relation(fields: [courseId], references: [id])
+  id                  String     @id @default(cuid()) @map("_id")
+  courseId            String
+  noidnumber          Int        @default(1)
+  name                String
+  videoReferenceVideo String?
+  completed           Boolean    @default(false)
+  progress            Int        @default(0)
+  questions           Question[]
+  Course              Course     @relation(fields: [courseId], references: [id])
 }
 
 model Question {
   id                       String                     @id @default(cuid()) @map("_id")
   Unit                     Unit                       @relation(fields: [unitId], references: [id])
   unitId                   String
-  Image                    String?
+  questionNo               String?
   idea                     String?
-  name                     String
   description              String?
+  name                     String
+  Image                    String?
   MainQuestions            MainQuestions[]
   UserProgress             UserProgress[]
   UserProgressQuestion     UserProgressQuestion[]
   UserProgressMainQuestion UserProgressMainQuestion[]
+  MainQuestions2           MainQuestions2[]
 }
 
 // model UserProgressQuestion {
@@ -79,27 +81,28 @@ model Question {
 // }
 
 model UserProgressQuestion {
-  id        String   @id @map("_id")
-  progress  Int?     @default(0)
-  submitted Boolean  @default(false)
+  id        String    @id @map("_id")
+  progress  Int?      @default(0)
+  submitted Boolean   @default(false)
   userEmail String
-  User      User?    @relation(fields: [userEmail], references: [email])
+  User      User?     @relation(fields: [userEmail], references: [email])
   Question  Question? @relation(fields: [id], references: [id])
 }
 
-
 model UserProgressMainQuestion {
-  id              String         @id @map("_id") @default(cuid())
-  userAnswer      String
+  id               String          @id @default(cuid()) @map("_id")
+  userAnswer       String
   userAnswer2      String?
-  correct         Boolean        @default(false)
+  correct          Boolean         @default(false)
   correct2         Boolean?
-  userEmail       String
-  User            User           @relation(fields: [userEmail], references: [email])
-  mainQuestionsId String
-  MainQuestions   MainQuestions? @relation(fields: [mainQuestionsId], references: [id])
-  questionId      String
-  Question        Question?       @relation(fields: [questionId], references: [id])
+  userEmail        String
+  User             User            @relation(fields: [userEmail], references: [email])
+  mainQuestionsId  String
+  MainQuestions    MainQuestions?  @relation(fields: [mainQuestionsId], references: [id])
+  questionId       String
+  Question         Question?       @relation(fields: [questionId], references: [id])
+  MainQuestions2   MainQuestions2? @relation(fields: [mainQuestions2Id], references: [id])
+  mainQuestions2Id String?
 }
 
 model User {
@@ -120,6 +123,19 @@ model MainQuestions {
   id                       String                     @id @default(cuid()) @map("_id")
   question                 Question                   @relation(fields: [questionid], references: [id])
   questionid               String
+  whatquestion             String
+  answer1                  String?
+  whatquestionOption1      String?
+  whatquestionOption2      String?
+  answer2Question          String?
+  answer2                  String?
+  UserProgressMainQuestion UserProgressMainQuestion[]
+}
+
+model MainQuestions2 {
+  id                       String                     @id @default(cuid()) @map("_id")
+  questionid               String
+  question                 Question                   @relation(fields: [questionid], references: [id])
   whatquestion             String
   answer1                  String?
   whatquestionOption1      String?
