@@ -68,7 +68,6 @@ model Question {
   UserProgress             UserProgress[]
   UserProgressQuestion     UserProgressQuestion[]
   UserProgressMainQuestion UserProgressMainQuestion[]
-  MainQuestions2           MainQuestions2[]
 }
 
 // model UserProgressQuestion {
@@ -101,7 +100,6 @@ model UserProgressMainQuestion {
   MainQuestions    MainQuestions?  @relation(fields: [mainQuestionsId], references: [id])
   questionId       String
   Question         Question?       @relation(fields: [questionId], references: [id])
-  MainQuestions2   MainQuestions2? @relation(fields: [mainQuestions2Id], references: [id])
   mainQuestions2Id String?
 }
 
@@ -123,19 +121,6 @@ model MainQuestions {
   id                       String                     @id @default(cuid()) @map("_id")
   question                 Question                   @relation(fields: [questionid], references: [id])
   questionid               String
-  whatquestion             String
-  answer1                  String?
-  whatquestionOption1      String?
-  whatquestionOption2      String?
-  answer2Question          String?
-  answer2                  String?
-  UserProgressMainQuestion UserProgressMainQuestion[]
-}
-
-model MainQuestions2 {
-  id                       String                     @id @default(cuid()) @map("_id")
-  questionid               String
-  question                 Question                   @relation(fields: [questionid], references: [id])
   whatquestion             String
   answer1                  String?
   whatquestionOption1      String?

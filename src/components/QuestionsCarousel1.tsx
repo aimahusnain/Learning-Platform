@@ -104,6 +104,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     }
   }, [questions]);
 
+ 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
