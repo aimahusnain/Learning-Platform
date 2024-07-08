@@ -1,5 +1,5 @@
 export const StaticData = {
-  SiteName: "BlueLan",
+  SiteName: "Quizkit",
   Description: "This is the Sample Description.",
   // SiteURL: "https://bluelan.vercel.app",
   SiteURL: "http://localhost:3000",
