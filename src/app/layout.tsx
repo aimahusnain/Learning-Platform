@@ -20,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} bg-white dark:bg-zinc-800`}>
-      <NextThemeProvider>
-        <Toaster />
-        <NextAuthProvider>{children}</NextAuthProvider>
-      </NextThemeProvider>
+        <NextThemeProvider>
+          <Toaster />
+          <NextAuthProvider>{children}</NextAuthProvider>
+        </NextThemeProvider>
       </body>
     </html>
   );

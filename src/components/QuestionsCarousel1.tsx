@@ -104,7 +104,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     }
   }, [questions]);
 
- 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -214,17 +213,17 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
     setProgress((prevProgress) => prevProgress + 100 / totalQuestions);
 
-    if (userAnswers[currentQuestionIndex].trim().toLowerCase() !== "") {
-      SaveMainQuestion(
-        userAnswers2[currentQuestionIndex],
-        questions[currentQuestionIndex]?.id,
-        userAnswers[currentQuestionIndex],
-        isAnswer1Correct,
-        isAnswer2Correct,
-        String(session?.user?.email),
-        questionid
-      );
-    }
+    // if (userAnswers[currentQuestionIndex].trim().toLowerCase() !== "") {
+    //   SaveMainQuestion(
+    //     userAnswers2[currentQuestionIndex],
+    //     questions[currentQuestionIndex]?.id,
+    //     userAnswers[currentQuestionIndex],
+    //     isAnswer1Correct,
+    //     isAnswer2Correct,
+    //     String(session?.user?.email),
+    //     questionid
+    //   );
+    // }
 
     setTotalQuestionsAnswered(
       (prevTotalQuestionsAnswered) => prevTotalQuestionsAnswered + 1
@@ -402,8 +401,6 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     };
   }, [currentQuestionIndex, userAnswers, userAnswers2]);
 
-
-
   // HandleAnswer
   const [questionData, setQuestionData] = useState<any>({
     userAnswer: "",
@@ -457,15 +454,15 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
   const handleLocalInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    field: 'userAnswer' | 'userAnswer2'
+    field: "userAnswer" | "userAnswer2"
   ) => {
     const newValue = event.target.value;
     setQuestionData((prevData: any) => ({
       ...prevData,
       [field]: newValue,
-      [field === 'userAnswer' ? 'correct' : 'correct2']: null,
+      [field === "userAnswer" ? "correct" : "correct2"]: null,
     }));
-    if (field === 'userAnswer') {
+    if (field === "userAnswer") {
       handleInputChange(event);
     } else {
       handleInput2Change(event);
@@ -519,6 +516,42 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
         }
       );
 
+      const currentQuestion = questions[currentQuestionIndex];
+
+      const correctAnswers1 = [
+        currentQuestion?.answer1?.toLowerCase(),
+        currentQuestion?.whatquestionOption1?.toLowerCase(),
+        currentQuestion?.whatquestionOption2?.toLowerCase(),
+        currentQuestion?.whatquestionOption3?.toLowerCase(),
+        currentQuestion?.whatquestionOption4?.toLowerCase(),
+      ].filter(Boolean); // Filter out undefined values
+
+      const correctAnswers2 = currentQuestion?.answer2
+        ? [currentQuestion?.answer2?.toLowerCase()]
+        : [];
+
+      const userAnswer1 = userAnswers[currentQuestionIndex]
+        .trim()
+        .toLowerCase();
+      const userAnswer2 = userAnswers2[currentQuestionIndex]
+        ?.trim()
+        .toLowerCase();
+
+      const isAnswer1Correct = correctAnswers1.includes(userAnswer1);
+      const isAnswer2Correct = correctAnswers2.includes(userAnswer2);
+
+      if (userAnswers[currentQuestionIndex].trim().toLowerCase() !== "") {
+        SaveMainQuestion(
+          userAnswers2[currentQuestionIndex],
+          questions[currentQuestionIndex]?.id,
+          userAnswers[currentQuestionIndex],
+          isAnswer1Correct,
+          isAnswer2Correct,
+          String(session?.user?.email),
+          questionid
+        );
+      }
+
       if (response.data.success) {
         setQuestionData(response.data.data);
       } else {
@@ -529,31 +562,28 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     }
   };
 
-
-
   return (
-    <>
+   <>
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center">
+        <div className="w-full py-14 px-20 h-screen flex flex-col items-center justify-center bg-indigo-50">
           <div className="w-full flex flex-col h-screen items-center justify-between">
             <div className="w-full flex flex-col">
               <div className="w-full mb-6 flex items-center text-center justify-center gap-3">
-                <Progress value={progress} className="w-full mt-5 h-4" />
+                <Progress value={progress} className="w-full mt-5 h-4 bg-indigo-200" />
                 {isSubmitted !== false && (
                   <div className="flex justify-between w-full font-bold text-lg gap-2">
                     <div className="flex justify-between w-full font-bold text-lg gap-2">
-                      <p className="text-green-500">
+                      <p className="text-indigo-600">
                         Total Answered: {questions.length}
                       </p>
-                      <p className="text-blue-500">Correct: {correctCount}</p>
-                      <p className="text-red-500">
+                      <p className="text-indigo-500">Correct: {correctCount}</p>
+                      <p className="text-indigo-400">
                         Incorrect: {incorrectCount}
                       </p>
-                      <p className="text-gray-500">
-                        Skipped:{" "}
-                        {questions.length - (correctCount + incorrectCount)}
+                      <p className="text-indigo-300">
+                        Skipped: {questions.length - (correctCount + incorrectCount)}
                       </p>
                     </div>
                   </div>
@@ -562,27 +592,24 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
 
               <div className="flex w-full justify-between items-center gap-3">
                 <Button
-                  className="rounded-lg hover:rounded-3xl font-bold transition-all  duration-300"
+                  className="rounded-lg hover:rounded-3xl font-bold transition-all duration-300 bg-indigo-600 hover:bg-indigo-700"
                   onClick={router.back}
-                  variant="destructive"
                   size="icon"
                 >
                   <X />
                 </Button>
                 <div className="ml-32">
                   {isSubmitted === false ? (
-                    <Badge variant="secondary">Saved</Badge>
+                    <Badge variant="secondary" className="bg-indigo-200 text-indigo-700">Saved</Badge>
                   ) : (
-                    <Badge variant="secondary">Submitted</Badge>
+                    <Badge variant="secondary" className="bg-indigo-200 text-indigo-700">Submitted</Badge>
                   )}
                 </div>
                 <div className="flex gap-6 items-center">
                   {isSubmitted === false ? (
-                    <h2>
-                      {Math.round(
-                        (currentQuestionIndex / (totalQuestions - 1)) * 100
-                      )}
-                      % ({currentQuestionIndex + 1}/{totalQuestions})
+                    <h2 className="text-indigo-700 font-bold">
+                      {Math.round((currentQuestionIndex / (totalQuestions - 1)) * 100)}%
+                      ({currentQuestionIndex + 1}/{totalQuestions})
                     </h2>
                   ) : (
                     <SubmittedMarks
@@ -607,19 +634,19 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   <img
                     src={openedQuestion[0]?.Image}
                     alt="Question Image"
-                    className="w-[20rem]"
+                    className="w-[20rem] rounded-lg shadow-md"
                   />
                 )}
               </div>
-              <h1 className="text-2xl font-bold font-sans text-center">
+              <h1 className="text-2xl font-bold font-sans text-center text-indigo-800">
                 {openedQuestion[0]?.name}
                 {openedQuestion[0]?.idea && (
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger className="mx-2 py-2 px-2 rounded-full border border-black/40">
+                      <TooltipTrigger className="mx-2 py-2 px-2 rounded-full border border-indigo-400 text-indigo-600">
                         <Lightbulb width={20} />
                       </TooltipTrigger>
-                      <TooltipContent className="max-w-md">
+                      <TooltipContent className="max-w-md bg-indigo-100 text-indigo-800">
                         <p>{openedQuestion[0]?.idea}</p>
                       </TooltipContent>
                     </Tooltip>
@@ -628,7 +655,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               </h1>
 
               <div className="p-5 w-fit text-center">
-                <h2 className="text-2xl font-bold mb-4 capitalize">
+                <h2 className="text-2xl font-bold mb-4 capitalize text-indigo-700">
                   {aboutyourself ? null : (
                     <>
                       {capitalizeFirstLetter(
@@ -639,7 +666,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                 </h2>
                 {aboutyourself ? (
                   <>
-                    <Textarea className="w-96" />
+                    <Textarea className="w-96 border-indigo-300 focus:border-indigo-500" />
                   </>
                 ) : (
                   <>
@@ -672,13 +699,13 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   />
                 )}
                 {showCorrectAnswer && isSubmitted && (
-                  <div className="my-4 text-center capitalize font-sans font-bold text-green-500">
-                    Correct Answer: {questions[currentQuestionIndex]?.answer1},{" "}
+                  <div className="my-4 text-center capitalize font-sans font-bold text-indigo-600">
+                    Correct Answer: {questions[currentQuestionIndex]?.answer1},
                     {questions[currentQuestionIndex]?.answer2 && (
-                      <>{questions[currentQuestionIndex]?.answer2}</>
-                    )}{" "}
+                      <> {questions[currentQuestionIndex]?.answer2}</>
+                    )}
                   </div>
-                )}{" "}
+                )}
               </div>
             </div>
 
@@ -686,13 +713,13 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
               <Button
                 onClick={handlePreviousQuestion}
                 variant="outline"
-                className="border-blue-500/50"
+                className="border-indigo-500 text-indigo-700 hover:bg-indigo-100"
                 disabled={currentQuestionIndex === 0}
               >
                 Previous
               </Button>
               {isSubmitted && (
-                <Button onClick={() => setShowCorrectAnswer(true)}>
+                <Button onClick={() => setShowCorrectAnswer(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                   Show the Answer
                 </Button>
               )}
@@ -701,7 +728,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                   {aboutyourself ? (
                     <Button
                       variant="default"
-                      className="bg-gradient-to-r hover:from-blue-500 hover:to-cyan-500 rounded-xl hover:rounded-sm font-bold transition-all duration-300 px-9"
+                      className="bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 rounded-xl hover:rounded-sm font-bold transition-all duration-300 px-9 text-white"
                       disabled={true}
                     >
                       Check
@@ -710,7 +737,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                     <Button
                       onClick={saveAnswer}
                       variant="default"
-                      className="bg-gradient-to-r hover:from-blue-500 hover:to-cyan-500 rounded-xl hover:rounded-sm font-bold transition-all duration-300 px-9"
+                      className="bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 rounded-xl hover:rounded-sm font-bold transition-all duration-300 px-9 text-white"
                       disabled={isSubmitted}
                     >
                       Check
@@ -722,6 +749,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                 <Button
                   onClick={handleForwardQuestionwithoutSaveMainQuestion}
                   variant="outline"
+                  className="border-indigo-500 text-indigo-700 hover:bg-indigo-100"
                 >
                   Next
                 </Button>
@@ -729,7 +757,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
                 <Button
                   onClick={handleForwardQuestion}
                   variant="outline"
-                  className="border-blue-500/50"
+                  className="border-indigo-500 text-indigo-700 hover:bg-indigo-100"
                 >
                   Next
                 </Button>

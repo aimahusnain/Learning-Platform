@@ -1,13 +1,7 @@
 import { Input } from "../ui/input";
 
 const QuestionsPageInput = ({
-  userAnswers,
-  userAnswers2,
   currentQuestionIndex,
-  handleInputChange,
-  handleInput2Change,
-  mainQuestionId,
-  userEmail,
   questionData,
   questions,
   handleLocalInputChange,

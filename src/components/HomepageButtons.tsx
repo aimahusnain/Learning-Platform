@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Signin from "./Signin";
 import { useSession } from "next-auth/react";
+import { motion } from "framer-motion";
 
 const HomepageButtons = () => {
   const { data: session } = useSession();
@@ -13,8 +14,8 @@ const HomepageButtons = () => {
 
   const handleRedirect = () => {
     setLoading(true);
-    
-      setTimeout(() => {
+
+    setTimeout(() => {
       setLoading(false);
     }, 500);
   };
@@ -23,15 +24,16 @@ const HomepageButtons = () => {
     <div>
       {session ? (
         <Link href="/learn">
-          <Button
-            size="lg"
-            className="mt-5 text-white"
+          <motion.button
+            className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full hover:bg-indigo-700 transition duration-300 flex items-center mx-auto"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleRedirect}
             disabled={loading}
           >
-            {loading ? "Redirecting..." : "Get started"}{" "}
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+            {loading ? "Redirecting..." : "Start Learning Now"}{" "}
+            <ArrowRight className="ml-2 w-5 h-5" />
+          </motion.button>
         </Link>
       ) : (
         <Signin />

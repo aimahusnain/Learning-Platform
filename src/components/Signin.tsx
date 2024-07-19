@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import * as React from "react";
 import { FC } from "react";
-import { Button } from "./ui/button";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,15 +25,15 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
 
   return (
     <div className={cn("flex justify-center", className)} {...props}>
-      <Button
-        type="button"
-        size="sm"
-        className="w-full"
+      <motion.button
+        className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full hover:bg-indigo-700 transition duration-300 flex items-center mx-auto"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={loginWithGoogle}
         disabled={isLoading}
       >
-        Sign in With Google
-      </Button>
+        Start Learning Now
+      </motion.button>
     </div>
   );
 };

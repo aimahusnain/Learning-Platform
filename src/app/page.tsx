@@ -1,170 +1,298 @@
+// HomePage.tsx
 "use client";
 
-import HomepageButtons from "@/components/HomepageButtons";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Navbar from "@/components/Navbar";
-import { StaticData } from "@/lib/staticdata";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import {
+  Book,
+  Award,
+  Users,
+  ArrowRight,
+  Globe,
+  Zap,
+  ChevronUp,
+} from "lucide-react";
+import AnimatedLogo from "@/components/AnimatedLogo";
+import HomepageButtons from "@/components/HomepageButtons";
+import GenderPopup from "@/components/GenderPopup";
 
-const container = {
-  hidden: { opacity: 1, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delayChildren: 0.3,
-      staggerChildren: 0.2,
+const HomePage = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [showGenderPopup, setShowGenderPopup] = useState(false);
+  const [colorScheme, setColorScheme] = useState('purple');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollThreshold = 200;
+      setIsVisible(scrollY > scrollThreshold);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    const timeoutId = setTimeout(() => {
+      setShowGenderPopup(true);
+    }, 5000);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleGenderSelect = (gender: 'male' | 'female') => {
+    setColorScheme(gender === 'female' ? 'pink' : 'purple');
+    setShowGenderPopup(false);
+  };
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  const staggerChildren = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
     },
-  },
-};
+  };
 
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-  },
-};
+  const pulse = {
+    scale: [1, 1.05, 1],
+    transition: { duration: 2, repeat: Infinity },
+  };
 
-export default function Home() {
   return (
-    <>
-      <Navbar />
-      <MaxWidthWrapper className="mb-12 mt-10 flex flex-col items-center justify-center text-center">
-          <div>
-            {" "}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none mt-[20px] absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-            >
-              <div
-                style={{
-                  clipPath:
-                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-                }}
-                className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-blue-500 to-cyan-600 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-              />
-            </div>
+    <div className={`min-h-screen ${colorScheme === 'pink' ? 'bg-gradient-to-br from-pink-50 to-red-50' : 'bg-gradient-to-br from-blue-50 to-indigo-50'}`}>
+      <motion.header
+        className="bg-white shadow-sm sticky top-0 z-50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
+      >
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+          <motion.div
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Book className={`h-8 w-8 ${colorScheme === 'pink' ? 'text-pink-600' : 'text-indigo-600'} mr-2`} />
+            <span className={`text-2xl font-bold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'}`}>WordWise</span>
+          </motion.div>
+          <div className="flex space-x-4">
+            {["Features", "How It Works", "Pricing"].map((item) => (
+              <motion.a
+                key={item}
+                href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                className={`text-gray-700 hover:${colorScheme === 'pink' ? 'text-pink-600' : 'text-indigo-600'}`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {item}
+              </motion.a>
+            ))}
           </div>
-        <motion.ul variants={container} initial="hidden" animate="visible">
-          <div className="flex items-center flex-col">
-            <motion.li key="1" variants={item}>
-              <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md transition-all hover:border-gray-300 ">
-                <p className="text-sm font-semibold text-gray-700">
-                  Learn About Us
-                </p>
-              </div>
-            </motion.li>
+        </nav>
+      </motion.header>
 
-            <motion.li
-              key="4"
-              variants={item}
-              className="mt-5 max-w-prose text-primary font-bold text-3xl md:text-4xl"
-            >
-              The free, fun, and effective way to learn{" "}
-              <br className="md:block hidden" /> a language!
-            </motion.li>
-            <motion.li
-              key="3"
-              variants={item}
-              className="mt-5 max-w-prose text-zinc-700 sm:text-lg"
-            >
-              Unlock boundless learning opportunities with {StaticData.SiteName}.
-              Explore diverse courses, engage with expert content, and elevate
-              your knowledge journey today!
-            </motion.li>
-            <motion.li key="5" className="mt-5" variants={item}>
-              <HomepageButtons />
-            </motion.li>
-          </div>
-        </motion.ul>
-      </MaxWidthWrapper>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.section
+          className="text-center mb-16 py-24"
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+        >
+          <motion.h1
+            className={`text-5xl font-extrabold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'} mb-4`}
+            animate={pulse}
+          >
+            Master English with
+            <span className={`${colorScheme === 'pink' ? 'text-pink-600' : 'text-indigo-600'} w-fit`}>
+              {" "}
+              <AnimatedLogo />
+            </span>
+          </motion.h1>
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+            Elevate your language skills through interactive challenges,
+            real-world scenarios, and personalized learning paths.
+          </p>
+          <HomepageButtons />
+        </motion.section>
 
-      <div>
-        <div className="relative isolate">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="mt-16 flow-root sm:mt-24">
-              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <Image
-                  src="/file-upload-preview.jpg"
-                  alt="uploading preview"
-                  width={1419}
-                  height={732}
-                  quality={100}
-                  className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
-                />
-              </div>
-            </div>
+        <motion.section
+          id="features"
+          className="mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerChildren}
+        >
+          <h2 className={`text-3xl font-bold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'} mb-8 text-center`}>
+            Why Choose WordWise?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Globe,
+                title: "Global Language Skills",
+                description:
+                  "Prepare for real-world communication in diverse global contexts.",
+              },
+              {
+                icon: Zap,
+                title: "Adaptive Learning",
+                description:
+                  "Our AI-powered system adapts to your learning style and pace.",
+              },
+              {
+                icon: Users,
+                title: "Community Challenges",
+                description:
+                  "Compete with friends and learn together in a supportive environment.",
+              },
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="bg-white p-6 rounded-lg shadow-lg"
+                variants={fadeIn}
+                whileHover={{ scale: 1.05 }}
+              >
+                <feature.icon className={`w-12 h-12 ${colorScheme === 'pink' ? 'text-pink-600' : 'text-indigo-600'} mb-4`} />
+                <h3 className={`text-xl font-semibold mb-2 ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'}`}>
+                  {feature.title}
+                </h3>
+                <p className="text-gray-700">{feature.description}</p>
+              </motion.div>
+            ))}
           </div>
-          
+        </motion.section>
+
+        <motion.section
+          id="how-it-works"
+          className="mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerChildren}
+        >
+          <h2 className={`text-3xl font-bold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'} mb-8 text-center`}>
+            How WordWise Works
+          </h2>
+          <div className="flex flex-col md:flex-row justify-between items-center bg-white p-8 rounded-lg shadow-lg">
+            {[
+              {
+                title: "1. Sign Up",
+                description:
+                  "Create your free account and set your language goals.",
+              },
+              {
+                title: "2. Take the Assessment",
+                description:
+                  "Complete our adaptive placement test to determine your current level.",
+              },
+              {
+                title: "3. Start Learning",
+                description:
+                  "Dive into personalized lessons and start improving your skills.",
+              },
+            ].map((step, index) => (
+              <React.Fragment key={index}>
+                <motion.div
+                  className="text-center md:text-left mb-4 md:mb-0"
+                  variants={fadeIn}
+                >
+                  <h3 className={`text-2xl font-semibold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'} mb-2`}>
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-700">{step.description}</p>
+                </motion.div>
+                {index < 2 && (
+                  <motion.div
+                    className="hidden md:block"
+                    animate={{ x: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    <ArrowRight className={`w-8 h-8 ${colorScheme === 'pink' ? 'text-pink-600' : 'text-indigo-600'} mx-4`} />
+                  </motion.div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          id="pricing"
+          className="text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeIn}
+        >
+          <h2 className={`text-3xl font-bold ${colorScheme === 'pink' ? 'text-pink-900' : 'text-indigo-900'} mb-8`}>
+            Ready to Become a Language Master?
+          </h2>
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+            Join thousands of learners who are already on their way to English
+            fluency with WordWise.
+          </p>
+          <motion.button
+            className={`${colorScheme === 'pink' ? 'bg-pink-600 hover:bg-pink-700' : 'bg-indigo-600 hover:bg-indigo-700'} text-white font-bold py-3 px-8 rounded-full transition duration-300 flex items-center mx-auto`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Started for Free
+            <Award className="ml-2 w-5 h-5" />
+          </motion.button>
+        </motion.section>
+      </main>
+
+      <footer className={`${colorScheme === 'pink' ? 'bg-pink-900' : 'bg-indigo-900'} text-white py-8`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+          <motion.div
+            className="flex items-center mb-4 md:mb-0"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Book className="h-8 w-8 mr-2" />
+            <span className="text-2xl font-bold">WordWise</span>
+          </motion.div>
+          <div className="flex flex-wrap justify-center md:justify-end space-x-4">
+            {["Privacy Policy", "Terms of Service", "Contact Us"].map(
+              (item) => (
+                <motion.a
+                  key={item}
+                  href="#"
+                  className={`hover:${colorScheme === 'pink' ? 'text-pink-300' : 'text-indigo-300'} mb-2 md:mb-0`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item}
+                </motion.a>
+              )
+            )}
+          </div>
         </div>
-      </div>
+      </footer>
 
-      {/* Feature section */}
-      <div className="mx-auto mb-32 mt-32 max-w-5xl sm:mt-56">
-        <div className="mb-12 px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
-              Designed by developers for developers
-            </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Experience our markdown, diagram-as-code, keyboard navigation,
-              seamless dark mode, GitHub integration, and syntax highlighted
-              code blocks.
-            </p>
-          </div>
-        </div>
+      <motion.button
+        className={`fixed bottom-4 right-4 ${colorScheme === 'pink' ? 'bg-pink-600' : 'bg-indigo-600'} text-white p-2 rounded-full shadow-lg`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={scrollToTop}
+      >
+        <ChevronUp className="w-6 h-6" />
+      </motion.button>
 
-        {/* steps */}
-        <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
-          <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-blue-600">Step 1</span>
-              <span className="text-xl font-semibold">Diagram as Code</span>
-              <span className="mt-2 text-zinc-700">
-                allows you to create beautiful diagrams with a straightforward
-                syntax, all without fumbling with a GUI.
-              </span>
-            </div>
-          </li>
-          <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-blue-600">Step 2</span>
-              <span className="text-xl font-semibold">GitHub integration</span>
-              <span className="mt-2 text-zinc-700">
-                Our GitHub integration keeps your markdown docs and diagrams
-                next to code. You can even create PRs.
-              </span>
-            </div>
-          </li>
-          <li className="md:flex-1">
-            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-              <span className="text-sm font-medium text-blue-600">Step 3</span>
-              <span className="text-xl font-semibold">Eraser AI</span>
-              <span className="mt-2 text-zinc-700">
-                Eraser AI generates stunning diagrams in seconds. You can
-                kickstart your diagram with existing code or text excerpts.
-              </span>
-            </div>
-          </li>
-        </ol>
-
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="mt-16 flow-root sm:mt-24">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <Image
-                src="/file-upload-preview.jpg"
-                alt="uploading preview"
-                width={1419}
-                height={732}
-                quality={100}
-                className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      {showGenderPopup && <GenderPopup onSelect={handleGenderSelect} />}
+    </div>
   );
-}
+};
+
+export default HomePage;

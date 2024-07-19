@@ -61,7 +61,7 @@ export const authOptions: NextAuthOptions = {
       };
     },
     redirect() {
-      return "/";
+      return "/learn";
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
