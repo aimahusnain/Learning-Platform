@@ -34,14 +34,7 @@ async function SearchedQuestions(id: string) {
   if (data.success) return data.data;
 }
 
-interface UnitDetailsProps {
-  params: {
-    unitid: string;
-  };
-  colorScheme: 'pink' | 'purple';
-}
-
-const UnitDetails: React.FC<UnitDetailsProps> = async ({ params, colorScheme }) => {
+const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
   const { unitid } = params;
 
   const UnitDetailsData = await SearchedUnit(unitid);
