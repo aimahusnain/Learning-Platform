@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import NextThemeProvider from "@/providers/next-theme-provider";
 
 export const metadata: Metadata = {
-  title: StaticData.SiteName,
+  title: `${StaticData.SiteName} - ${StaticData.Description}`,
   description: StaticData.Description,
 };
 
@@ -19,11 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.className} bg-white dark:bg-zinc-800`}>
-        <NextThemeProvider>
+      <body className={`${font.className} bg-white`}>
+        {/* <NextThemeProvider> */}
           <Toaster />
           <NextAuthProvider>{children}</NextAuthProvider>
-        </NextThemeProvider>
+        {/* </NextThemeProvider> */}
       </body>
     </html>
   );

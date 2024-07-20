@@ -1,6 +1,6 @@
 export const StaticData = {
   SiteName: "WordWise",
-  Description: "This is the Sample Description.",
-  SiteURL: "https://bluelan.vercel.app",
-  // SiteURL: "http://localhost:3000",
+  Description: "Let's dive into English Language",
+  // SiteURL: "https://bluelan.vercel.app",
+  SiteURL: "http://localhost:3000",
 };

@@ -1,4 +1,3 @@
-// HomePage.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -15,6 +14,7 @@ import {
 import AnimatedLogo from "@/components/AnimatedLogo";
 import HomepageButtons from "@/components/HomepageButtons";
 import GenderPopup from "@/components/GenderPopup";
+import Navbar from "@/components/Navbar";
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -71,7 +71,7 @@ const HomePage = () => {
 
   return (
     <div className={`min-h-screen ${colorScheme === 'pink' ? 'bg-gradient-to-br from-pink-50 to-red-50' : 'bg-gradient-to-br from-blue-50 to-indigo-50'}`}>
-      <motion.header
+      {/* <motion.header
         className="bg-white shadow-sm sticky top-0 z-50"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -99,7 +99,8 @@ const HomePage = () => {
             ))}
           </div>
         </nav>
-      </motion.header>
+      </motion.header> */}
+      <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.section
