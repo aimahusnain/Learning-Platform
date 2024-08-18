@@ -27,18 +27,53 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     possesive: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
   });
 
-  const generateNegativeSentence = (positiveSentence: string): string => {
-    if (positiveSentence.startsWith("I'm")) {
+  const generateNegativeSentence = (positiveSentence: string, category: Category): string => {
+    if (category === "noun") {
+      if (positiveSentence.startsWith("I'm")) {
+        return positiveSentence.replace("I'm", "I'm not");
+      }
+      return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
+    } else if (category === "adjective") {
       return positiveSentence.replace("I'm", "I'm not");
+    } else if (category === "objective") {
+      return positiveSentence.replace("is", "isn't");
     }
-    return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
+    return positiveSentence;
   };
   
-  const generateYesNoQuestion = (positiveSentence: string): string => {
-    if (positiveSentence.startsWith("I'm")) {
-      return `Are you ${positiveSentence.replace("I'm", "").trim()}?`;
+  const generateYesNoQuestion = (positiveSentence: string, category: Category): string => {
+    if (category === "noun" || category === "adjective") {
+      if (positiveSentence.startsWith("I'm")) {
+        return `Are you ${positiveSentence.replace("I'm", "").trim()}?`;
+      }
+      return `Are you ${positiveSentence}?`;
+    } else if (category === "objective") {
+      const parts = positiveSentence.split(" is ");
+      if (parts.length === 2) {
+        return `Is ${parts[0]} ${parts[1]}?`;
+      }
     }
-    return `Are you ${positiveSentence}?`;
+    return positiveSentence; // Default case
+  };
+
+  const getSentences = (category: Category, subCategory: SubCategory): string[] => {
+    if (category === "noun" || category === "adjective" || category === "objective") {
+      const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
+      
+      switch (subCategory) {
+        case "Positive":
+          return positiveSentences;
+        case "Negative":
+          return positiveSentences.map((sentence: string) => generateNegativeSentence(sentence, category));
+        case "Yes/No Questions":
+          return positiveSentences.map((sentence: string) => generateYesNoQuestion(sentence, category));
+        default:
+          return [];
+      }
+    }
+    
+    // For other categories, return the original sentences
+    return data[0][category].find((item: any) => item.name === subCategory)?.sentence || [];
   };
 
   const [currentSubCategories, setCurrentSubCategories] = useState<Record<Category, SubCategory>>({
@@ -49,25 +84,6 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     possesive: "Negative",
   });
 
-  const getSentences = (category: Category, subCategory: SubCategory) => {
-    if (category === "noun") {
-      const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
-      
-      switch (subCategory) {
-        case "Positive":
-          return positiveSentences;
-        case "Negative":
-          return positiveSentences.map(generateNegativeSentence);
-        case "Yes/No Questions":
-          return positiveSentences.map(generateYesNoQuestion);
-        default:
-          return [];
-      }
-    }
-    
-    // For other categories, return the original sentences
-    return data[0][category].find((item: any) => item.name === subCategory)?.sentence || [];
-  };
 
   const nextSentence = (category: Category) => {
     const subCategory = currentSubCategories[category];
@@ -126,7 +142,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       </h2>
       <div className="p-8">
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-xl shadow-inner mb-6">
-          <div key={`${category}-${subCategory}-${currentIndex}`} className="text-xl font-semibold text-center mb-4 h-24 flex items-center justify-center text-gray-800 transition-opacity duration-300 ease-in-out">
+          <div key={`${category}-${subCategory}-${currentIndex}`} className="text-xl font-semibold text-center mb-4 h-24 flex items-center justify-center text-gray-800 transition-opacity duration-300 ease-in-out first-letter:uppercase lowercase">
             {sentences[currentIndex]}
           </div>
         </div>
@@ -170,7 +186,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
           Learn About {learnAbout}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {(["noun", "adjective", "preposition", "objective", "possesive"] as const).map((category) => (
+          {(["noun", "adjective", "preposition", "possesive", "objective"] as const).map((category) => (
             <SentenceSection
               key={category}
               title={category.charAt(0).toUpperCase() + category.slice(1)}
