@@ -51,36 +51,35 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const [loading, setLoading] = useState(true);
   const aboutyourself =
     questions[currentQuestionIndex]?.whatquestion === "[yourself]";
-  const [correctCount, setCorrectCount] = useState(0);
-  const [incorrectCount, setIncorrectCount] = useState(0);
+    const [correctCount, setCorrectCount] = useState(0);
+    const [incorrectCount, setIncorrectCount] = useState(0);
 
   useEffect(() => {
     const fetchUserProgressMainQuestion = async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.get<{ data: any }>(
           `${StaticData.SiteURL}/api/GETUserProgressMainQuestion?email=${userEmail}&questionsId=${questionid}`
         );
         const data = response.data;
 
-        if (data.success) {
-          // Count correct and incorrect answers
-          let correct = 0;
-          let incorrect = 0;
+        if (data) {
+          // Use Sets to keep track of unique correct and incorrect answers
+          const correctAnswers = new Set<string>();
+          const incorrectAnswers = new Set<string>();
 
           data.data.forEach((item: any) => {
-            if (item.correct === true) {
-              correct++;
+            if (item.correct) {
+              correctAnswers.add(item.userAnswer);
             } else {
-              incorrect++;
+              incorrectAnswers.add(item.userAnswer);
             }
           });
 
-          // Update state variables with the counts
-          setCorrectCount(correct);
-          setIncorrectCount(incorrect);
+          setCorrectCount(correctAnswers.size);
+          setIncorrectCount(incorrectAnswers.size);
         } else {
-          console.error("Failed to fetch user progress:", data.message);
-        }
+          console.error("Failed to fetch user progress: No data received");
+        } 
       } catch (error) {
         console.error("Error fetching user progress:", error);
       }

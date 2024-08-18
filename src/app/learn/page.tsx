@@ -76,7 +76,7 @@ const English = () => {
 
         <div className="flex items-center mb-8 justify-between w-full">
           <h1 className="text-4xl font-bold text-indigo-900">
-            English Course Units{" "}
+            English Course Units
             <span className="text-2xl font-medium text-indigo-600">({getAllList?.length})</span>
           </h1>
           <ToggleGroup type="single" className="border border-indigo-200 rounded-md">
