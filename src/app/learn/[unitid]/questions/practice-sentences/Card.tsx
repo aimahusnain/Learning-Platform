@@ -28,26 +28,34 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   });
 
   const generateNegativeSentence = (positiveSentence: string, category: Category): string => {
-    if (category === "noun") {
+    if (category === "noun" || category === "adjective" || category === "preposition") {
       if (positiveSentence.startsWith("I'm")) {
         return positiveSentence.replace("I'm", "I'm not");
       }
       return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
-    } else if (category === "adjective") {
-      return positiveSentence.replace("I'm", "I'm not");
     } else if (category === "objective") {
-      return positiveSentence.replace("is", "isn't");
+      return positiveSentence.replace("is", "is not");
+    } else if (category === "possesive") {
+      const parts = positiveSentence.split(" is ");
+      if (parts.length === 2) {
+        return `${parts[0]} is not ${parts[1]}`;
+      }
     }
-    return positiveSentence;
+    return positiveSentence; // Default case
   };
-  
+
   const generateYesNoQuestion = (positiveSentence: string, category: Category): string => {
     if (category === "noun" || category === "adjective") {
       if (positiveSentence.startsWith("I'm")) {
         return `Are you ${positiveSentence.replace("I'm", "").trim()}?`;
       }
       return `Are you ${positiveSentence}?`;
-    } else if (category === "objective") {
+    } else if (category === "preposition") {
+      if (positiveSentence.startsWith("I'm")) {
+        return `Am I ${positiveSentence.replace("I'm", "").trim()}?`;
+      }
+      return `Am I ${positiveSentence}?`;
+    } else if (category === "objective" || category === "possesive") {
       const parts = positiveSentence.split(" is ");
       if (parts.length === 2) {
         return `Is ${parts[0]} ${parts[1]}?`;
@@ -57,24 +65,20 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   };
 
   const getSentences = (category: Category, subCategory: SubCategory): string[] => {
-    if (category === "noun" || category === "adjective" || category === "objective") {
-      const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
-      
-      switch (subCategory) {
-        case "Positive":
-          return positiveSentences;
-        case "Negative":
-          return positiveSentences.map((sentence: string) => generateNegativeSentence(sentence, category));
-        case "Yes/No Questions":
-          return positiveSentences.map((sentence: string) => generateYesNoQuestion(sentence, category));
-        default:
-          return [];
-      }
-    }
+    const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
     
-    // For other categories, return the original sentences
-    return data[0][category].find((item: any) => item.name === subCategory)?.sentence || [];
+    switch (subCategory) {
+      case "Positive":
+        return positiveSentences;
+      case "Negative":
+        return positiveSentences.map((sentence: string) => generateNegativeSentence(sentence, category));
+      case "Yes/No Questions":
+        return positiveSentences.map((sentence: string) => generateYesNoQuestion(sentence, category));
+      default:
+        return [];
+    }
   };
+
 
   const [currentSubCategories, setCurrentSubCategories] = useState<Record<Category, SubCategory>>({
     noun: "Negative",
