@@ -34,9 +34,12 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       }
       return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
     } else if (category === "objective" || category === "possesive") {
-      const parts = positiveSentence.split(" is ");
-      if (parts.length === 2) {
-        return `${parts[0]} is not ${parts[1]}`;
+      const singularMatch = positiveSentence.match(/^(.*) is (.*)$/);
+      const pluralMatch = positiveSentence.match(/^(.*) are (.*)$/);
+      if (singularMatch) {
+        return `${singularMatch[1]} isn't ${singularMatch[2]}`;
+      } else if (pluralMatch) {
+        return `${pluralMatch[1]} aren't ${pluralMatch[2]}`;
       }
     }
     return positiveSentence; // Default case
@@ -49,9 +52,12 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       }
       return `Am I ${positiveSentence}?`;
     } else if (category === "objective" || category === "possesive") {
-      const parts = positiveSentence.split(" is ");
-      if (parts.length === 2) {
-        return `Is ${parts[0]} ${parts[1]}?`;
+      const singularMatch = positiveSentence.match(/^(.*) is (.*)$/);
+      const pluralMatch = positiveSentence.match(/^(.*) are (.*)$/);
+      if (singularMatch) {
+        return `Is ${singularMatch[1]} ${singularMatch[2]}?`;
+      } else if (pluralMatch) {
+        return `Are ${pluralMatch[1]} ${pluralMatch[2]}?`;
       }
     }
     return positiveSentence; // Default case
