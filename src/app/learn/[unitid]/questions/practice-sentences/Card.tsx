@@ -1,9 +1,10 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useState } from "react";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
-type Category = "noun" | "adjective" | "preposition";
+type Category = "noun" | "adjective" | "preposition" | "objective" | "possesive";
 
 interface SentenceSectionProps {
   title: string;
@@ -22,15 +23,49 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     noun: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
     adjective: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
     preposition: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
+    objective: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
+    possesive: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
   });
+
+  const generateNegativeSentence = (positiveSentence: string): string => {
+    if (positiveSentence.startsWith("I'm")) {
+      return positiveSentence.replace("I'm", "I'm not");
+    }
+    return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
+  };
+  
+  const generateYesNoQuestion = (positiveSentence: string): string => {
+    if (positiveSentence.startsWith("I'm")) {
+      return `Are you ${positiveSentence.replace("I'm", "").trim()}?`;
+    }
+    return `Are you ${positiveSentence}?`;
+  };
 
   const [currentSubCategories, setCurrentSubCategories] = useState<Record<Category, SubCategory>>({
     noun: "Negative",
     adjective: "Negative",
     preposition: "Negative",
+    objective: "Negative",
+    possesive: "Negative",
   });
 
   const getSentences = (category: Category, subCategory: SubCategory) => {
+    if (category === "noun") {
+      const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
+      
+      switch (subCategory) {
+        case "Positive":
+          return positiveSentences;
+        case "Negative":
+          return positiveSentences.map(generateNegativeSentence);
+        case "Yes/No Questions":
+          return positiveSentences.map(generateYesNoQuestion);
+        default:
+          return [];
+      }
+    }
+    
+    // For other categories, return the original sentences
     return data[0][category].find((item: any) => item.name === subCategory)?.sentence || [];
   };
 
@@ -85,6 +120,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     currentIndex,
   }) => (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-102 hover:shadow-2xl">
+     
       <h2 className="text-3xl font-bold text-center py-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
         {title}
       </h2>
@@ -97,15 +133,15 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
         <div className="flex justify-between mb-6">
           <button
             onClick={onPrev}
-            className="px-6 py-3 font-bold text-white bg-indigo-500 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition-all duration-300 ease-in-out transform hover:scale-105"
+            className="px-3 py-3 font-bold text-white bg-indigo-500 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition-all duration-300 ease-in-out transform hover:scale-105"
           >
-            Previous
+            <ChevronLeft />
           </button>
           <button
             onClick={onNext}
-            className="px-6 py-3 font-bold text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 transition-all duration-300 ease-in-out transform hover:scale-105"
+            className="px-3 py-3 font-bold text-white bg-purple-500 rounded-full hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 transition-all duration-300 ease-in-out transform hover:scale-105"
           >
-            Next
+            <ChevronRight />
           </button>
         </div>
         <div className="flex flex-wrap justify-center gap-3">
@@ -128,13 +164,13 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="bg-gradient-to-br from-indigo-100 to-purple-100 py-16 px-4">
+      <div className="">
         <h1 className="text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
           Learn About {learnAbout}
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {(["noun", "adjective", "preposition"] as const).map((category) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+          {(["noun", "adjective", "preposition", "objective", "possesive"] as const).map((category) => (
             <SentenceSection
               key={category}
               title={category.charAt(0).toUpperCase() + category.slice(1)}
