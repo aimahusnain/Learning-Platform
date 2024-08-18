@@ -33,9 +33,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
         return positiveSentence.replace("I'm", "I'm not");
       }
       return `I'm not ${positiveSentence.replace("I'm", "").trim()}`;
-    } else if (category === "objective") {
-      return positiveSentence.replace("is", "is not");
-    } else if (category === "possesive") {
+    } else if (category === "objective" || category === "possesive") {
       const parts = positiveSentence.split(" is ");
       if (parts.length === 2) {
         return `${parts[0]} is not ${parts[1]}`;
@@ -43,14 +41,9 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     }
     return positiveSentence; // Default case
   };
-
+  
   const generateYesNoQuestion = (positiveSentence: string, category: Category): string => {
-    if (category === "noun" || category === "adjective") {
-      if (positiveSentence.startsWith("I'm")) {
-        return `Are you ${positiveSentence.replace("I'm", "").trim()}?`;
-      }
-      return `Are you ${positiveSentence}?`;
-    } else if (category === "preposition") {
+    if (category === "noun" || category === "adjective" || category === "preposition") {
       if (positiveSentence.startsWith("I'm")) {
         return `Am I ${positiveSentence.replace("I'm", "").trim()}?`;
       }
@@ -146,8 +139,8 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       </h2>
       <div className="p-8">
         <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-xl shadow-inner mb-6">
-          <div key={`${category}-${subCategory}-${currentIndex}`} className="text-xl font-semibold text-center mb-4 h-24 flex items-center justify-center text-gray-800 transition-opacity duration-300 ease-in-out first-letter:uppercase lowercase">
-            {sentences[currentIndex]}
+          <div key={`${category}-${subCategory}-${currentIndex}`} className="text-xl font-semibold text-center mb-4 h-24 flex items-center justify-center text-gray-800 transition-opacity duration-300 ease-in-out">
+          {sentences[currentIndex].charAt(0).toUpperCase() + sentences[currentIndex].slice(1).toLowerCase()}
           </div>
         </div>
         <div className="flex justify-between mb-6">
