@@ -16,6 +16,8 @@ const SentenceSection: React.FC<any> = ({
 }) => (
   <div className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-102 hover:shadow-2xl">
     <h2 className="text-3xl font-bold text-center py-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+    <p>{currentIndex}/{sentences.length}</p>
+
       {title}
     </h2>
     <div className="p-8">
