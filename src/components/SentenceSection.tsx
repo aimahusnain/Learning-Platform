@@ -53,7 +53,7 @@ const SentenceSection: React.FC<any> = ({
         
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 shadow-inner">
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 text-center font-medium leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg lg:text-2xl text-black font-bold text-center leading-relaxed">
               {sentences[currentIndex].charAt(0).toUpperCase() + sentences[currentIndex].slice(1).toLowerCase()}
             </p>
           </div>
