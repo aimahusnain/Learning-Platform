@@ -1,8 +1,7 @@
 "use client";
 
 import SentenceSection from "@/components/SentenceSection";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 type Category = "noun" | "adjective" | "preposition" | "objective" | "possesive";
