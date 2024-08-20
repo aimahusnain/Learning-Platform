@@ -646,7 +646,7 @@ const data = [
       {
         name: "Positive" as const,
         sentence: [
-          "The windows are open.",
+          "Mama gala biscuit koon la raha hai",
           "Eman isn't happy.",
           "Aima is a doctor.",
           "The children are asleep.",
