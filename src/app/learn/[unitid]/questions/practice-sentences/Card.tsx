@@ -6,17 +6,64 @@ import { useState } from "react";
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 type Category = "noun" | "adjective" | "preposition" | "objective" | "possesive";
 
-interface SentenceSectionProps {
-  title: string;
-  category: Category;
-  subCategory: SubCategory;
-  sentences: string[];
-  onNext: () => void;
-  onPrev: () => void;
-  onSelectSubCategory: (subCategory: SubCategory) => void;
-  currentSubCategory: SubCategory;
-  currentIndex: number;
-}
+const colorSchemes = {
+  tealIndigo: {
+    name: "Teal & Indigo",
+    from: "from-teal-400",
+    to: "to-indigo-600",
+    gradientFrom: "from-teal-500",
+    gradientTo: "to-indigo-500",
+    bgFrom: "from-teal-100",
+    bgTo: "to-indigo-100",
+  },
+  pinkYellow: {
+    name: "Pink & Yellow",
+    from: "from-pink-400",
+    to: "to-yellow-400",
+    gradientFrom: "from-pink-500",
+    gradientTo: "to-yellow-500",
+    bgFrom: "from-pink-100",
+    bgTo: "to-yellow-100",
+  },
+  yellowOrange: {
+    name: "Yellow & Orange",
+    from: "from-yellow-400",
+    to: "to-orange-500",
+    gradientFrom: "from-yellow-500",
+    gradientTo: "to-orange-600",
+    bgFrom: "from-yellow-100",
+    bgTo: "to-orange-100",
+  },
+  blueSkyBlue: {
+    name: "Blue & Sky Blue",
+    from: "from-blue-400",
+    to: "to-sky-400",
+    gradientFrom: "from-blue-500",
+    gradientTo: "to-sky-500",
+    bgFrom: "from-blue-100",
+    bgTo: "to-sky-100",
+  },
+  indigoPurple: {
+    name: "Indigo & Purple",
+    from: "from-indigo-400",
+    to: "to-purple-500",
+    gradientFrom: "from-indigo-500",
+    gradientTo: "to-purple-600",
+    bgFrom: "from-indigo-100",
+    bgTo: "to-purple-100",
+  },
+  redPink: {
+    name: "Red & Pink",
+    from: "from-red-400",
+    to: "to-pink-500",
+    gradientFrom: "from-red-500",
+    gradientTo: "to-pink-600",
+    bgFrom: "from-red-100",
+    bgTo: "to-pink-100",
+  },
+};
+
+type ColorScheme = keyof typeof colorSchemes;
 
 const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   const [indexes, setIndexes] = useState<Record<Category, Record<SubCategory, number>>>({
@@ -26,6 +73,8 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
     objective: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
     possesive: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
   });
+
+  const [currentColorScheme, setCurrentColorScheme] = useState<ColorScheme>("tealIndigo");
 
   const generateNegativeSentence = (positiveSentence: string, category: Category): string => {
     if (category === "noun" || category === "adjective" || category === "preposition") {
@@ -134,6 +183,19 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
         <h1 className="text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
           Learn About {learnAbout}
         </h1>
+        <div className="mb-8 flex justify-center">
+        <select
+          value={currentColorScheme}
+          onChange={(e) => setCurrentColorScheme(e.target.value as ColorScheme)}
+          className="px-4 py-2 rounded-full text-gray-800 bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-opacity-50"
+        >
+          {Object.entries(colorSchemes).map(([key, scheme]) => (
+            <option key={key} value={key}>
+              {scheme.name}
+            </option>
+          ))}
+        </select>
+      </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {(["noun", "adjective", "preposition", "possesive", "objective"] as const).map((category) => (
             <SentenceSection
@@ -150,6 +212,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
               }
               currentSubCategory={currentSubCategories[category]}
               currentIndex={indexes[category][currentSubCategories[category]]}
+              colorScheme={colorSchemes[currentColorScheme]}
             />
           ))}
         </div>
