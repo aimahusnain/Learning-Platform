@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,15 +45,20 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
   return (
     <div className={`min-h-screen bg-gradient-to-br ${colors.gradient}`}>
       <div className="container mx-auto px-4 py-12">
-        <motion.h1 
+        <motion.h1
           className={`text-5xl font-bold mb-12 text-center text-${colors.text}`}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {UnitDetailsData[0].name} <span className={`font-normal text-${colors.primary}`}>Questions</span>
+          {UnitDetailsData[0].name}{" "}
+          <span className={`font-normal text-${colors.primary}`}>
+            Questions
+          </span>
         </motion.h1>
-        <motion.div 
+
+        {/* Practice Sentences */}
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -61,26 +66,42 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
         >
           <Dialog>
             <DialogTrigger asChild>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Card className={`w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border-${colors.primary} border-2`}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Card
+                  className={`w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white border-${colors.primary} border-2`}
+                >
                   <CardHeader>
                     <CardTitle className="capitalize w-full text-left flex items-center">
-                      <PlayCircle className={`w-6 h-6 mr-2 text-${colors.primary}`} />
+                      <PlayCircle
+                        className={`w-6 h-6 mr-2 text-${colors.primary}`}
+                      />
                       Explanatory Video
                     </CardTitle>
                   </CardHeader>
                   <CardFooter className="flex w-full justify-between">
                     <div></div>
-                    <Button className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}>Watch Now</Button>
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Watch Now
+                    </Button>
                   </CardFooter>
                 </Card>
               </motion.div>
             </DialogTrigger>
             <DialogContent className="max-w-3xl">
               <DialogHeader>
-                <DialogTitle className={`text-2xl font-bold text-${colors.text}`}>Explanation Video</DialogTitle>
+                <DialogTitle
+                  className={`text-2xl font-bold text-${colors.text}`}
+                >
+                  Explanation Video
+                </DialogTitle>
                 <DialogDescription>
-                  This video will explain {UnitDetailsData[0].name} in an easy-to-understand manner.
+                  This video will explain {UnitDetailsData[0].name} in an
+                  easy-to-understand manner.
                 </DialogDescription>
               </DialogHeader>
               {UnitDetailsData[0].videoReferenceVideo ? (
@@ -95,53 +116,113 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                   />
                 </div>
               ) : (
-                <p className="text-center py-8 text-gray-500">Video not found :(</p>
+                <p className="text-center py-8 text-gray-500">
+                  Video not found :(
+                </p>
               )}
             </DialogContent>
           </Dialog>
-          
-          {UnitDetailsData[0].name === "am/is/are" ? 
-        <motion.div  whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
-          <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
-            <Link href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}>
-              <CardTitle className={`capitalize text-${colors.text} flex items-center`}>
-                <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
-                Practice Sentences
-              </CardTitle>
-            </Link>
-          </CardHeader>
-          <CardContent>
-          </CardContent>
-          <CardFooter className="flex justify-between items-center">
-            <Link href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}>
-              <Button className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}>Learn</Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      </motion.div>: <p>Hello1</p>  
-        }
 
+          
+         {/* Practice Sentences */}
+          {UnitDetailsData[0].name === "am/is/are" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      Practice Sentences
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : (
+            <p>Hello1</p>
+          )}
+
+{UnitDetailsData[0].name === "am/is/are" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences2`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      Practice Sentences 2
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences2`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : (
+            <p>Hello1</p>
+          )}
 
           {Questions && Array.isArray(Questions) ? (
             Questions.map((question: any) => (
-              <motion.div key={question.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                key={question.id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
                   <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
                     <Link href={`/learn/${unitid}/questions/${question.id}`}>
-                      <CardTitle className={`capitalize text-${colors.text} flex items-center`}>
-                        <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      <CardTitle
+                        className={`capitalize text-${colors.text} flex items-center`}
+                      >
+                        <Book
+                          className={`w-5 h-5 mr-2 text-${colors.primary}`}
+                        />
                         {question.name}
                       </CardTitle>
                     </Link>
-                    <CardDescription className={`text-${colors.primary} font-medium`}>
-                      {question.MainQuestions && `${question.MainQuestions.length} Questions`}
+                    <CardDescription
+                      className={`text-${colors.primary} font-medium`}
+                    >
+                      {question.MainQuestions &&
+                        `${question.MainQuestions.length} Questions`}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                  </CardContent>
+                  <CardContent></CardContent>
                   <CardFooter className="flex justify-between items-center">
-                    <Button variant="outline" className="cursor-default flex items-center">
+                    <Button
+                      variant="outline"
+                      className="cursor-default flex items-center"
+                    >
                       {question.submitted ? (
                         <>
                           <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
@@ -155,30 +236,38 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                       )}
                     </Button>
                     <Link href={`/learn/${unitid}/questions/${question.id}`}>
-                      <Button className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}>Learn</Button>
+                      <Button
+                        className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                      >
+                        Learn
+                      </Button>
                     </Link>
                   </CardFooter>
                 </Card>
               </motion.div>
             ))
           ) : (
-            <p className="col-span-full text-center py-8 text-gray-500">No questions found</p>
+            <p className="col-span-full text-center py-8 text-gray-500">
+              No questions found
+            </p>
           )}
         </motion.div>
+        
       </div>
     </div>
   );
 };
 
-const getColors = (scheme: 'pink' | 'purple') => {
+const getColors = (scheme: "pink" | "purple") => {
   return {
-    primary: scheme === 'pink' ? 'pink-600' : 'indigo-600',
-    secondary: scheme === 'pink' ? 'pink-100' : 'indigo-100',
-    text: scheme === 'pink' ? 'pink-800' : 'indigo-800',
-    hover: scheme === 'pink' ? 'pink-700' : 'indigo-700',
-    gradient: scheme === 'pink' 
-      ? 'from-pink-50 to-red-100'
-      : 'from-blue-50 to-indigo-100',
+    primary: scheme === "pink" ? "pink-600" : "indigo-600",
+    secondary: scheme === "pink" ? "pink-100" : "indigo-100",
+    text: scheme === "pink" ? "pink-800" : "indigo-800",
+    hover: scheme === "pink" ? "pink-700" : "indigo-700",
+    gradient:
+      scheme === "pink"
+        ? "from-pink-50 to-red-100"
+        : "from-blue-50 to-indigo-100",
   };
 };
 

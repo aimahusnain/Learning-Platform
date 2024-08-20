@@ -65,7 +65,12 @@ const English = () => {
         <Breadcrumb className="mb-6">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/" className="text-indigo-600 hover:text-indigo-800">Home</BreadcrumbLink>
+              <BreadcrumbLink
+                href="/"
+                className="text-indigo-600 hover:text-indigo-800"
+              >
+                Home
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -77,14 +82,19 @@ const English = () => {
         <div className="flex items-center mb-8 justify-between w-full">
           <h1 className="text-4xl font-bold text-indigo-900">
             English Course Units
-            <span className="text-2xl font-medium text-indigo-600">({getAllList?.length})</span>
+            <span className="text-2xl font-medium text-indigo-600">
+              ({getAllList?.length})
+            </span>
           </h1>
-          <ToggleGroup type="single" className="border border-indigo-200 rounded-md">
+          <ToggleGroup
+            type="single"
+            className="border border-indigo-200 rounded-md"
+          >
             <ToggleGroupItem
               value="list"
               aria-label="Toggle List"
               onClick={toggleLayout}
-              className={`p-2 ${!isGrid ? 'bg-indigo-100' : ''}`}
+              className={`p-2 ${!isGrid ? "bg-indigo-100" : ""}`}
             >
               <List className="w-5 h-5 text-indigo-600" />
             </ToggleGroupItem>
@@ -92,13 +102,13 @@ const English = () => {
               value="grid"
               aria-label="Toggle Grid"
               onClick={toggleLayout}
-              className={`p-2 ${isGrid ? 'bg-indigo-100' : ''}`}
+              className={`p-2 ${isGrid ? "bg-indigo-100" : ""}`}
             >
               <LayoutGrid className="w-5 h-5 text-indigo-600" />
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
-        
+
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500"></div>
@@ -116,7 +126,11 @@ const English = () => {
           >
             {getAllList &&
               getAllList.map((unit) => (
-                <motion.div key={unit.id} whileHover={{ scale: 1.03 }} transition={{ type: "spring", stiffness: 300 }}>
+                <motion.div
+                  key={unit.id}
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   {isGrid ? (
                     <Card className="w-full hover:shadow-lg transition-all duration-300 bg-white">
                       <CardHeader className="bg-indigo-50 rounded-t-lg">
@@ -136,12 +150,17 @@ const English = () => {
                         </div>
                       </CardContent>
                       <CardFooter className="flex justify-between bg-gray-50 rounded-b-lg">
-                        <Button variant="outline" className="cursor-default flex items-center">
+                        <Button
+                          variant="outline"
+                          className="cursor-default flex items-center"
+                        >
                           <XCircle className="w-4 h-4 mr-2 text-red-500" />
                           Not Completed
                         </Button>
                         <Link href={`/learn/${unit.id}`}>
-                          <Button className="bg-indigo-600 hover:bg-indigo-700">Start Learning</Button>
+                          <Button className="bg-indigo-600 hover:bg-indigo-700">
+                            Start Learning
+                          </Button>
                         </Link>
                       </CardFooter>
                     </Card>
@@ -158,7 +177,9 @@ const English = () => {
                           >
                             Unit {unit.noidnumber}: {unit.name}
                           </Link>
-                          <p className="text-gray-600 mt-1">{unit.description} Questions</p>
+                          <p className="text-gray-600 mt-1">
+                            {unit.description} Questions
+                          </p>
                         </div>
                       </div>
                       <div className="flex gap-4 items-center">
@@ -170,13 +191,86 @@ const English = () => {
                           Not Completed
                         </Button>
                         <Link href={`/learn/${unit.id}`}>
-                          <Button className="bg-indigo-600 hover:bg-indigo-700">Start Learning</Button>
+                          <Button className="bg-indigo-600 hover:bg-indigo-700">
+                            Start Learning
+                          </Button>
                         </Link>
                       </div>
                     </div>
                   )}
                 </motion.div>
               ))}
+
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {isGrid ? (
+                <Card className="w-full hover:shadow-lg transition-all duration-300 bg-white">
+                  <CardHeader className="bg-indigo-50 rounded-t-lg">
+                    <Link href={`/learn/nursery`}>
+                      <CardTitle className="text-2xl font-bold text-indigo-800 capitalize">
+                        Unit Nursery
+                      </CardTitle>
+                    </Link>
+                    <CardDescription className="text-xl text-indigo-600">
+                      Nursery
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center text-gray-600 mb-4">
+                      <Book className="w-5 h-5 mr-2" />
+                      <span>For Kids</span>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between bg-gray-50 rounded-b-lg">
+                    <Button
+                      variant="outline"
+                      className="cursor-default flex items-center"
+                    >
+                      <XCircle className="w-4 h-4 mr-2 text-red-500" />
+                      Not Completed
+                    </Button>
+                    <Link href={`/learn/nursery`}>
+                      <Button className="bg-indigo-600 hover:bg-indigo-700">
+                        Start Learning
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ) : (
+                <div className="flex justify-between items-center bg-white rounded-lg shadow p-6 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center">
+                    <div className="bg-indigo-100 rounded-full p-3 mr-4">
+                      <Book className="w-6 h-6 text-indigo-600" />
+                    </div>
+                    <div>
+                      <Link
+                        className="text-xl font-bold text-indigo-800 capitalize hover:text-indigo-600"
+                        href={`/learn/nursery`}
+                      >
+                        Unit Kids: Nursery
+                      </Link>
+                      <p className="text-gray-600 mt-1">Nursery Questions</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Button
+                      variant="outline"
+                      className="cursor-default flex items-center"
+                    >
+                      <XCircle className="w-4 h-4 mr-2 text-red-500" />
+                      Not Completed
+                    </Button>
+                    <Link href={`/learn/nursery`}>
+                      <Button className="bg-indigo-600 hover:bg-indigo-700">
+                        Start Learning
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         )}
       </div>
