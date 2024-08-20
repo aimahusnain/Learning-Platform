@@ -58,7 +58,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     const fetchUserProgressMainQuestion = async () => {
       try {
         const response = await axios.get<{ data: any }>(
-          `${StaticData.SiteURL}/api/GETUserProgressMainQuestion?email=${userEmail}&questionsId=${questionid}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/GETUserProgressMainQuestion?email=${userEmail}&questionsId=${questionid}`
         );
         const data = response.data;
 
@@ -107,7 +107,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/mainquestions?id=${questionid}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/mainquestions?id=${questionid}`
         );
         const data = response.data;
         if (data.success) {
@@ -133,7 +133,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/questions/openedQuestion?id=${questionid}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/questions/openedQuestion?id=${questionid}`
         );
         const data = response.data;
         if (data.success) {
@@ -354,7 +354,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
   const CheckSubmit = async () => {
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
       );
 
       const data = await response.json();
@@ -413,7 +413,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/UserAnswerSaver?email=${userEmail}&mainQuestionsId=${questions[currentQuestionIndex]?.id}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/UserAnswerSaver?email=${userEmail}&mainQuestionsId=${questions[currentQuestionIndex]?.id}`
         );
         const data = response.data;
 
@@ -503,7 +503,7 @@ export const QuestionsCarousel: React.FC<Props> = ({ questionid }) => {
     const { isCorrect1, isCorrect2 } = checkAnswer();
     try {
       const response = await axios.put(
-        `${StaticData.SiteURL}/api/savequestionedit`,
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/savequestionedit`,
         {
           id: questionData.id,
           email: userEmail,

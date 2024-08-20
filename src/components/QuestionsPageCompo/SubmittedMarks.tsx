@@ -30,7 +30,7 @@ const SubmittedMarks = ({
 
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/fetchUserProgressQuestion?id=${questionId}&userEmail=${session.user.email}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/fetchUserProgressQuestion?id=${questionId}&userEmail=${session.user.email}`
         );
         const data = await response.json();
         if (data.success) {

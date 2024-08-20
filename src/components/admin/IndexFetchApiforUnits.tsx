@@ -53,7 +53,7 @@ const IndexFetchApiforUnits: React.FC<Props> = ({
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/units/unitwithIndex?startIndex=${first - 1}&endIndex=${
             last - 1
           }`
         );

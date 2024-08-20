@@ -20,7 +20,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
     refresh();
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/unquestionsubmitapi`,
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/unquestionsubmitapi`,
         {
           method: "PUT",
           headers: {
@@ -48,7 +48,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = (questionid) => {
   async function deleteuserProgressMainQuestion() {
     try {
       const response = await fetch(
-        `${StaticData.SiteURL}/api/deleteUserProgressMainQuestion?email=${session?.user?.email}&questionId=${questionid.questionid}`,
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/deleteUserProgressMainQuestion?email=${session?.user?.email}&questionId=${questionid.questionid}`,
         {
           method: "DELETE",
           headers: {

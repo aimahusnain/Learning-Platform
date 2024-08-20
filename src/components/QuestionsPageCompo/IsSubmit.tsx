@@ -20,7 +20,7 @@ const IsSubmit: React.FC<Props> = ({ county, questionid }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${StaticData.SiteURL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/findquestions?email=${session?.user?.email}&id=${questionid}`
         );
 
         const data = await response.json();

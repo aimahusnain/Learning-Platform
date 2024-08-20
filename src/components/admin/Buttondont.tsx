@@ -11,7 +11,7 @@ const Buttondont = ({ Datay }: { Datay: any }) => {
     async function deleteQuestion() {
         try {
             const response = await fetch(
-                `${StaticData.SiteURL}/api/admin/Questions/delete`,
+                `${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/Questions/delete`,
                 {
                     method: "DELETE",
                     headers: {

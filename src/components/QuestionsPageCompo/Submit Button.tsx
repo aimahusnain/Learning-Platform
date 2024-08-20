@@ -38,7 +38,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
       refresh();
 
       const response = await fetch(
-        `${StaticData.SiteURL}/api/questionsubmitapi`,
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/questionsubmitapi`,
         {
           method: "PUT",
           headers: {

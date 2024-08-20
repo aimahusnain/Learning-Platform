@@ -6,7 +6,7 @@ import { StaticData } from "@/lib/staticdata";
 
 async function SearchedQuestions() {
   try {
-    const res = await fetch(`${StaticData.SiteURL}/api/admin/Questions/get`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/Questions/get`);
 
     const data = await res.json();
     return data.success ? data.data : console.log("Not Found Please");

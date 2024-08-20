@@ -27,7 +27,7 @@ import { motion } from "framer-motion";
 
 async function getAllListsByCategory() {
   try {
-    const response = await axios.get(`${StaticData.SiteURL}/api/units`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/units`);
     const data = response.data;
     if (data.success) return data.data;
   } catch (error) {

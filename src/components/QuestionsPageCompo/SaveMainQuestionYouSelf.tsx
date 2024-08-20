@@ -7,7 +7,7 @@ export async function SaveMainQuestionYouSelf(
   userEmail: String,
 ) {
   try {
-    const res = await fetch(`${StaticData.SiteURL}/api/saveuserquestion`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/saveuserquestion`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

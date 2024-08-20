@@ -29,7 +29,7 @@ const SubmitTrueorFalse: React.FC<Props> = ({
     const fetchUserProgress = async () => {
       try {
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/fetchUserProgressMainQuestion?email=${UserEmail}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/fetchUserProgressMainQuestion?email=${UserEmail}`
         );
         const data = response.data;
         const userProgress = data.data;
@@ -64,7 +64,7 @@ const SubmitTrueorFalse: React.FC<Props> = ({
         setError(false);
 
         const response = await axios.get(
-          `${StaticData.SiteURL}/api/UserAnswerSaver?email=${UserEmail}&mainQuestionsId=${mainQuestionId}`
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/UserAnswerSaver?email=${UserEmail}&mainQuestionsId=${mainQuestionId}`
         );
         const data = response.data;
 
