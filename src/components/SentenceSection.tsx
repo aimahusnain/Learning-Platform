@@ -16,44 +16,75 @@ const SentenceSection: React.FC<any> = ({
   showNegativePositive,
   colorScheme,
 }) => {
-    const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
-    const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-    const [isFullscreen, setIsFullscreen] = useState(false);
-  
-    const toggleFullscreen = () => {
-      setIsFullscreen(!isFullscreen);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
+  const [wordDefinition, setWordDefinition] = useState<string | null>(null);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
     };
-  
-    useEffect(() => {
-      const loadVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices();
-        setVoices(availableVoices);
-      };
-  
-      loadVoices();
-  
+
+    loadVoices();
+
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    return () => {
       if (typeof window !== 'undefined' && window.speechSynthesis) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-      }
-  
-      return () => {
-        if (typeof window !== 'undefined' && window.speechSynthesis) {
-          window.speechSynthesis.onvoiceschanged = null;
-        }
-      };
-    }, []);
-  
-    const speakSentence = () => {
-      if ("speechSynthesis" in window) {
-        const utterance = new SpeechSynthesisUtterance(sentences[currentIndex]);
-        if (selectedVoice) {
-          utterance.voice = selectedVoice;
-        }
-        speechSynthesis.speak(utterance);
-      } else {
-        alert("Speech synthesis is not supported in this browser.");
+        window.speechSynthesis.onvoiceschanged = null;
       }
     };
+  }, []);
+
+  const speakSentence = () => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(sentences[currentIndex]);
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+      speechSynthesis.speak(utterance);
+    } else {
+      alert("Speech synthesis is not supported in this browser.");
+    }
+  };
+
+  const fetchDefinition = async (word: string) => {
+    // Note: In a real application, you would need to use a proper API key and endpoint
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    const data = await response.json();
+    if (data && data[0] && data[0].meanings && data[0].meanings[0] && data[0].meanings[0].definitions) {
+      setWordDefinition(data[0].meanings[0].definitions[0].definition);
+    } else {
+      setWordDefinition("Definition not found");
+    }
+  };
+
+  const handleWordClick = (word: string) => {
+    setSelectedWord(word);
+    fetchDefinition(word);
+  };
+
+  const renderSentenceWithClickableWords = (sentence: string) => {
+    const words = sentence.split(' ');
+    return words.map((word, index) => (
+      <span
+        key={index}
+        onClick={() => handleWordClick(word.replace(/[^a-zA-Z]/g, ''))}
+        className="cursor-pointer hover:underline"
+      >
+        {word}{' '}
+      </span>
+    ));
+  };
 
   return (
     <div
@@ -98,10 +129,16 @@ const SentenceSection: React.FC<any> = ({
                   : "text-sm sm:text-base md:text-lg lg:text-2xl"
               }`}
             >
-              {sentences[currentIndex].charAt(0).toUpperCase() +
-                sentences[currentIndex].slice(1).toLowerCase()}
+              {renderSentenceWithClickableWords(sentences[currentIndex])}
             </p>
           </div>
+
+          {selectedWord && wordDefinition && (
+            <div className="bg-blue-100 p-4 rounded-lg mb-4">
+              <p className="font-bold">{selectedWord}:</p>
+              <p>{wordDefinition}</p>
+            </div>
+          )}
 
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
             <button
