@@ -17,9 +17,10 @@ interface SentenceSectionProps {
   onSelectSubCategory: (subCategory: SubCategory) => void;
   currentSubCategory: SubCategory;
   currentIndex: number;
+  showNegativePositive?: boolean;
 }
 
-const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
+const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data }) => {
   const [indexes, setIndexes] = useState<Record<Category, Record<SubCategory, number>>>({
     "data set 1": { Positive: 0 },
     "data set 2": { Positive: 0 },
@@ -72,7 +73,6 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       ...prev,
       [category]: subCategory,
     }));
-    // Keep the current index when switching subcategories
     setIndexes((prevIndexes) => ({
       ...prevIndexes,
       [category]: {
@@ -84,27 +84,28 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
 
   return (
     <div className="bg-gradient-to-br from-indigo-100 to-purple-100 py-16 px-4">
-      <div className="">
-        <h1 className="text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-         {learnAbout}
+      <div className="container mx-auto">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+          {learnAbout}
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {(["data set 1", "data set 2", "data set 3", "data set 4", "data set 5"] as const).map((category) => (
-            <SentenceSection
-              key={category}
-              title={category.charAt(0).toUpperCase() + category.slice(1)}
-              category={category}
-              subCategory={currentSubCategories[category]}
-              sentences={getSentences(category, currentSubCategories[category])}
-              onNext={() => nextSentence(category)}
-              showNegativePositive={false} // You might want to remove this prop if not needed
-              onPrev={() => prevSentence(category)}
-              onSelectSubCategory={(subCategory: any) =>
-                handleSubCategoryChange(category, subCategory)
-              }
-              currentSubCategory={currentSubCategories[category]}
-              currentIndex={indexes[category][currentSubCategories[category]]}
-            />
+            <div key={category} className="min-w-0">
+              <SentenceSection
+                title={category.charAt(0).toUpperCase() + category.slice(1)}
+                category={category}
+                subCategory={currentSubCategories[category]}
+                sentences={getSentences(category, currentSubCategories[category])}
+                onNext={() => nextSentence(category)}
+                onPrev={() => prevSentence(category)}
+                onSelectSubCategory={(subCategory: any) =>
+                  handleSubCategoryChange(category, subCategory)
+                }
+                currentSubCategory={currentSubCategories[category]}
+                currentIndex={indexes[category][currentSubCategories[category]]}
+                showNegativePositive={false} // Adjust if necessary
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -135,7 +135,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
         <h1 className="text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
           Learn About {learnAbout}
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {(["noun", "adjective", "preposition", "possesive", "objective"] as const).map((category) => (
             <SentenceSection
               key={category}
@@ -145,6 +145,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
               sentences={getSentences(category, currentSubCategories[category])}
               onNext={() => nextSentence(category)}
               onPrev={() => prevSentence(category)}
+              showNegativePositive={true} // Adjust if necessary
               onSelectSubCategory={(subCategory: any) =>
                 handleSubCategoryChange(category, subCategory)
               }
