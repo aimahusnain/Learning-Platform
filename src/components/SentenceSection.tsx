@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, Volume2, X } from "lucide-react";
+import Chatbox from "@/app/learn/[unitid]/questions/practice-sentences-unit1-1/Chatbox";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
@@ -16,7 +17,8 @@ const SentenceSection: React.FC<any> = ({
   showNegativePositive,
   colorScheme,
 }) => {
-  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [selectedVoice, setSelectedVoice] =
+    useState<SpeechSynthesisVoice | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
@@ -34,12 +36,12 @@ const SentenceSection: React.FC<any> = ({
 
     loadVoices();
 
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
 
     return () => {
-      if (typeof window !== 'undefined' && window.speechSynthesis) {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
         window.speechSynthesis.onvoiceschanged = null;
       }
     };
@@ -59,9 +61,17 @@ const SentenceSection: React.FC<any> = ({
 
   const fetchDefinition = async (word: string) => {
     // Note: In a real application, you would need to use a proper API key and endpoint
-    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    const response = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    );
     const data = await response.json();
-    if (data && data[0] && data[0].meanings && data[0].meanings[0] && data[0].meanings[0].definitions) {
+    if (
+      data &&
+      data[0] &&
+      data[0].meanings &&
+      data[0].meanings[0] &&
+      data[0].meanings[0].definitions
+    ) {
       setWordDefinition(data[0].meanings[0].definitions[0].definition);
     } else {
       setWordDefinition("Definition not found");
@@ -74,14 +84,14 @@ const SentenceSection: React.FC<any> = ({
   };
 
   const renderSentenceWithClickableWords = (sentence: string) => {
-    const words = sentence.split(' ');
+    const words = sentence.split(" ");
     return words.map((word, index) => (
       <span
         key={index}
-        onClick={() => handleWordClick(word.replace(/[^a-zA-Z]/g, ''))}
+        onClick={() => handleWordClick(word.replace(/[^a-zA-Z]/g, ""))}
         className="cursor-pointer hover:underline"
       >
-        {word}{' '}
+        {word}{" "}
       </span>
     ));
   };
@@ -165,14 +175,16 @@ const SentenceSection: React.FC<any> = ({
           <select
             value={selectedVoice?.name || ""}
             onChange={(e) => {
-              const voice = voices.find(v => v.name === e.target.value);
+              const voice = voices.find((v) => v.name === e.target.value);
               setSelectedVoice(voice || null);
             }}
             className="px-2 sm:px-4 w-full py-1 sm:py-2 bg-gray-100 rounded-full text-gray-800 text-xs sm:text-sm md:text-base w-22 focus:outline-none focus:ring-2 focus:ring-indigo-400"
           >
             <option value="">Select Voice</option>
             {voices.map((voice) => (
-              <option key={voice.name} value={voice.name}>{voice.name}</option>
+              <option key={voice.name} value={voice.name}>
+                {voice.name}
+              </option>
             ))}
           </select>
 
@@ -195,6 +207,7 @@ const SentenceSection: React.FC<any> = ({
           )}
         </div>
       </div>
+      {/* <Chatbox /> */}
     </div>
   );
 };

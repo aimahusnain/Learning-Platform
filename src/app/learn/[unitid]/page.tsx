@@ -23,13 +23,17 @@ import { motion } from "framer-motion";
 import { PlayCircle, Book, CheckCircle, XCircle } from "lucide-react";
 
 async function SearchedUnit(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/units/unitopen?id=${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/units/unitopen?id=${id}`
+  );
   const data = await res.json();
   if (data.success) return data.data;
 }
 
 async function SearchedQuestions(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/questions?id=${id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/questions?id=${id}`
+  );
   const data = await res.json();
   if (data.success) return data.data;
 }
@@ -123,14 +127,13 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
             </DialogContent>
           </Dialog>
 
-          
-         {/* Practice Sentences */}
+          {/* Practice Sentences */}
           {UnitDetailsData[0].name === "am/is/are" ? (
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
                 <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
                   <Link
-                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit1-1`}
                   >
                     <CardTitle
                       className={`capitalize text-${colors.text} flex items-center`}
@@ -143,7 +146,7 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                 <CardContent></CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <Link
-                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences`}
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit1-1`}
                   >
                     <Button
                       className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
@@ -154,16 +157,14 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                 </CardFooter>
               </Card>
             </motion.div>
-          ) : (
-            <p>Hello1</p>
-          )}
+          ) : null}
 
-{UnitDetailsData[0].name === "am/is/are" ? (
+          {UnitDetailsData[0].name === "am/is/are" ? (
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
                 <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
                   <Link
-                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences2`}
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit1-2`}
                   >
                     <CardTitle
                       className={`capitalize text-${colors.text} flex items-center`}
@@ -176,7 +177,7 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                 <CardContent></CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <Link
-                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences2`}
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit1-2`}
                   >
                     <Button
                       className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
@@ -187,9 +188,69 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                 </CardFooter>
               </Card>
             </motion.div>
-          ) : (
-            <p>Hello1</p>
-          )}
+          ) : null}
+
+          {UnitDetailsData[0].name === "am/is/are (questions)" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit2-1`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      Practice Sentences
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit2-1`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : null}
+
+{UnitDetailsData[0].name === "I am doing (present continuous)" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      Practice Sentences
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : null}
 
           {Questions && Array.isArray(Questions) ? (
             Questions.map((question: any) => (
@@ -252,7 +313,6 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
             </p>
           )}
         </motion.div>
-        
       </div>
     </div>
   );
