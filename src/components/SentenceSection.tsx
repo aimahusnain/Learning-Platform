@@ -14,47 +14,53 @@ const SentenceSection: React.FC<any> = ({
   currentSubCategory,
   currentIndex,
   showNegativePositive,
+  colorScheme,
 }) => {
-  const [selectedVoice, setSelectedVoice] =
-    useState<SpeechSynthesisVoice | null>(null);
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
-  };
-
-  useEffect(() => {
-    const loadVoices = () => {
-      setVoices(window.speechSynthesis.getVoices());
+    const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+    const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+  
+    const toggleFullscreen = () => {
+      setIsFullscreen(!isFullscreen);
     };
-
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    loadVoices();
-
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-    };
-  }, []);
-
-  const speakSentence = () => {
-    if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(sentences[currentIndex]);
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
+  
+    useEffect(() => {
+      const loadVoices = () => {
+        const availableVoices = window.speechSynthesis.getVoices();
+        setVoices(availableVoices);
+      };
+  
+      loadVoices();
+  
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
       }
-      speechSynthesis.speak(utterance);
-    } else {
-      alert("Speech synthesis is not supported in this browser.");
-    }
-  };
+  
+      return () => {
+        if (typeof window !== 'undefined' && window.speechSynthesis) {
+          window.speechSynthesis.onvoiceschanged = null;
+        }
+      };
+    }, []);
+  
+    const speakSentence = () => {
+      if ("speechSynthesis" in window) {
+        const utterance = new SpeechSynthesisUtterance(sentences[currentIndex]);
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+        speechSynthesis.speak(utterance);
+      } else {
+        alert("Speech synthesis is not supported in this browser.");
+      }
+    };
 
   return (
     <div
-      className={`bg-gradient-to-br from-teal-400 to-indigo-600 p-4 sm:p-6 lg:p-8 rounded-3xl shadow-2xl mx-auto transition-all duration-300 ease-in-out ${
-        isFullscreen
-          ? "fixed inset-0 z-50 m-0 rounded-none"
-          : "max-w-md sm:max-w-lg md:max-w-xl lg:max-w-4xl"
+      className={`bg-gradient-to-br ${colorScheme.from} ${
+        colorScheme.to
+      } p-4 sm:p-6 lg:p-8 rounded-3xl shadow-2xl max-w-md sm:max-w-lg md:max-w-xl ${
+        isFullscreen ? "!max-w-full fixed inset-0 z-50 m-0 rounded-none" : ""
       }`}
     >
       <div
@@ -62,10 +68,15 @@ const SentenceSection: React.FC<any> = ({
           isFullscreen ? "h-full flex flex-col" : ""
         }`}
       >
-        <div className="bg-gradient-to-r from-teal-500 to-indigo-500 p-4 sm:p-6 text-white flex justify-between items-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold">
+        <div
+          className={`bg-gradient-to-r ${colorScheme.gradientFrom} ${colorScheme.gradientTo} p-4 sm:p-6 text-white`}
+        >
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-center mb-2">
             {title}
           </h2>
+          <p className="text-sm sm:text-md md:text-lg font-semibold text-center">
+            {currentIndex + 1} / {sentences.length}
+          </p>
           <button
             onClick={toggleFullscreen}
             className="p-2 bg-white/20 rounded-full"
@@ -92,42 +103,39 @@ const SentenceSection: React.FC<any> = ({
             </p>
           </div>
 
-          <div className="flex flex-row justify-between items-center mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
             <button
               onClick={onPrev}
-              className="p-2 sm:p-3 lg:p-3 bg-teal-500 text-white rounded-full hover:bg-teal-600 transition-transform transform hover:scale-110"
+              className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-r ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
             >
               <ChevronLeft size={18} />
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <button
                 onClick={speakSentence}
-                className="p-2 sm:p-3 lg:p-3 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 transition-transform transform hover:scale-110"
+                className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
               >
                 <Volume2 size={18} />
               </button>
             </div>
             <button
               onClick={onNext}
-              className="p-2 sm:p-3 lg:p-3 bg-teal-500 text-white rounded-full hover:bg-teal-600 transition-transform transform hover:scale-110"
+              className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-l ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
             >
               <ChevronRight size={18} />
             </button>
           </div>
           <select
             value={selectedVoice?.name || ""}
-            onChange={(e) =>
-              setSelectedVoice(
-                voices.find((voice) => voice.name === e.target.value) || null
-              )
-            }
+            onChange={(e) => {
+              const voice = voices.find(v => v.name === e.target.value);
+              setSelectedVoice(voice || null);
+            }}
             className="px-2 sm:px-4 w-full py-1 sm:py-2 bg-gray-100 rounded-full text-gray-800 text-xs sm:text-sm md:text-base w-22 focus:outline-none focus:ring-2 focus:ring-indigo-400"
           >
             <option value="">Select Voice</option>
             {voices.map((voice) => (
-              <option key={voice.name} value={voice.name}>
-                {voice.name}
-              </option>
+              <option key={voice.name} value={voice.name}>{voice.name}</option>
             ))}
           </select>
 
