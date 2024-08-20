@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, Volume2, X } from "lucide-react";
-import Chatbox from "@/app/learn/[unitid]/questions/practice-sentences-unit1-1/Chatbox";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
