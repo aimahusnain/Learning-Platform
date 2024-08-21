@@ -18,12 +18,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { StaticData } from "@/lib/staticdata";
 import axios from "axios";
-import { LayoutGrid, List, Book, CheckCircle, XCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Book, LayoutGrid, List, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 async function getAllListsByCategory() {
   try {
@@ -49,7 +48,8 @@ const English = () => {
       try {
         setIsLoading(true);
         const data = await getAllListsByCategory();
-        setAllList(data);
+        const sortedData = data.sort((a: any, b: any) => a.noidnumber - b.noidnumber);
+        setAllList(sortedData);
       } catch (error) {
         console.error("Error fetching unit data:", error);
       } finally {
@@ -58,6 +58,7 @@ const English = () => {
     };
     fetchData();
   }, []);
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">

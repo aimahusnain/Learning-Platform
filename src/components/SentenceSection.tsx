@@ -16,8 +16,7 @@ const SentenceSection: React.FC<any> = ({
   showNegativePositive,
   colorScheme,
 }) => {
-  const [selectedVoice, setSelectedVoice] =
-    useState<SpeechSynthesisVoice | null>(null);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
@@ -30,14 +29,19 @@ const SentenceSection: React.FC<any> = ({
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
-      setVoices(availableVoices);
+      if (availableVoices.length > 0) {
+        const englishVoices = availableVoices.filter(voice => voice.lang.startsWith('en'));
+        setVoices(englishVoices);
+      } else {
+        setTimeout(loadVoices, 100); // Retry after a short delay
+      }
     };
-
-    loadVoices();
 
     if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
     }
+
+    loadVoices();
 
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
@@ -59,7 +63,6 @@ const SentenceSection: React.FC<any> = ({
   };
 
   const fetchDefinition = async (word: string) => {
-    // Note: In a real application, you would need to use a proper API key and endpoint
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
     );
