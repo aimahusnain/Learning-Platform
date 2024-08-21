@@ -695,6 +695,24 @@ const data = [
         ],
       },
     ],
+
+    "data set 7": [
+      {
+        name: "Positive" as const,
+        sentence: [
+          "Is it Ali outside?",
+          "Are there no fish in this pond?",
+          "Who's there on the roof?",
+          "Is it hailing?",
+          "Is Ali a cricket player?",
+          "When is the train due?",
+          "Why are many students absent today?",
+          "Where are the players of your team?",
+          "What's he to you?"
+        ]
+        
+      },
+    ],
   },
 ];
 

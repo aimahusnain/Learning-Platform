@@ -762,6 +762,50 @@ const data = [
         sentence: ["Am I at home?", "Am I in the office?", "Am I on vacation?"],
       },
     ],
+    "data set 7": [
+      {
+        name: "Negative" as const,
+        sentence: [
+          "I'm not at home",
+          "I'm not in the office",
+          "I'm not on vacation",
+        ],
+      },
+      {
+        name: "Positive" as const,
+        sentence: [
+          "It's morning.",
+          "It's getting dark.",
+          "Where there's a will, there's a way.",
+          "A book is on the table.",
+          "There's a book on the table.",
+          "There's Ali beating Rashid.",
+          "It's 7 o'clock.",
+          "It's fine today.",
+          "What a beautiful place it is!",
+          "It's you who broke my pen.",
+          "It's very hot today.",
+          "It's evening.",
+          "There's no book on the table.",
+          "There are some apples in the basket.",
+          "There are no new clothes in the box.",
+          "I'm an honest boy.",
+          "She's very pretty.",
+          "We're tired.",
+          "He isn't brave.",
+          "You aren't a liar.",
+          "We're all Muslims.",
+          "Ahmad is a bold soldier.",
+          "The dog and the horse are faithful animals.",
+          "Every Pakistani is a patriot.",
+          "Lahore is famous for gardens."
+        ]        
+      },
+      {
+        name: "Yes/No Questions" as const,
+        sentence: ["Am I at home?", "Am I in the office?", "Am I on vacation?"],
+      },
+    ],
   },
 ];
 
