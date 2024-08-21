@@ -1,7 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Maximize2, Mic, Volume2, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  Mic,
+  PlusCircle,
+  Volume2,
+  X,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { toast } from "sonner";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
@@ -16,11 +26,44 @@ const SentenceSection: React.FC<any> = ({
   showNegativePositive,
   colorScheme,
 }) => {
-  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+  const [selectedVoice, setSelectedVoice] =
+    useState<SpeechSynthesisVoice | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [wordDefinition, setWordDefinition] = useState<string | null>(null);
+
+  // Don't Know
+  const [dontKnowSentences, setDontKnowSentences] = useState<string[]>([]);
+  const [showDontKnowSection, setShowDontKnowSection] = useState(false);
+
+  const addSentenceToDontKnow = () => {
+    toast("Sentence added successfully in don't know list", {
+      action: {
+        label: "close",
+        onClick: () => console.log("close"),
+      },
+    });
+    setDontKnowSentences([...dontKnowSentences, sentences[currentIndex]]);
+  };
+
+  const toggleDontKnowSection = () => {
+    setShowDontKnowSection(!showDontKnowSection);
+  };
+
+  const DontKnowSection: React.FC<{ sentences: string[] }> = ({
+    sentences,
+  }) => {
+    return (
+      <div className="overflow-y-scroll">
+        {sentences.map((sentence) => (
+          <p className="text-black font-bold text-center leading-relaxed text-sm sm:text-base md:text-lg lg:text-2xl">
+            {sentence}
+          </p>
+        ))}
+      </div>
+    );
+  };
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -30,20 +73,19 @@ const SentenceSection: React.FC<any> = ({
   const [recognition, setRecognition] = useState<any>(null);
   const [transcript, setTranscript] = useState("");
 
-
-  
   const startSpeechRecognition = () => {
-    if ('webkitSpeechRecognition' in window) {
+    if ("webkitSpeechRecognition" in window) {
       const newRecognition = new (window as any).webkitSpeechRecognition();
       newRecognition.continuous = true;
       newRecognition.interimResults = true;
-      newRecognition.lang = 'en-US';
-  
+      newRecognition.lang = "en-US";
+
       newRecognition.onresult = (event: any) => {
-        const speechResult = event.results[event.results.length - 1][0].transcript;
+        const speechResult =
+          event.results[event.results.length - 1][0].transcript;
         setTranscript(speechResult);
       };
-  
+
       newRecognition.start();
       setRecognition(newRecognition);
       setIsMicActive(true);
@@ -51,7 +93,7 @@ const SentenceSection: React.FC<any> = ({
       alert("Speech recognition is not supported in this browser.");
     }
   };
-  
+
   const stopSpeechRecognition = () => {
     if (recognition) {
       recognition.stop();
@@ -62,7 +104,7 @@ const SentenceSection: React.FC<any> = ({
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
-    
+
     if (currentSentence === spokenTextLower) {
       speakFeedback("Correct! You got it!");
     } else {
@@ -70,7 +112,7 @@ const SentenceSection: React.FC<any> = ({
     }
     setTranscript("");
   };
-  
+
   const speakFeedback = (text: string) => {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
@@ -84,7 +126,9 @@ const SentenceSection: React.FC<any> = ({
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
       if (availableVoices.length > 0) {
-        const englishVoices = availableVoices.filter(voice => voice.lang.startsWith('en'));
+        const englishVoices = availableVoices.filter((voice) =>
+          voice.lang.startsWith("en")
+        );
         setVoices(englishVoices);
       } else {
         setTimeout(loadVoices, 100); // Retry after a short delay
@@ -205,12 +249,12 @@ const SentenceSection: React.FC<any> = ({
               <p>{wordDefinition}</p>
             </div>
           )}
-{transcript && (
-  <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-    <p className="text-sm font-semibold">Your speech:</p>
-    <p>{transcript}</p>
-  </div>
-)}
+          {transcript && (
+            <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+              <p className="text-sm font-semibold">Your speech:</p>
+              <p>{transcript}</p>
+            </div>
+          )}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
             <button
               onClick={onPrev}
@@ -219,28 +263,30 @@ const SentenceSection: React.FC<any> = ({
               <ChevronLeft size={18} />
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4">
-  <button
-    onClick={speakSentence}
-    className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
-  >
-    <Volume2 size={18} />
-  </button>
-  <button
-  onMouseDown={startSpeechRecognition}
-  onMouseUp={stopSpeechRecognition}
-  onMouseLeave={stopSpeechRecognition}
-  onTouchStart={startSpeechRecognition}
-  onTouchEnd={stopSpeechRecognition}
-  className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${
-    isMicActive ? 'from-green-500 to-green-600' : colorScheme.gradient
-  } text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110 relative`}
->
-  <Mic size={18} />
-  {isMicActive && (
-    <span className="absolute top-0 right-0 h-3 w-3 bg-green-400 rounded-full animate-pulse"></span>
-  )}
-</button>
-</div>
+              <button
+                onClick={speakSentence}
+                className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
+              >
+                <Volume2 size={18} />
+              </button>
+              <button
+                onMouseDown={startSpeechRecognition}
+                onMouseUp={stopSpeechRecognition}
+                onMouseLeave={stopSpeechRecognition}
+                onTouchStart={startSpeechRecognition}
+                onTouchEnd={stopSpeechRecognition}
+                className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${
+                  isMicActive
+                    ? "from-green-500 to-green-600"
+                    : colorScheme.gradient
+                } text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110 relative`}
+              >
+                <Mic size={18} />
+                {isMicActive && (
+                  <span className="absolute top-0 right-0 h-3 w-3 bg-green-400 rounded-full animate-pulse"></span>
+                )}
+              </button>
+            </div>
             <button
               onClick={onNext}
               className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-l ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
@@ -263,6 +309,20 @@ const SentenceSection: React.FC<any> = ({
               </option>
             ))}
           </select>
+          <div className="my-4 gap-4 flex items-center justify-center">
+            <button
+              onClick={addSentenceToDontKnow}
+              className="p-2 sm:p-3 lg:p-4 bg-gradient-to-t text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110"
+            >
+              <PlusCircle size={18} />
+            </button>
+            <Button onClick={toggleDontKnowSection}>
+              {showDontKnowSection ? "Hide" : "Show"} Don't Know Sentences
+            </Button>
+          </div>
+          {showDontKnowSection && (
+            <DontKnowSection sentences={dontKnowSentences} />
+          )}
 
           {showNegativePositive && (
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-5">
@@ -283,7 +343,6 @@ const SentenceSection: React.FC<any> = ({
           )}
         </div>
       </div>
-      {/* <Chatbox /> */}
     </div>
   );
 };
