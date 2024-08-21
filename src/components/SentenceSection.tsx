@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
+import leven from 'leven';
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
@@ -56,8 +57,8 @@ const SentenceSection: React.FC<any> = ({
   }) => {
     return (
       <div className="overflow-y-scroll">
-        {sentences.map((sentence) => (
-          <p className="text-black font-bold text-center leading-relaxed text-sm sm:text-base md:text-lg lg:text-2xl">
+        {sentences.map((sentence, index) => (
+          <p key={index} className="text-black font-bold text-center leading-relaxed text-sm sm:text-base md:text-lg lg:text-2xl">
             {sentence}
           </p>
         ))}
@@ -101,15 +102,26 @@ const SentenceSection: React.FC<any> = ({
       compareTranscriptWithSentence(transcript);
     }
   };
+  
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
-
-    if (currentSentence === spokenTextLower) {
+  
+    // Calculate the Levenshtein distance between the two strings
+    const distance = leven(currentSentence, spokenTextLower);
+    const maxLength = Math.max(currentSentence.length, spokenTextLower.length);
+    const similarityScore = 1 - distance / maxLength; // Similarity score between 0 and 1
+  
+    if (similarityScore > 0.9) {
       speakFeedback("Correct! You got it!");
+    } else if (similarityScore > 0.7) {
+      speakFeedback("You're getting the point! Try again.");
+    } else if (similarityScore > 0.5) {
+      speakFeedback("Almost there! Keep practicing.");
     } else {
       speakFeedback("Sorry, please try again.");
     }
+  
     setTranscript("");
   };
 
