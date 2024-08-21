@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Maximize2, Volume2, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, Mic, Volume2, X } from "lucide-react";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
@@ -25,6 +25,72 @@ const SentenceSection: React.FC<any> = ({
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
+
+  const [transcript, setTranscript] = useState<string>("");
+  const [isMicActive, setIsMicActive] = useState(false);
+  const [recognition, setRecognition] = useState<any>(null);
+
+
+  
+  const startSpeechRecognition = () => {
+    if ('webkitSpeechRecognition' in window) {
+      const newRecognition = new (window as any).webkitSpeechRecognition();
+      newRecognition.continuous = true;
+      newRecognition.interimResults = true;
+      newRecognition.lang = 'en-US';
+  
+      newRecognition.onresult = (event: any) => {
+        const speechResult = event.results[event.results.length - 1][0].transcript;
+        setTranscript(speechResult);
+      };
+  
+      newRecognition.onend = () => {
+        setIsMicActive(false);
+      };
+  
+      newRecognition.start();
+      setRecognition(newRecognition);
+      setIsMicActive(true);
+  
+      // Auto-stop after 3 minutes
+      setTimeout(() => {
+        if (newRecognition) {
+          newRecognition.stop();
+        }
+      }, 180000); // 3 minutes in milliseconds
+    } else {
+      alert("Speech recognition is not supported in this browser.");
+    }
+  };
+
+  const compareTranscriptWithSentence = (spokenText: string) => {
+    const currentSentence = sentences[currentIndex].toLowerCase();
+    const spokenTextLower = spokenText.toLowerCase();
+    
+    if (currentSentence === spokenTextLower) {
+      alert("Perfect match!");
+    } else {
+      alert("Not quite right. Try again!");
+    }
+    setTranscript("");
+  };
+
+  useEffect(() => {
+    return () => {
+      if (recognition) {
+        recognition.stop();
+      }
+    };
+  }, [recognition]);
+
+
+const stopSpeechRecognition = () => {
+  if (recognition) {
+    recognition.stop();
+    setIsMicActive(false);
+    compareTranscriptWithSentence(transcript);
+  }
+};
 
   useEffect(() => {
     const loadVoices = () => {
@@ -151,7 +217,12 @@ const SentenceSection: React.FC<any> = ({
               <p>{wordDefinition}</p>
             </div>
           )}
-
+{transcript && (
+  <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+    <p className="text-sm font-semibold">Your speech:</p>
+    <p>{transcript}</p>
+  </div>
+)}
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
             <button
               onClick={onPrev}
@@ -160,13 +231,24 @@ const SentenceSection: React.FC<any> = ({
               <ChevronLeft size={18} />
             </button>
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <button
-                onClick={speakSentence}
-                className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
-              >
-                <Volume2 size={18} />
-              </button>
-            </div>
+  <button
+    onClick={speakSentence}
+    className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
+  >
+    <Volume2 size={18} />
+  </button>
+  <button
+  onClick={isMicActive ? stopSpeechRecognition : startSpeechRecognition}
+  className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${
+    isMicActive ? 'from-green-500 to-green-600' : colorScheme.gradient
+  } text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110 relative`}
+>
+  <Mic size={18} />
+  {isMicActive && (
+    <span className="absolute top-0 right-0 h-3 w-3 bg-green-400 rounded-full animate-pulse"></span>
+  )}
+</button>
+</div>
             <button
               onClick={onNext}
               className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-l ${colorScheme.gradient} text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110`}
