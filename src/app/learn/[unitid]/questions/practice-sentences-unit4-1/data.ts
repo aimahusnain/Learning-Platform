@@ -566,6 +566,44 @@ const data = [
       
       },
     ],
+    "data set 6": [
+      {
+        name: "Positive" as const,
+        sentence: [
+          "Is the baby sleeping?",
+          "Are you listening to the news?",
+          "Are the players playing the match?",
+          "Is Salma going to her aunt's house?",
+          "Where are the people dancing?",
+          "Why are the students coming back early from school?",
+          "Why is the plane landing here?",
+          "Is your watch losing five minutes daily?",
+          "Who is ringing the bell?",
+          "When are the guests arriving here?",
+          "How many persons are considering this matter?",
+          "Am I not addressing you?",
+          "Whom is the nurse talking to?",
+          "How is the doctor injecting the patient?",
+          "How many lawyers are arguing?",
+          "Is the moon coming out?",
+          "Are the bad boys throwing stones at buses?",
+          "Are the workers digging up soil?",
+          "Why are you selling your house?",
+          "Is Bashir buying a new motorcycle?",
+          "Where are the women washing clothes?",
+          "How many men are joining this business?",
+          "How much money are you withdrawing from the bank?",
+          "Who’s inviting me to dinner?",
+          "Where are the poor refugees going?",
+          "Is the shopkeeper charging the customer extra money?",
+          "Whose message are you carrying?",
+          "When is the contractor starting the work?",
+          "Who’s knocking at the door?",
+          "Which magazine are you reading?"
+        ]
+        
+      },
+    ],
   },
 ];
 

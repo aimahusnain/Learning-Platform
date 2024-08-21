@@ -4,7 +4,7 @@ import SentenceSection from "@/components/SentenceSection";
 import React, { useState } from "react";
 
 type SubCategory = "Positive";
-type Category = "data set 1" | "data set 2" | "data set 3" | "data set 4";
+type Category = "data set 1" | "data set 2" | "data set 3" | "data set 4" | "data set 5";
 
 const colorSchemes = {
   tealIndigo: {
@@ -71,6 +71,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
     "data set 2": { Positive: 0 },
     "data set 3": { Positive: 0 },
     "data set 4": { Positive: 0 },
+    "data set 5": { Positive: 0 },
   });
 
   const [currentColorScheme, setCurrentColorScheme] = useState<ColorScheme>("tealIndigo");
@@ -87,6 +88,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
     "data set 2": "Positive",
     "data set 3": "Positive",
     "data set 4": "Positive",
+    "data set 5": "Positive",
   });
 
   const nextSentence = (category: Category) => {
@@ -149,7 +151,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {(["data set 1", "data set 2", "data set 3", "data set 4"] as const).map((category) => (
+        {(["data set 1", "data set 2", "data set 3", "data set 4", "data set 5"] as const).map((category) => (
           <div key={category} className="min-w-0">
             <SentenceSection
               title={category.charAt(0).toUpperCase() + category.slice(1)}
