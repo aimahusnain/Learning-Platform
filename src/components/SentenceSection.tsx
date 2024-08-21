@@ -102,7 +102,7 @@ const SentenceSection: React.FC<any> = ({
       compareTranscriptWithSentence(transcript);
     }
   };
-  
+
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
@@ -118,7 +118,7 @@ const SentenceSection: React.FC<any> = ({
       speakFeedback("You're getting the point! Try again.");
     } else if (similarityScore > 0.5) {
       speakFeedback("Almost there! Keep practicing.");
-    } else {
+    } else if (similarityScore > 0.2) {
       speakFeedback("Sorry, please try again.");
     }
   
