@@ -26,9 +26,9 @@ const SentenceSection: React.FC<any> = ({
     setIsFullscreen(!isFullscreen);
   };
 
-  const [transcript, setTranscript] = useState<string>("");
   const [isMicActive, setIsMicActive] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
+  const [transcript, setTranscript] = useState("");
 
 
   
@@ -44,54 +44,42 @@ const SentenceSection: React.FC<any> = ({
         setTranscript(speechResult);
       };
   
-      newRecognition.onend = () => {
-        setIsMicActive(false);
-      };
-  
       newRecognition.start();
       setRecognition(newRecognition);
       setIsMicActive(true);
-  
-      // Auto-stop after 3 minutes
-      setTimeout(() => {
-        if (newRecognition) {
-          newRecognition.stop();
-        }
-      }, 180000); // 3 minutes in milliseconds
     } else {
       alert("Speech recognition is not supported in this browser.");
     }
   };
-
+  
+  const stopSpeechRecognition = () => {
+    if (recognition) {
+      recognition.stop();
+      setIsMicActive(false);
+      compareTranscriptWithSentence(transcript);
+    }
+  };
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
     
     if (currentSentence === spokenTextLower) {
-      alert("Perfect match!");
+      speakFeedback("Correct! You got it!");
     } else {
-      alert("Not quite right. Try again!");
+      speakFeedback("Sorry, please try again.");
     }
     setTranscript("");
   };
-
-  useEffect(() => {
-    return () => {
-      if (recognition) {
-        recognition.stop();
+  
+  const speakFeedback = (text: string) => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
-    };
-  }, [recognition]);
-
-
-const stopSpeechRecognition = () => {
-  if (recognition) {
-    recognition.stop();
-    setIsMicActive(false);
-    compareTranscriptWithSentence(transcript);
-  }
-};
-
+      speechSynthesis.speak(utterance);
+    }
+  };
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -238,7 +226,11 @@ const stopSpeechRecognition = () => {
     <Volume2 size={18} />
   </button>
   <button
-  onClick={isMicActive ? stopSpeechRecognition : startSpeechRecognition}
+  onMouseDown={startSpeechRecognition}
+  onMouseUp={stopSpeechRecognition}
+  onMouseLeave={stopSpeechRecognition}
+  onTouchStart={startSpeechRecognition}
+  onTouchEnd={stopSpeechRecognition}
   className={`p-2 sm:p-3 lg:p-4 bg-gradient-to-t ${
     isMicActive ? 'from-green-500 to-green-600' : colorScheme.gradient
   } text-white rounded-full hover:opacity-80 transition-transform transform hover:scale-110 relative`}
