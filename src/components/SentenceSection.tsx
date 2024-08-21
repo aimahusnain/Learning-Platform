@@ -317,7 +317,7 @@ const SentenceSection: React.FC<any> = ({
               <PlusCircle size={18} />
             </button>
             <Button onClick={toggleDontKnowSection}>
-              {showDontKnowSection ? "Hide" : "Show"} Don't Know Sentences
+              {showDontKnowSection ? "Hide" : "Show"} Don&apos;t Know Sentences
             </Button>
           </div>
           {showDontKnowSection && (
