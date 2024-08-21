@@ -2,70 +2,16 @@
 
 import SentenceSection from "@/components/SentenceSection";
 import { useState } from "react";
+import { ColorScheme, colorSchemes } from "@/components/ColorScheme";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 type Category = "noun" | "adjective" | "preposition" | "objective" | "possesive";
 
-const colorSchemes = {
-  tealIndigo: {
-    name: "Teal & Indigo",
-    from: "from-teal-400",
-    to: "to-indigo-600",
-    gradientFrom: "from-teal-500",
-    gradientTo: "to-indigo-500",
-    bgFrom: "from-teal-100",
-    bgTo: "to-indigo-100",
-  },
-  pinkYellow: {
-    name: "Pink & Yellow",
-    from: "from-pink-400",
-    to: "to-yellow-400",
-    gradientFrom: "from-pink-500",
-    gradientTo: "to-yellow-500",
-    bgFrom: "from-pink-100",
-    bgTo: "to-yellow-100",
-  },
-  yellowOrange: {
-    name: "Yellow & Orange",
-    from: "from-yellow-400",
-    to: "to-orange-500",
-    gradientFrom: "from-yellow-500",
-    gradientTo: "to-orange-600",
-    bgFrom: "from-yellow-100",
-    bgTo: "to-orange-100",
-  },
-  blueSkyBlue: {
-    name: "Blue & Sky Blue",
-    from: "from-blue-400",
-    to: "to-sky-400",
-    gradientFrom: "from-blue-500",
-    gradientTo: "to-sky-500",
-    bgFrom: "from-blue-100",
-    bgTo: "to-sky-100",
-  },
-  indigoPurple: {
-    name: "Indigo & Purple",
-    from: "from-indigo-400",
-    to: "to-purple-500",
-    gradientFrom: "from-indigo-500",
-    gradientTo: "to-purple-600",
-    bgFrom: "from-indigo-100",
-    bgTo: "to-purple-100",
-  },
-  redPink: {
-    name: "Red & Pink",
-    from: "from-red-400",
-    to: "to-pink-500",
-    gradientFrom: "from-red-500",
-    gradientTo: "to-pink-600",
-    bgFrom: "from-red-100",
-    bgTo: "to-pink-100",
-  },
-};
-
-type ColorScheme = keyof typeof colorSchemes;
 
 const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
+  const router = useRouter()
   const [indexes, setIndexes] = useState<Record<Category, Record<SubCategory, number>>>({
     noun: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
     adjective: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
@@ -180,9 +126,19 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   return (
     <div className="bg-gradient-to-br from-indigo-100 to-purple-100 py-16 px-4">
       <div className="">
-        <h1 className="text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-          Learn About {learnAbout}
-        </h1>
+      <div className="flex justify-between items-center mb-8">
+          <Button
+            onClick={() => router.back()}
+            className="bg-white hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-300"
+          >
+            Go Back
+          </Button>
+          <h1
+            className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${colorSchemes[currentColorScheme].gradientFrom} ${colorSchemes[currentColorScheme].gradientTo}`}
+          >
+            {learnAbout}
+          </h1>
+        </div>
         <div className="mb-8 flex justify-center">
         <select
           value={currentColorScheme}
