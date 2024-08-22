@@ -55,6 +55,10 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
       name: "I do/work/like etc. (present simple)",
       link: "/learn/cly4ngafb0004ldnn1v522bfy/questions/practice-sentences-unit5-1",
     },
+    {
+      name: "I don't... (present simple negative)",
+      link: "/learn/cly4ngafc0006ldnnnge57r94/questions/practice-sentences-unit6-1",
+    },
   ];
 
   return (

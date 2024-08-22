@@ -34,6 +34,25 @@ const SentenceSection: React.FC<any> = ({
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [wordDefinition, setWordDefinition] = useState<string | null>(null);
 
+  // Difficulty levels
+  const [easyLevel, setEasyLevel] = useState<string[]>([]);
+  const [intermediateLevel, setIntermediateLevel] = useState<string[]>([]);
+  const [hardLevel, setHardLevel] = useState<string[]>([]);
+
+ const handleDifficultyLevel = (sentence: string, level: any) => {
+    switch (level) {
+      case "Easy":
+        setEasyLevel([...easyLevel, sentence]);
+        break;
+      case "Intermediate":
+        setIntermediateLevel([...intermediateLevel, sentence]);
+        break;
+      case "Hard":
+        setHardLevel([...hardLevel, sentence]);
+        break;
+    }
+  }
+
   // Don't Know
   const [dontKnowSentences, setDontKnowSentences] = useState<string[]>([]);
   const [showDontKnowSection, setShowDontKnowSection] = useState(false);
