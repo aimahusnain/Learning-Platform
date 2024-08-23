@@ -63,6 +63,10 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
       name: "Do you...? (present simple questions)",
       link: "/learn/cly4ngafc0006ldnnnge57r94/questions/practice-sentences-unit7-1",
     },
+    {
+      name: "I am doing (present continuous) and I do (present simple)",
+      link: "/learn/cly4ngafd0008ldnn9qkgi7qi/questions/practice-sentences-unit8-1",
+    },
   ];
 
   return (

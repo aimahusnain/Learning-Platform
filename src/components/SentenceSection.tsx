@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
-import leven from 'leven';
+import leven from "leven";
 
 type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 
@@ -33,25 +33,6 @@ const SentenceSection: React.FC<any> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [wordDefinition, setWordDefinition] = useState<string | null>(null);
-
-  // Difficulty levels
-  const [easyLevel, setEasyLevel] = useState<string[]>([]);
-  const [intermediateLevel, setIntermediateLevel] = useState<string[]>([]);
-  const [hardLevel, setHardLevel] = useState<string[]>([]);
-
- const handleDifficultyLevel = (sentence: string, level: any) => {
-    switch (level) {
-      case "Easy":
-        setEasyLevel([...easyLevel, sentence]);
-        break;
-      case "Intermediate":
-        setIntermediateLevel([...intermediateLevel, sentence]);
-        break;
-      case "Hard":
-        setHardLevel([...hardLevel, sentence]);
-        break;
-    }
-  }
 
   // Don't Know
   const [dontKnowSentences, setDontKnowSentences] = useState<string[]>([]);
@@ -77,7 +58,10 @@ const SentenceSection: React.FC<any> = ({
     return (
       <div className="overflow-y-scroll">
         {sentences.map((sentence, index) => (
-          <p key={index} className="text-black font-bold text-center leading-relaxed text-sm sm:text-base md:text-lg lg:text-2xl">
+          <p
+            key={index}
+            className="text-black font-bold text-center leading-relaxed text-sm sm:text-base md:text-lg lg:text-2xl"
+          >
             {sentence}
           </p>
         ))}
@@ -125,12 +109,12 @@ const SentenceSection: React.FC<any> = ({
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
-  
+
     // Calculate the Levenshtein distance between the two strings
     const distance = leven(currentSentence, spokenTextLower);
     const maxLength = Math.max(currentSentence.length, spokenTextLower.length);
     const similarityScore = 1 - distance / maxLength; // Similarity score between 0 and 1
-  
+
     if (similarityScore > 0.9) {
       speakFeedback("Correct! You got it!");
     } else if (similarityScore > 0.7) {
@@ -140,7 +124,7 @@ const SentenceSection: React.FC<any> = ({
     } else if (similarityScore > 0.2) {
       speakFeedback("Sorry, please try again.");
     }
-  
+
     setTranscript("");
   };
 
@@ -258,8 +242,8 @@ const SentenceSection: React.FC<any> = ({
         </div>
 
         <div
-          className={`p-4 sm:p-6 lg:p-8 ${
-            isFullscreen ? "flex-grow flex flex-col justify-center" : ""
+          className={`p-4 sm:p-6 lg:p-8 overflow-y-scroll ${
+            isFullscreen ? "flex-grow flex flex-col justify-center overflow-y-scroll" : ""
           }`}
         >
           <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 shadow-inner">
@@ -268,9 +252,22 @@ const SentenceSection: React.FC<any> = ({
                 isFullscreen
                   ? "text-3xl sm:text-4xl"
                   : "text-sm sm:text-base md:text-lg lg:text-2xl"
-              }`}
+              } ${sentences[currentIndex].includes("<br />") && isFullscreen ? "md:pt-0 pt-28" : ""}`}
             >
-              {renderSentenceWithClickableWords(sentences[currentIndex])}
+              {sentences[currentIndex]
+                .split("<br />")
+                .map((part: any, index: number) => (
+                  <span key={index}>
+                    {renderSentenceWithClickableWords(part)}
+                    {index <
+                      sentences[currentIndex].split("<br />").length - 1 && (
+                      <>
+                        <br />
+                        <br />
+                      </>
+                    )}
+                  </span>
+                ))}
             </p>
           </div>
 
