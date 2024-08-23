@@ -249,7 +249,7 @@ const SentenceSection: React.FC<any> = ({
             isFullscreen ? "flex-grow flex flex-col justify-center overflow-y-scroll" : ""
           }`}
         >
-          <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 shadow-inner">
+          <div className="bg-gray-50 pt-[120px] rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 shadow-inner">
             <p
               className={`text-black font-bold text-center leading-relaxed ${
                 isFullscreen
