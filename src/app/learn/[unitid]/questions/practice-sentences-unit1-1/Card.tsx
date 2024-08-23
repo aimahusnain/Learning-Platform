@@ -126,7 +126,7 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   return (
     <div className="bg-gradient-to-br from-indigo-100 to-purple-100 py-16 px-4">
       <div className="">
-      <div className="flex justify-between items-center mb-8">
+     <div className="flex flex-col text-center justify-center items-center mb-8">
           <Button
             onClick={() => router.back()}
             className="bg-white hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-300"

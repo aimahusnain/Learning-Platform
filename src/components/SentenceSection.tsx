@@ -227,19 +227,22 @@ const SentenceSection: React.FC<any> = ({
         <div
           className={`bg-gradient-to-r ${colorScheme.gradientFrom} ${colorScheme.gradientTo} p-4 sm:p-6 text-white`}
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-center mb-2">
-            {title}
-          </h2>
-          <p className="text-sm sm:text-md md:text-lg font-semibold text-center">
-            {currentIndex + 1} / {sentences.length}
-          </p>
-          <button
+<div className="flex items-center justify-between">
+<button
             onClick={toggleFullscreen}
             className="p-2 bg-white/20 rounded-full"
           >
             {isFullscreen ? <X size={24} /> : <Maximize2 size={24} />}
           </button>
-        </div>
+
+          <h2 className="text-xl mt-3 mr-9 sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-center mb-2">
+            {title}
+          </h2>
+          <div></div>
+</div>          <p className="text-sm sm:text-md md:text-lg font-semibold text-center">
+            {currentIndex + 1} / {sentences.length}
+          </p>
+                 </div>
 
         <div
           className={`p-4 sm:p-6 lg:p-8 overflow-y-scroll ${
@@ -250,7 +253,7 @@ const SentenceSection: React.FC<any> = ({
             <p
               className={`text-black font-bold text-center leading-relaxed ${
                 isFullscreen
-                  ? "text-3xl sm:text-4xl"
+                  ? "text-3xl sm:text-4xl" 
                   : "text-sm sm:text-base md:text-lg lg:text-2xl"
               } ${sentences[currentIndex].includes("<br />") && isFullscreen ? "md:pt-0 pt-28" : ""}`}
             >

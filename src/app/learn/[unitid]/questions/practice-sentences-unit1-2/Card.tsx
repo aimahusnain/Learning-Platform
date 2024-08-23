@@ -81,7 +81,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
   return (
     <div className={`bg-gradient-to-br ${colorSchemes[currentColorScheme].bgFrom} ${colorSchemes[currentColorScheme].bgTo} py-16 px-4`}>
     <div className="container mx-auto">
-    <div className="flex justify-between items-center mb-8">
+   <div className="flex flex-col text-center justify-center items-center mb-8">
           <Button
             onClick={() => router.back()}
             className="bg-white hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-300"
