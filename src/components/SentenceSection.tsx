@@ -108,6 +108,18 @@ const SentenceSection: React.FC<any> = ({
     }
   };
 
+  const toggleTestMode = async () => {
+    setIsTestMode(!isTestMode);
+    if (!isTestMode && romanUrduSentences.length === 0) {
+      const convertedSentences = await Promise.all(
+        sentences.map(
+          async (sentence: string) => await convertToRomanUrdu(sentence)
+        )
+      );
+      setRomanUrduSentences(convertedSentences);
+    }
+  };
+
   const compareTranscriptWithSentence = (spokenText: string) => {
     const currentSentence = sentences[currentIndex].toLowerCase();
     const spokenTextLower = spokenText.toLowerCase();
@@ -192,19 +204,27 @@ const SentenceSection: React.FC<any> = ({
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
+      console.log("Available voices:", availableVoices);
       const urduVoice = availableVoices.find(
         (voice) => voice.lang === "ur-PK" || voice.lang === "ur"
       );
       if (urduVoice) {
+        console.log("Urdu voice found:", urduVoice);
         setUrduVoice(urduVoice);
+      } else {
+        console.warn("No Urdu voice found");
       }
     };
 
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    loadVoices();
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices(); // Initial load
+    }
 
     return () => {
-      window.speechSynthesis.onvoiceschanged = null;
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = null;
+      }
     };
   }, []);
 
@@ -213,6 +233,7 @@ const SentenceSection: React.FC<any> = ({
       const utterance = new SpeechSynthesisUtterance(text);
 
       if (urduVoice) {
+        console.log("Using Urdu voice:", urduVoice);
         utterance.voice = urduVoice;
       } else {
         console.warn("No Urdu voice found. Using default voice.");
@@ -221,7 +242,13 @@ const SentenceSection: React.FC<any> = ({
       utterance.lang = "ur";
       utterance.rate = 0.8; // Slightly slower rate for better clarity
 
+      utterance.onstart = () => {
+        console.log("Started speaking");
+        toast.success("Started speaking Urdu sentence...");
+      };
+
       utterance.onend = () => {
+        console.log("Finished speaking");
         toast.success("Finished speaking");
       };
 
@@ -230,24 +257,16 @@ const SentenceSection: React.FC<any> = ({
         toast.error("Error occurred while speaking. Please try again.");
       };
 
+      window.speechSynthesis.cancel(); // Cancel any ongoing speech
       window.speechSynthesis.speak(utterance);
-      toast.success("Speaking Urdu sentence...");
     } else {
+      console.error("Speech synthesis not supported");
       toast.error("Speech synthesis is not supported in this browser.");
     }
   };
 
-  const toggleTestMode = async () => {
-    setIsTestMode(!isTestMode);
-    if (!isTestMode && romanUrduSentences.length === 0) {
-      const convertedSentences = await Promise.all(
-        sentences.map(
-          async (sentence: string) => await convertToRomanUrdu(sentence)
-        )
-      );
-      setRomanUrduSentences(convertedSentences);
-    }
-  };
+
+  
 
   const convertToRomanUrdu = async (text: string) => {
     const url = `https://translate.googleapis.com/translate_a/single`;
