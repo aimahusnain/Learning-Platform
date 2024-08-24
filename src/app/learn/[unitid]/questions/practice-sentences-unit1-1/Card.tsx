@@ -10,7 +10,7 @@ type SubCategory = "Negative" | "Positive" | "Yes/No Questions";
 type Category = "noun" | "adjective" | "preposition" | "objective" | "possesive";
 
 
-const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
+const Card = ({ learnAbout, data, generateQuestions = false }: { learnAbout: string; data: any, generateQuestions?: boolean }) => {
   const router = useRouter()
   const [indexes, setIndexes] = useState<Record<Category, Record<SubCategory, number>>>({
     noun: { Negative: 0, Positive: 0, "Yes/No Questions": 0 },
@@ -37,6 +37,8 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
         return `${pluralMatch[1]} aren't ${pluralMatch[2]}`;
       }
     }
+
+    
     return positiveSentence; // Default case
   };
   
@@ -59,20 +61,24 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
   };
 
   const getSentences = (category: Category, subCategory: SubCategory): string[] => {
-    const positiveSentences = data[0][category].find((item: any) => item.name === "Positive")?.sentence || [];
+    const categoryData = data[0][category];
+    const positiveSentences = categoryData.find((item: any) => item.name === "Positive")?.sentence || [];
     
-    switch (subCategory) {
-      case "Positive":
-        return positiveSentences;
-      case "Negative":
-        return positiveSentences.map((sentence: string) => generateNegativeSentence(sentence, category));
-      case "Yes/No Questions":
-        return positiveSentences.map((sentence: string) => generateYesNoQuestion(sentence, category));
-      default:
-        return [];
+    if (generateQuestions) {
+      switch (subCategory) {
+        case "Positive":
+          return positiveSentences;
+        case "Negative":
+          return positiveSentences.map((sentence: string) => generateNegativeSentence(sentence, category));
+        case "Yes/No Questions":
+          return positiveSentences.map((sentence: string) => generateYesNoQuestion(sentence, category));
+        default:
+          return [];
+      }
+    } else {
+      return categoryData.find((item: any) => item.name === subCategory)?.sentence || [];
     }
   };
-
 
   const [currentSubCategories, setCurrentSubCategories] = useState<Record<Category, SubCategory>>({
     noun: "Negative",
@@ -112,7 +118,6 @@ const Card = ({ learnAbout, data }: { learnAbout: string; data: any }) => {
       ...prev,
       [category]: subCategory,
     }));
-    // Keep the current index when switching subcategories
     setIndexes((prevIndexes) => ({
       ...prevIndexes,
       [category]: {
