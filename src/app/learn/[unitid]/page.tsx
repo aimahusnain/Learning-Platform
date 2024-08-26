@@ -67,6 +67,10 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
       name: "I am doing (present continuous) and I do (present simple)",
       link: "/learn/cly4ngafd0008ldnn9qkgi7qi/questions/practice-sentences-unit8-1",
     },
+    {
+      name: "I have... and I've got...",
+      link: "/learn/cly4ngafd0009ldnnybcsokt0/questions/practice-sentences-unit9-1",
+    },
   ];
 
   return (
