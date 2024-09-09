@@ -2494,9 +2494,7 @@ export const yourselvesData = [
           "You are not careless.",
           "You are not talented.",
           "You are not special."
-      ]
-      
-      ,
+      ],
 
       },
       {

@@ -12,6 +12,7 @@ type Category =
   | "data set 2"
   | "data set 3"
   | "data set 4"
+  | "data set 5"
 
 const Card: React.FC<{ learnAbout: string; data: any }> = ({
   learnAbout,
@@ -25,6 +26,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({
     "data set 2": { Positive: 0 },
     "data set 3": { Positive: 0 },
     "data set 4": { Positive: 0 },
+    "data set 5": { Positive: 0 },
   });
 
   const [currentColorScheme, setCurrentColorScheme] =
@@ -50,6 +52,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({
     "data set 2": "Positive",
     "data set 3": "Positive",
     "data set 4": "Positive",
+    "data set 5": "Positive",
   });
 
   const nextSentence = (category: Category) => {
@@ -138,6 +141,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({
               "data set 2",
               "data set 3",
               "data set 4",
+              "data set 5",
             ] as const
           ).map((category) => (
             <div key={category} className="min-w-0">

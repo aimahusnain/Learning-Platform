@@ -7,12 +7,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 type SubCategory = "Positive";
-type Category = "data set 1" | "data set 2" | "data set 3" | "data set 4" | "data set 5" | "data set 6" | "data set 7";
+type Category = "data set 1 - Who/What (Noun)" | "data set 1 - How (Adjective)"| "data set 1 - Where (Prepositional Phrase)" | "data set 2" | "data set 3" | "data set 4" | "data set 5" | "data set 6" | "data set 7";
 
 const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data }) => {
  const router = useRouter()
   const [indexes, setIndexes] = useState<Record<Category, Record<SubCategory, number>>>({
-    "data set 1": { Positive: 0 },
+    "data set 1 - Who/What (Noun)": { Positive: 0 },
+    "data set 1 - Where (Prepositional Phrase)": { Positive: 0 },
+    "data set 1 - How (Adjective)": { Positive: 0 },
     "data set 2": { Positive: 0 },
     "data set 3": { Positive: 0 },
     "data set 4": { Positive: 0 },
@@ -31,7 +33,9 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
   };
 
   const [currentSubCategories, setCurrentSubCategories] = useState<Record<Category, SubCategory>>({
-    "data set 1": "Positive",
+    "data set 1 - How (Adjective)": "Positive",
+    "data set 1 - Who/What (Noun)": "Positive",
+    "data set 1 - Where (Prepositional Phrase)": "Positive",
     "data set 2": "Positive",
     "data set 3": "Positive",
     "data set 4": "Positive",
@@ -110,7 +114,7 @@ const Card: React.FC<{ learnAbout: string; data: any }> = ({ learnAbout, data })
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {(["data set 1", "data set 2", "data set 3", "data set 4", "data set 5", "data set 6", "data set 7"] as const).map((category) => (
+        {(["data set 1 - Where (Prepositional Phrase)", "data set 1 - Who/What (Noun)", "data set 1 - How (Adjective)", "data set 2", "data set 3", "data set 4", "data set 5", "data set 6", "data set 7"] as const).map((category) => (
           <div key={category} className="min-w-0">
             <SentenceSection
               title={category.charAt(0).toUpperCase() + category.slice(1)}
