@@ -47,10 +47,7 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
   const colors = getColors(colorScheme);
 
   const practiceSentences = [
-    {
-      name: "am/is/are",
-      link: "/learn/cly4ne9ni0001ldnnlphvaq6p/questions/alfabet-learning",
-    },
+
     {
       name: "are you doing? (present continuous questions)",
       link: "/learn/cly4ngafb0004ldnn1v522bfy/questions/practice-sentences-unit4-1",
@@ -260,6 +257,37 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                     >
                       <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
                       Practice Sentences
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : null}
+
+          {UnitDetailsData[0].name === "am/is/are" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      Alfabet Learning
                     </CardTitle>
                   </Link>
                 </CardHeader>
