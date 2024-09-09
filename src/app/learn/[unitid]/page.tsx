@@ -281,7 +281,7 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
               <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
                 <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
                   <Link
-                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/alfabet-learning`}
                   >
                     <CardTitle
                       className={`capitalize text-${colors.text} flex items-center`}
@@ -294,7 +294,7 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
                 <CardContent></CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <Link
-                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/practice-sentences-unit3-1`}
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/alfabet-learning`}
                   >
                     <Button
                       className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
