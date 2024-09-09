@@ -72,8 +72,8 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
       link: "/learn/cly4ngafd0008ldnn9qkgi7qi/questions/practice-sentences-unit8-1",
     },
     {
-      name: "I have... and I've got...",
-      link: "/learn/cly4ngafd0009ldnnybcsokt0/questions/practice-sentences-unit9-1",
+      name: "am/is/are",
+      link: "/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit9-1",
     },
   ];
 
