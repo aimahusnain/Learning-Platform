@@ -59,7 +59,7 @@ const ABCRandomizer: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen" style={{ backgroundColor }}>
       <div className="text-9xl font-bold mb-8 text-white" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-        {currentLetter.toUpperCase()}
+        {currentLetter}
       </div>
       <div className="flex space-x-4">
         <Button
