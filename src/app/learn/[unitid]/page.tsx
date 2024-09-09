@@ -48,8 +48,8 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
 
   const practiceSentences = [
     {
-      name: "Alfabet Learning",
-      link: "/learn/cly4ngafb0004ldnn1v522bfy/questions/alfabet-learning",
+      name: "am/is/are",
+      link: "/learn/cly4ne9ni0001ldnnlphvaq6p/questions/alfabet-learning",
     },
     {
       name: "are you doing? (present continuous questions)",
@@ -70,10 +70,6 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
     {
       name: "I am doing (present continuous) and I do (present simple)",
       link: "/learn/cly4ngafd0008ldnn9qkgi7qi/questions/practice-sentences-unit8-1",
-    },
-    {
-      name: "am/is/are",
-      link: "/learn/cly4ne9ni0001ldnnlphvaq6p/questions/practice-sentences-unit9-1",
     },
   ];
 
