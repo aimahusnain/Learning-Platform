@@ -338,6 +338,37 @@ const UnitDetails: React.FC<any> = async ({ params, colorScheme }) => {
             </motion.div>
           ) : null}
 
+{UnitDetailsData[0].name === "am/is/are" ? (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card className="w-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white">
+                <CardHeader className={`bg-${colors.secondary} rounded-t-lg`}>
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/3-letter-words`}
+                  >
+                    <CardTitle
+                      className={`capitalize text-${colors.text} flex items-center`}
+                    >
+                      <Book className={`w-5 h-5 mr-2 text-${colors.primary}`} />
+                      3 Letter Words
+                    </CardTitle>
+                  </Link>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <Link
+                    href={`/learn/cly4ngafa0003ldnnucg3o2l9/questions/3-letter-words`}
+                  >
+                    <Button
+                      className={`bg-${colors.primary} hover:bg-${colors.hover} text-white`}
+                    >
+                      Learn
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ) : null}
+
           {practiceSentences.map((box, index) => (
             <>
               {UnitDetailsData[0].name === box.name ? (
