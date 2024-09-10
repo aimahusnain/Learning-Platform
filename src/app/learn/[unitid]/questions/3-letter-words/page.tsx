@@ -31,26 +31,6 @@ const words3Letter = [
   { word: 'job', romanUrdu: 'kaam', urdu: 'کام' },
   { word: 'bus', romanUrdu: 'bus', urdu: 'بس' },
   { word: 'sit', romanUrdu: 'baithna', urdu: 'بیٹھنا' },
-  { word: 'get', romanUrdu: 'haasil', urdu: 'حاصل' },
-  { word: 'eat', romanUrdu: 'khaana', urdu: 'کھانا' },
-  { word: 'hot', romanUrdu: 'garm', urdu: 'گرم' },
-  { word: 'dry', romanUrdu: 'khushk', urdu: 'خشک' },
-  { word: 'big', romanUrdu: 'bara', urdu: 'بڑا' },
-  { word: 'old', romanUrdu: 'purana', urdu: 'پرانا' },
-  { word: 'new', romanUrdu: 'naya', urdu: 'نیا' },
-  { word: 'boy', romanUrdu: 'ladka', urdu: 'لڑکا' },
-  { word: 'man', romanUrdu: 'aadmi', urdu: 'آدمی' },
-  { word: 'toy', romanUrdu: 'khilona', urdu: 'کھلونا' },
-  { word: 'mat', romanUrdu: 'chattai', urdu: 'چٹائی' },
-  { word: 'tip', romanUrdu: 'noke', urdu: 'نوک' },
-  { word: 'log', romanUrdu: 'lakri ka tukra', urdu: 'لکڑی کا ٹکڑا' },
-  { word: 'win', romanUrdu: 'jeetna', urdu: 'جیتنا' },
-  { word: 'top', romanUrdu: 'oopar', urdu: 'اوپر' },
-  { word: 'fox', romanUrdu: 'lomri', urdu: 'لومڑی' },
-  { word: 'dig', romanUrdu: 'khodna', urdu: 'کھودنا' },
-  { word: 'hen', romanUrdu: 'murgi', urdu: 'مرغی' },
-  { word: 'jam', romanUrdu: 'marmalade', urdu: 'مارملیڈ' },
-  { word: 'wet', romanUrdu: 'geela', urdu: 'گیلا' }
 ];
 
 
