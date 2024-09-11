@@ -2,7 +2,7 @@
 const data = [
   {
     name: "MySelf",
-    "data set 1 - Where (Prepositional Phrase)": [
+    "Where (Prepositional Phrase)": [
       {
         name: "Positive" as const,
         sentence: [
@@ -18,11 +18,26 @@ const data = [
           "Peter is at the restaurant. His meal is on the table.",
           "Sophie is at the gym. Her workout clothes are in her bag.",
           "Oliver is at school. His backpack is in his locker.",
-          "Laura is at the mall. Her shopping bags are heavy."
+          "Laura is at the mall. Her shopping bags are heavy.",
+            "Rafia isn't at home. She's at work.",
+            "Sarah isn't at school. She's at the doctor's.",
+            "David isn't at the gym. He's at the library.",
+            "Lisa isn't at the party. She's at home studying.",
+            "Peter isn't at the beach. He's at the mountains.",
+            "Emily isn't at the store. She's at the park.",
+            "John isn't at the meeting. He's on vacation.",
+            "Rachel isn't in the kitchen. She's in the garden.",
+            "Mark isn't at the airport. He's still at home packing.",
+            "Kelly isn't at the gym. She's at the yoga studio.",
+            "Michael isn't at the concert. He's at home with a cold.",
+            "Sophie isn't in the living room. She's in the study.",
+            "Alex isn't at the library. He's at the coffee shop.",
+            "Linda isn't at the mall. She's at the dentist.",
+            "Robert isn't in the office. He's working from home."
       ]
       },
     ],
-    "data set 1 - How (Adjective)": [
+    "How (Adjective)": [
       {
         name: "Positive" as const,
         sentence: [
@@ -72,7 +87,72 @@ const data = [
           "My neighbors and I are friendly.",
           "The wind is strong.",
           "This tea is hot.",
-          "Those fireworks are beautiful."
+          "Those fireworks are beautiful.",
+            "Steve is ill. He's in bed.",
+            "I'm not hungry, but I'm thirsty.",
+            "These chairs aren't beautiful, but they're comfortable.",
+            "The weather is nice today. It's warm and sunny.",
+            "\"Are you late?\" \"'No, I'm not. I'm early.\"",
+            "Tom is busy. He's at the office.",
+            "I'm not tired, but I'm bored.",
+            "These shoes aren't stylish, but they're durable.",
+            "The party is fun tonight. It's lively and exciting.",
+            "\"Are you ready?\" \"Yes, I am. I'm prepared.\"",
+            "The cat is sleepy. It's on the couch.",
+            "We're not lost, but we're confused.",
+            "This book isn't short, but it's interesting.",
+            "The music is loud today. It's energetic and upbeat.",
+            "\"Are you new here?\" \"No, I'm not. I'm a regular.\"",
+            "The dog is playful. It's in the yard.",
+            "They're not angry, but they're disappointed.",
+            "These headphones aren't expensive, but they're high-quality.",
+            "The movie is entertaining. It's funny and clever.",
+            "\"Are you satisfied?\" \"Yes, I am. I'm very pleased.\"",
+            "The baby is fussy. She's in her crib.",
+            "We're not experts, but we're enthusiastic.",
+            "This apartment isn't spacious, but it's cozy.",
+            "The concert is amazing tonight. It's energetic and loud.",
+            "\"Are you nervous?\" \"No, I'm not. I'm confident.\"",
+            "The flowers are beautiful. They're in the garden.",
+            "I'm not rich, but I'm content.",
+            "These cars aren't fast, but they're reliable.",
+            "The lecture is informative today. It's clear and concise.",
+            "\"Are you awake?\" \"Yes, I am. I couldn't sleep.\"",
+            "The coffee is strong. It's in the blue mug.",
+            "\"Are you finished?\" \"No, I'm not. I'm still working.\"",
+            "The sky is cloudy today. It's gray and overcast.",
+            "We're not experts, but we're willing to learn.",
+            "This restaurant isn't fancy, but it's delicious.",
+            "The game is exciting tonight. It's close and intense.",
+            "\"Are you cold?\" \"Yes, I am. I'm shivering.\"",
+            "The computer is slow. It's old and outdated.",
+            "They're not famous, but they're respected.",
+            "These vegetables aren't fresh, but they're still edible.",
+            "The meeting is productive today. It's focused and efficient.",
+            "\"Are you available?\" \"No, I'm not. I'm busy all day.\"",
+            "The tea is hot. It's in the green teapot.",
+            "\"Are you excited?\" \"Yes, I am. I'm thrilled about the trip.\"",
+            "The room is messy. It's cluttered and disorganized.",
+            "This movie isn't original, but it's entertaining.",
+            "The festival is lively today. It's colorful and noisy.",
+            "\"Are you hungry?\" \"No, I'm not. I just ate.\"",
+            "The river is calm. It's smooth and peaceful.",
+            "I'm not an expert, but I'm eager to learn.",
+            "These shoes aren't comfortable, but they're fashionable.",
+            "The lecture is interesting today. It's engaging and thought-provoking.",
+            "\"Are you ready to leave?\" \"Yes, I am. I'm all set.\"",
+            "The cake is delicious. It's sweet and moist.",
+            "\"Are you worried?\" \"No, I'm not. I'm optimistic.\"",
+            "The garden is beautiful. It's colorful and well-maintained.",
+            "They're not wealthy, but they're happy.",
+            "This report isn't brief, but it's comprehensive.",
+            "The atmosphere is tense today. It's quiet and uneasy.",
+            "\"Are you allergic?\" \"Yes, I am. I'm allergic to peanuts.\"",
+            "The sunset is stunning. It's orange and purple.",
+            "This software isn't user-friendly, but it's powerful.",
+            "The party is enjoyable tonight. It's relaxed and friendly.",
+            "\"Are you married?\" \"No, I'm not. I'm single.\""
+          
       ]
       
       },
@@ -81,7 +161,7 @@ const data = [
         sentence: ["Am I a student?", "Am I a teacher?", "Am I an engineer?"],
       },
     ],
-    "data set 1 - Who/What (Noun)": [
+    "Who/What (Noun)": [
      
       {
         name: "Positive" as const,
@@ -123,7 +203,39 @@ const data = [
           "I'm a journalist. My husband is an editor.",
           "They aren't expert gardeners.",
           "I'm a painter. My sister is a sculptor.",
-          "We're not professional swimmers."
+          "We're not professional swimmers.",
+          [
+            "Mr. Faiz is a very old man. He's 98.",
+            "\"Is this your coat?\" \"Oh, thank you very much.\"",
+            "Mrs. Johnson is a talented artist. She's 72.",
+            "\"Is this your umbrella?\" \"Yes, thank you so much.\"",
+            "Mr. Lee is a skilled chef. He's 45.",
+            "\"Is this your phone?\" \"Oh, I've been looking for it!\"",
+            "Ms. Garcia is a strict teacher. She's 38.",
+            "\"Is this your wallet?\" \"Oh, thank goodness you found it!\"",
+            "Dr. Miller is a renowned scientist. He's 62.",
+            "\"Is this your luggage?\" \"Yes, that's mine. Thank you!\"",
+            "Mrs. Thompson is a dedicated volunteer. She's 55.",
+            "\"Is this your seat?\" \"No, it's not. Mine is over there.\"",
+            "\"Is this your notebook?\" \"Yes, it is. I've been searching for it.\"",
+            "Ms. Chen is a talented musician. She's 29.",
+            "\"Is this your jacket?\" \"Oh, I thought I'd lost it!\"",
+            "Mr. Brown is a skilled carpenter. He's 50.",
+            "\"Is this your dog?\" \"No, it's not. Mine is much smaller.\"",
+            "\"Is this your book?\" \"Yes, it is. I've been looking for it.\"",
+            "We're not professionals, but we're dedicated amateurs.",
+            "Dr. Patel is a respected surgeon. She's 47.",
+            "\"Is this your umbrella?\" \"No, it's not. Mine is black.\"",
+            "Mrs. Rodriguez is a talented painter. She's 68.",
+            "\"Is this your car?\" \"Yes, it is. Thank you for finding it.\"",
+            "\"Is this your hat?\" \"Yes, it is. I almost forgot it.\"",
+            "Professor Wilson is a brilliant mathematician. He's 56.",
+            "\"Is this your suitcase?\" \"No, it's not. Mine has a red tag.\"",
+            "We're not close friends, but we're good colleagues.",
+            "Ms. Taylor is a dedicated teacher. She's 41.",
+            "\"Is this your bicycle?\" \"Yes, it is. Thank you for finding it!\""
+          ]
+          
       ]      
       },
      
